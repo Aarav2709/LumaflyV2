@@ -16,7 +16,7 @@
 			Margin="20 10"
 			ColumnDefinitions="Auto * Auto"
 			RowDefinitions="Auto Auto Auto Auto Auto Auto Auto Auto Auto *">
-			
+
 			<TextBlock
 				Grid.Column="0"
 				Grid.Row="0"
@@ -35,7 +35,7 @@
 				Margin="0 15"
 				Text="{ext:Localize XAML_UseCustomModlinks}"
 				VerticalAlignment="Center"/>
-	    
+
 			<!-- 3 reserved for custom modlinks text box -->
 			<StackPanel
 				Grid.Column="0"
@@ -43,8 +43,8 @@
 				VerticalAlignment="Center"
 				Orientation="Horizontal"
 				Margin="0 15">
-				<TextBlock 
-					Text="{ext:Localize XAML_Low_Storage_Mode}" 
+				<TextBlock
+					Text="{ext:Localize XAML_Low_Storage_Mode}"
 					VerticalAlignment="Center"/>
 				<PathIcon
 					Data="{StaticResource info_regular}"
@@ -55,13 +55,19 @@
 					Margin="7 0 5 0"
 					ToolTip.Tip="{Binding ExtraSpaceTaken}" ToolTip.ShowDelay="0"/>
 			</StackPanel>
-			
+
 			<TextBlock
 				Grid.Column="0"
 				Grid.Row="5"
 				Margin="0 15"
 				Text="{ext:Localize XAML_AutoRemoveDeps}"
 				VerticalAlignment="Center"/>
+			<TextBlock
+				Grid.Column="0"
+				Grid.Row="9"
+				Margin="0 15"
+				VerticalAlignment="Center"
+				Text="{ext:Localize XAML_GameLabel}"/>
 			<TextBlock
 				Grid.Column="0"
 				Grid.Row="6"
@@ -76,7 +82,7 @@
 				Text="{ext:Localize XAML_UseGithubMirror}"
 				VerticalAlignment="Center"/>
 	    <!-- 3 reserved for github mirror format text box -->
-			
+
 			<TextBox
 				Grid.Column="1"
 				Grid.Row="0"
@@ -86,7 +92,7 @@
 				Margin="10 0 5 0"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Center"/>
-			
+
 			<Button
 				Grid.Column="2"
 				Grid.Row="0"
@@ -97,7 +103,7 @@
 				Margin="5 0"
 				Command="{Binding ChangePath}"
 				Content="{ext:Localize XAML_ChangPath}"/>
-			
+
 			<ToggleSwitch
 				Grid.Column="1"
 				Grid.Row="1"
@@ -107,7 +113,7 @@
 				OnContent="{ext:Localize XAML_On}"
 				OffContent="{ext:Localize XAML_Off}"
 				IsChecked="{Binding WarnBeforeRemovingDependents}"/>
-			
+
 			<ToggleSwitch
 				Grid.Column="1"
 				Grid.Row="2"
@@ -129,7 +135,7 @@
 				UseFloatingWatermark="True"
 				Text="{Binding CustomModlinksUri}"
 				AcceptsReturn="False"/>
-			
+
 			<ToggleSwitch
 				Grid.Column="1"
 				Grid.Row="4"
@@ -140,7 +146,7 @@
 				OffContent="{ext:Localize XAML_Off}"
 				IsChecked="{Binding LowStorageMode}"
 			/>
-			
+
 			<PathIcon
 				Grid.Column="2"
 				Grid.Row="3"
@@ -151,7 +157,7 @@
 				Margin="5 0 5 10"
 				IsVisible="{Binding UseCustomModlinks}"
 				ToolTip.Tip="{ext:Localize XAML_CustomModlinksExplanation}" ToolTip.ShowDelay="0"/>
-			
+
 			<ComboBox
 				Grid.Column="1"
 				Grid.Row="5"
@@ -161,7 +167,7 @@
 				MinWidth="75"
 				ItemsSource="{Binding AutoRemoveDepsOptions}"
 				SelectedItem="{Binding AutoRemoveDepSelection}"/>
-			
+
 			<ComboBox
 				Grid.Column="1"
 				Grid.Row="6"
@@ -171,6 +177,16 @@
 				MinWidth="75"
 				ItemsSource="{Binding LanguageOptions}"
 				SelectedItem="{Binding LanguageSelection}"/>
+
+			<ComboBox
+				Grid.Column="1"
+				Grid.Row="9"
+				Margin="10 0 5 0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				MinWidth="150"
+				ItemsSource="{Binding AvailableGames}"
+				SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
 
 	    <ToggleSwitch
 				Grid.Column="1"
@@ -200,8 +216,8 @@
 				Grid.Row="10"
 				HorizontalAlignment="Right"
 				ColumnDefinitions="Auto Auto Auto Auto">
-				
-				
+
+
 				<Button
 					Grid.Column="0"
 					Padding="20 5"
@@ -210,8 +226,8 @@
 					VerticalAlignment="Bottom"
 					HorizontalContentAlignment="Center"
 					Command="{Binding Donate}"
-					Content="{ext:Localize XAML_Donate}"/>			
-				
+					Content="{ext:Localize XAML_Donate}"/>
+
 				<Button
 					Grid.Column="1"
 					Padding="20 5"
@@ -221,7 +237,7 @@
 					HorizontalContentAlignment="Center"
 					Command="{Binding CheckForUpdates}"
 					Content="{ext:Localize XAML_CheckForUpdates}"/>
-				
+
 				<Button
 					Grid.Column="2"
 					Padding="20 5"
@@ -231,11 +247,11 @@
 					HorizontalContentAlignment="Center"
 					Command="{Binding OpenLogsFolder}"
 					Content="{ext:Localize XAML_OpenLogsFolder}"/>
-				
+
 				<StackPanel
 					Grid.Column="3"
 					VerticalAlignment="Bottom">
-					
+
 					<TextBlock
 						IsVisible="{Binding AskForReload}"
 						FontSize="10"
@@ -247,7 +263,7 @@
 						Foreground="Orange"
 						Margin="8 10"
 						Text="{ext:Localize XAML_ReloadPrompt}"/>
-					
+
 					<Button
 						Padding="20 5"
 						Margin="8 0"

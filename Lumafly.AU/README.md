@@ -1,6 +1,6 @@
-﻿# Lumafly Auto Updater
+﻿# LumaSong (Lumafly) Auto Updater
 
-This is the auto updater for Lumafly.
+This is the auto updater for the Lumafly/LumaSong app (multi‑game mod manager for Hollow Knight and Silksong).
 
 ## How it works
 

@@ -22,592 +22,596 @@ namespace Lumafly.Services;
 
 public class PackManager : IPackManager
 {
-    private readonly ISettings _settings;
-    private readonly IInstaller _installer;
-    private readonly IFileSystem _fs;
-    private readonly IModSource _mods;
-    private readonly IOnlineTextStorage _onlineTextStorage;
-    /// <summary>
-    /// Private collection to allow constant lookup times of ModItems from name.
-    /// </summary>
-    private readonly Dictionary<string, ModItem> _items;
+  private readonly ISettings _settings;
+  private readonly IInstaller _installer;
+  private readonly IFileSystem _fs;
+  private readonly IModSource _mods;
+  private readonly IOnlineTextStorage _onlineTextStorage;
+  /// <summary>
+  /// Private collection to allow constant lookup times of ModItems from name.
+  /// </summary>
+  private readonly Dictionary<string, ModItem> _items;
 
-    /// <summary>
-    /// A list of all the profiles saved by the application.
-    /// </summary>
-    private readonly SortableObservableCollection<Pack> _packList;
-    
-    public SortableObservableCollection<Pack> PackList => _packList;
+  /// <summary>
+  /// A list of all the profiles saved by the application.
+  /// </summary>
+  private readonly SortableObservableCollection<Pack> _packList;
 
-    internal const string packInfoFileName = "packMods.json";
-    internal const string TempModStorage = "Temp_Mods_Storage";
-    internal string TempModStorageLocation => Path.Combine(_settings.ManagedFolder, TempModStorage);
+  public SortableObservableCollection<Pack> PackList => _packList;
 
-    public PackManager(ISettings settings, IInstaller installer, IModDatabase db, IFileSystem fs, IModSource mods, IOnlineTextStorage onlineTextStorage)
+  internal const string packInfoFileName = "packMods.json";
+  internal const string TempModStorage = "Temp_Mods_Storage";
+  internal string TempModStorageLocation => Path.Combine(_settings.ManagedFolder, TempModStorage);
+
+  public PackManager(ISettings settings, IInstaller installer, IModDatabase db, IFileSystem fs, IModSource mods, IOnlineTextStorage onlineTextStorage)
+  {
+    _installer = installer;
+    _fs = fs;
+    _mods = mods;
+    _settings = settings;
+    _onlineTextStorage = onlineTextStorage;
+
+    _items = db.Items.DistinctBy(x => x.Name).ToDictionary(x => x.Name, x => x);
+
+    _packList = new SortableObservableCollection<Pack>(FindAvailablePacks());
+    _packList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
+  }
+
+  /// <summary>
+  /// Look through the managed folder for any profiles and add them to the list.
+  /// </summary>
+  private IEnumerable<Pack> FindAvailablePacks()
+  {
+    var packs = new List<Pack>();
+
+    var packFolderLocation = _settings.ManagedFolder;
+
+    foreach (var folderPath in _fs.Directory.EnumerateDirectories(packFolderLocation))
     {
-        _installer = installer;
-        _fs = fs;
-        _mods = mods;
-        _settings = settings;
-        _onlineTextStorage = onlineTextStorage;
-        
-        _items = db.Items.DistinctBy(x => x.Name).ToDictionary(x => x.Name, x => x);
+      var folder = Path.GetFileName(folderPath);
+      if (folder == "Mods") continue; // ignore mod folder
 
-        _packList = new SortableObservableCollection<Pack>(FindAvailablePacks());
-        _packList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
+      var packInfo = Path.Combine(folderPath, packInfoFileName);
+      if (!_fs.File.Exists(packInfo)) continue;
+
+      try
+      {
+        var pack = JsonSerializer.Deserialize<Pack>(File.ReadAllText(packInfo));
+        if (pack?.Name == folder) // only add packs with same name as folder
+          packs.Add(pack);
+      }
+      catch (Exception e)
+      {
+        Trace.TraceError($"Error reading pack info file {e}");
+      }
     }
 
-    /// <summary>
-    /// Look through the managed folder for any profiles and add them to the list.
-    /// </summary>
-    private IEnumerable<Pack> FindAvailablePacks()
+    Task.Run(() =>
     {
-        var packs = new List<Pack>();
-        
-        var packFolderLocation = _settings.ManagedFolder;
+      if (!_settings.LowStorageMode) return;
 
-        foreach (var folderPath in _fs.Directory.EnumerateDirectories(packFolderLocation))
+      var managed = new DirectoryInfo(_settings.ManagedFolder);
+
+      foreach (var dir in managed.EnumerateDirectories())
+      {
+        if (dir.Name == "Mods") continue;
+
+        try
         {
-            var folder = Path.GetFileName(folderPath);
-            if (folder == "Mods") continue; // ignore mod folder
-            
-            var packInfo = Path.Combine(folderPath, packInfoFileName);
-            if (!_fs.File.Exists(packInfo)) continue;
+          if (dir.GetFiles().Any(x => x.Name == packInfoFileName))
+          {
+            foreach (var subDir in dir.EnumerateDirectories())
+            {
+              subDir.Delete(true);
+            }
 
-            try
-            {
-                var pack = JsonSerializer.Deserialize<Pack>(File.ReadAllText(packInfo));
-                if (pack?.Name == folder) // only add packs with same name as folder
-                    packs.Add(pack);
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError($"Error reading pack info file {e}");
-            }
+            dir.EnumerateDirectories();
+          }
         }
-
-        Task.Run(() =>
+        catch (Exception e)
         {
-            if (!_settings.LowStorageMode) return;
+          Trace.TraceError($"Error creating pack info file {e}");
+        }
+      }
+    });
 
-            var managed = new DirectoryInfo(_settings.ManagedFolder);
+    return packs;
+  }
 
-            foreach (var dir in managed.EnumerateDirectories())
-            {
-                if (dir.Name == "Mods") continue;
+  /// <summary>
+  /// Loads a pack as the main mod list.
+  /// </summary>
+  /// <param name="packName">The profile to set as current.</param>
+  public async Task<bool> LoadPack(string packName, bool additive)
+  {
+    await EnsureGameClosed();
 
-                try
-                {
-                    if (dir.GetFiles().Any(x => x.Name == packInfoFileName))
-                    {
-                        foreach (var subDir in dir.EnumerateDirectories())
-                        {
-                            subDir.Delete(true);
-                        }
-
-                        dir.EnumerateDirectories();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceError($"Error creating pack info file {e}");
-                }
-            }
-        });
-
-        return packs;
+    var pack = _packList.FirstOrDefault(x => x.Name == packName);
+    if (pack == null)
+    {
+      await DisplayErrors.DisplayGenericError("Could not set current profile: profile not found!");
+      return false;
     }
 
-    /// <summary>
-    /// Loads a pack as the main mod list.
-    /// </summary>
-    /// <param name="packName">The profile to set as current.</param>
-    public async Task<bool> LoadPack(string packName, bool additive)
+    if (additive)
+      return await LoadPackAdditive(pack);
+    else
+      return await LoadPackExclusive(pack);
+  }
+
+  private async Task CacheOldModsFolder()
+  {
+    // move all the mods to a temp folder so we can revert if the pack enabling fails
+    FileUtil.DeleteDirectory(TempModStorageLocation);
+    FileUtil.CopyDirectory(_settings.ModsFolder, TempModStorageLocation);
+    var tempInstalledMods = Path.Combine(TempModStorageLocation, InstalledMods.FILE_NAME);
+    await using Stream fs = _fs.File.Exists(tempInstalledMods) ? _fs.FileStream.New(tempInstalledMods, FileMode.Truncate) : _fs.File.Create(tempInstalledMods);
+    await JsonSerializer.SerializeAsync(fs, _mods, new JsonSerializerOptions { WriteIndented = true });
+    fs.Close();
+  }
+
+  private async Task<bool> LoadPackAdditive(Pack pack)
+  {
+    try
     {
-        await EnsureGameClosed();
-        
-        var pack = _packList.FirstOrDefault(x => x.Name == packName);
-        if (pack == null)
+      var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
+
+      await CacheOldModsFolder();
+
+      foreach (var mod in pack.InstalledMods.Mods.Where(x => x.Value.Enabled))
+      {
+        if (!_mods.Mods.ContainsKey(mod.Key))
         {
-            await DisplayErrors.DisplayGenericError("Could not set current profile: profile not found!");
-            return false;
+          _mods.Mods.Add(mod.Key, mod.Value);
+          if (Directory.Exists(Path.Combine(packFolder, mod.Key)))
+          {
+            FileUtil.CopyDirectory(Path.Combine(packFolder, mod.Key), Path.Combine(_settings.ModsFolder, mod.Key));
+          }
+          else
+          {
+            await _installer.Install(_items[mod.Key], _ => { }, true);
+          }
         }
-        
-        if (additive)
-            return await LoadPackAdditive(pack);
         else
-            return await LoadPackExclusive(pack);
+        {
+          if (Directory.Exists(Path.Combine(packFolder, mod.Key)))
+          {
+            FileUtil.CopyDirectory(Path.Combine(packFolder, mod.Key), Path.Combine(_settings.ModsFolder, mod.Key));
+          }
+        }
+      }
+
+      await _mods.SetMods(_mods.Mods, _mods.NotInModlinksMods);
+
+      return true;
+    }
+    catch (Exception e)
+    {
+      await RevertToPreviousModsFolder();
+
+      await DisplayErrors.DisplayGenericError("An error occured when activating pack. Lumafly will revert to old mods", e);
+
+      return false;
+    }
+  }
+  private async Task<bool> LoadPackExclusive(Pack pack)
+  {
+    try
+    {
+      var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
+
+      await CacheOldModsFolder();
+
+      FileUtil.DeleteDirectory(_settings.ModsFolder);
+
+      // move the mods from the profile to the mods folder
+      FileUtil.CopyDirectory(packFolder, _settings.ModsFolder);
+      await _mods.SetMods(pack.InstalledMods.Mods, pack.InstalledMods.NotInModlinksMods);
+
+      var requestedModList = _mods.Mods.Select(x => x.Key)
+          .Concat(_mods.NotInModlinksMods.Select(x => x.Key))
+          .ToArray();
+
+      // get the full dependency list of the pack
+      HashSet<string> fullDependencyList = new();
+
+      // ensure all mods that are supposed to be in the pack are installed
+      foreach (string modName in requestedModList)
+      {
+        if (InstalledMods.ModExists(_settings, modName, out _))
+          continue;
+
+        if (_items.TryGetValue(modName, out var correspondingMod))
+        {
+          // to ensure the mod is installed when OnInstall is called
+          correspondingMod.State = new NotInstalledState();
+          await _installer.Install(correspondingMod, _ => { }, true);
+
+          // save full dependency list which will be used to decide what to uninstall
+          foreach (var dep in correspondingMod.Dependencies)
+            AddDependency(fullDependencyList, dep);
+
+        }
+        else // can't install so yeet it from the profile
+        {
+          _mods.Mods.Remove(modName);
+          _mods.NotInModlinksMods.Remove(modName);
+        }
+      }
+
+      var currentList = _fs.Directory.EnumerateDirectories(_settings.ModsFolder).ToList();
+
+      if (_fs.Directory.Exists(_settings.DisabledFolder))
+        currentList.AddRange(_fs.Directory.EnumerateDirectories(_settings.DisabledFolder));
+
+      // uninstall mods that arent in pack
+      foreach (var modNamePath in currentList)
+      {
+        var modName = Path.GetFileName(modNamePath);
+        if (modName == "Disabled") continue; // skip disabled Folder
+
+        // don't uninstall mods that are said to be in the pack
+        if (_mods.NotInModlinksMods.ContainsKey(modName)) continue;
+        if (_mods.Mods.ContainsKey(modName)) continue;
+
+        // don't uninstall if the mod is a dependency of a pack mod
+        if (fullDependencyList.Contains(modName)) continue;
+
+        // since it isn't a listed pack mod or a dependency, uninstall it
+        FileUtil.DeleteDirectory(Path.Combine(_settings.ModsFolder, modName));
+        FileUtil.DeleteDirectory(Path.Combine(_settings.DisabledFolder, modName));
+      }
+
+      // cache result so it is easier to load next time
+      await SavePack(pack.Name, pack.Description, pack.Authors);
+
+      _fs.File.Delete(Path.Combine(_settings.ModsFolder, packInfoFileName));
+
+      return true;
+    }
+    catch (Exception e)
+    {
+      await RevertToPreviousModsFolder();
+
+      await DisplayErrors.DisplayGenericError("An error occured when activating pack. Lumafly will revert to old mods", e);
+
+      return false;
+    }
+  }
+
+  /// <summary>
+  /// Saves the current Mods folder as a pack. Replaces the pack if it already exists.
+  /// </summary>
+  public async Task<Pack> SavePack(string name, string description, string authors)
+  {
+    var packFolder = Path.Combine(_settings.ManagedFolder, name);
+
+    FileUtil.DeleteDirectory(packFolder);
+    FileUtil.CreateDirectory(packFolder);
+
+    if (!_settings.LowStorageMode)
+      FileUtil.CopyDirectory(_settings.ModsFolder, packFolder, excludeDir: "Disabled");
+
+    var packInfo = Path.Combine(packFolder, packInfoFileName);
+
+    var packDetails = new Pack(name, description, authors, new InstalledMods()
+    {
+      Mods = _mods.Mods.Where(x => x.Value.Enabled).ToDictionary(x => x.Key, x => x.Value),
+      NotInModlinksMods = _mods.NotInModlinksMods.Where(x => x.Value.Enabled).ToDictionary(x => x.Key, x => x.Value),
+    });
+
+    await using Stream fs = _fs.File.Exists(packInfo)
+        ? _fs.FileStream.New(packInfo, FileMode.Truncate)
+        : _fs.File.Create(packInfo);
+
+    await JsonSerializer.SerializeAsync(fs, packDetails, new JsonSerializerOptions()
+    {
+      WriteIndented = true
+    });
+
+    var packInList = PackList.FirstOrDefault(x => x.Name == name);
+    if (packInList != null) // if the pack already exists, replace it
+      packInList.InstalledMods = packDetails.InstalledMods;
+    else // otherwise add it to the list
+      PackList.Add(packDetails);
+
+    PackList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
+
+    return PackList.First(x => x.Name == name);
+  }
+
+  /// <summary>
+  /// Saves the current instance of <paramref name="pack"/> to disk
+  /// </summary>
+  public async Task SaveEditedPack(Pack pack, string? oldPackName = null)
+  {
+    // if the name changed, move the folder to reflect the change
+    if (oldPackName != null && oldPackName != pack.Name)
+    {
+      Directory.Move(Path.Combine(_settings.ManagedFolder, oldPackName), Path.Combine(_settings.ManagedFolder, pack.Name));
     }
 
-    private async Task CacheOldModsFolder()
+    // write the new pack info to disk
+    var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
+
+    FileUtil.CreateDirectory(packFolder);
+
+    var packInfo = Path.Combine(packFolder, packInfoFileName);
+
+    await using Stream fs = _fs.File.Exists(packInfo)
+        ? _fs.FileStream.New(packInfo, FileMode.Truncate)
+        : _fs.File.Create(packInfo);
+
+    await JsonSerializer.SerializeAsync(fs, pack, new JsonSerializerOptions()
     {
-        // move all the mods to a temp folder so we can revert if the pack enabling fails
-        FileUtil.DeleteDirectory(TempModStorageLocation);
-        FileUtil.CopyDirectory(_settings.ModsFolder, TempModStorageLocation);
-        var tempInstalledMods = Path.Combine(TempModStorageLocation, InstalledMods.FILE_NAME);
-        await using Stream fs = _fs.File.Exists(tempInstalledMods) ? _fs.FileStream.New(tempInstalledMods, FileMode.Truncate) : _fs.File.Create(tempInstalledMods);
-        await JsonSerializer.SerializeAsync(fs, _mods, new JsonSerializerOptions { WriteIndented = true });
-        fs.Close();
+      WriteIndented = true
+    });
+
+    PackList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
+  }
+
+  /// <summary>
+  /// Remove a profile by object.
+  /// </summary>
+  /// <param name="packName">The pack to remove.</param>
+  /// <exception cref="ArgumentException">The profile to remove was not found in the profile list.</exception>
+  public void RemovePack(string packName)
+  {
+    var pack = _packList.FirstOrDefault(x => x.Name == packName);
+    if (pack != null)
+    {
+      _packList.Remove(pack);
     }
 
-    private async Task<bool> LoadPackAdditive(Pack pack)
+    FileUtil.DeleteDirectory(Path.Combine(_settings.ManagedFolder, packName));
+  }
+
+  /// <summary>
+  /// Adds a mods full dependency tree to the dependency list.
+  /// </summary>
+  private void AddDependency(ISet<string> fullDependencyList, string depName)
+  {
+    // so we don't unnecessarily go through the dependency list
+    if (fullDependencyList.Contains(depName)) return;
+
+    fullDependencyList.Add(depName);
+
+    // add all of its dependency to the dependency list
+    if (_items.TryGetValue(depName, out var depMod))
     {
-        try
-        {
-            var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
-
-            await CacheOldModsFolder();
-            
-            foreach (var mod in pack.InstalledMods.Mods.Where(x => x.Value.Enabled))
-            {
-                if (!_mods.Mods.ContainsKey(mod.Key))
-                {
-                    _mods.Mods.Add(mod.Key, mod.Value);
-                    if (Directory.Exists(Path.Combine(packFolder, mod.Key)))
-                    {
-                        FileUtil.CopyDirectory(Path.Combine(packFolder, mod.Key), Path.Combine(_settings.ModsFolder, mod.Key));
-                    }
-                    else
-                    {
-                        await _installer.Install(_items[mod.Key], _ => { }, true);
-                    }
-                }
-                else
-                {
-                    if (Directory.Exists(Path.Combine(packFolder, mod.Key)))
-                    {
-                        FileUtil.CopyDirectory(Path.Combine(packFolder, mod.Key), Path.Combine(_settings.ModsFolder, mod.Key));
-                    }
-                }
-            }   
-
-            await _mods.SetMods(_mods.Mods, _mods.NotInModlinksMods);
-            
-            return true;
-        }
-        catch (Exception e)
-        {
-            await RevertToPreviousModsFolder();
-            
-            await DisplayErrors.DisplayGenericError("An error occured when activating pack. Lumafly will revert to old mods", e);
-
-            return false;
-        }
+      foreach (var dep in depMod.Dependencies)
+      {
+        AddDependency(fullDependencyList, dep);
+      }
     }
-    private async Task<bool> LoadPackExclusive(Pack pack)
+  }
+
+  private async Task EnsureGameClosed()
+  {
+    bool IsGameProcess(Process p)
     {
-        try
-        {
-            var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
-
-            await CacheOldModsFolder();
-        
-            FileUtil.DeleteDirectory(_settings.ModsFolder);
-            
-            // move the mods from the profile to the mods folder
-            FileUtil.CopyDirectory(packFolder, _settings.ModsFolder);
-            await _mods.SetMods(pack.InstalledMods.Mods, pack.InstalledMods.NotInModlinksMods);
-
-            var requestedModList = _mods.Mods.Select(x => x.Key)
-                .Concat(_mods.NotInModlinksMods.Select(x => x.Key))
-                .ToArray();
-            
-            // get the full dependency list of the pack
-            HashSet<string> fullDependencyList = new();
-
-            // ensure all mods that are supposed to be in the pack are installed
-            foreach (string modName in requestedModList)
-            {
-                if (InstalledMods.ModExists(_settings, modName, out _))
-                    continue;
-                
-                if (_items.TryGetValue(modName, out var correspondingMod))
-                {
-                    // to ensure the mod is installed when OnInstall is called
-                    correspondingMod.State = new NotInstalledState();
-                    await _installer.Install(correspondingMod, _ => { }, true);
-
-                    // save full dependency list which will be used to decide what to uninstall
-                    foreach (var dep in correspondingMod.Dependencies)
-                        AddDependency(fullDependencyList, dep);
-                    
-                }
-                else // can't install so yeet it from the profile
-                {
-                    _mods.Mods.Remove(modName);
-                    _mods.NotInModlinksMods.Remove(modName);
-                }
-            }
-
-            var currentList = _fs.Directory.EnumerateDirectories(_settings.ModsFolder).ToList();
-            
-            if (_fs.Directory.Exists(_settings.DisabledFolder))
-                currentList.AddRange(_fs.Directory.EnumerateDirectories(_settings.DisabledFolder));
-
-            // uninstall mods that arent in pack
-            foreach (var modNamePath in currentList)
-            {
-                var modName = Path.GetFileName(modNamePath);
-                if (modName == "Disabled") continue; // skip disabled Folder
-                
-                // don't uninstall mods that are said to be in the pack
-                if (_mods.NotInModlinksMods.ContainsKey(modName)) continue;
-                if (_mods.Mods.ContainsKey(modName)) continue;
-
-                // don't uninstall if the mod is a dependency of a pack mod
-                if (fullDependencyList.Contains(modName)) continue;
-                
-                // since it isn't a listed pack mod or a dependency, uninstall it
-                FileUtil.DeleteDirectory(Path.Combine(_settings.ModsFolder, modName));
-                FileUtil.DeleteDirectory(Path.Combine(_settings.DisabledFolder, modName));
-            }
-            
-            // cache result so it is easier to load next time
-            await SavePack(pack.Name, pack.Description, pack.Authors);
-            
-            _fs.File.Delete(Path.Combine(_settings.ModsFolder, packInfoFileName));
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            await RevertToPreviousModsFolder();
-            
-            await DisplayErrors.DisplayGenericError("An error occured when activating pack. Lumafly will revert to old mods", e);
-
-            return false;
-        }
+      var prefixes = _settings.CurrentProfile.ExeNames
+          .Select(n => Path.GetFileNameWithoutExtension(n))
+          .ToArray();
+      return prefixes.Any(pre => p.ProcessName.StartsWith(pre, StringComparison.OrdinalIgnoreCase));
     }
 
-    /// <summary>
-    /// Saves the current Mods folder as a pack. Replaces the pack if it already exists.
-    /// </summary>
-    public async Task<Pack> SavePack(string name, string description, string authors)
+    if (Process.GetProcesses().FirstOrDefault(IsGameProcess) is { } proc)
     {
-        var packFolder = Path.Combine(_settings.ManagedFolder, name);
+      var res = await MessageBoxUtil.GetMessageBoxStandardWindow(new MessageBoxStandardParams
+      {
+        ContentTitle = Resources.MLVM_InternalUpdateInstallAsync_Msgbox_W_Title,
+        ContentMessage = Resources.GAME_InternalUpdateInstallAsync_Msgbox_W_Text.FormatWith(_settings.CurrentProfile.Name),
+        ButtonDefinitions = ButtonEnum.YesNo,
+        MinHeight = 200,
+        SizeToContent = SizeToContent.WidthAndHeight,
+      }).ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
 
-        FileUtil.DeleteDirectory(packFolder);
-        FileUtil.CreateDirectory(packFolder);
-        
-        if (!_settings.LowStorageMode)
-            FileUtil.CopyDirectory(_settings.ModsFolder, packFolder, excludeDir: "Disabled");
-
-        var packInfo = Path.Combine(packFolder, packInfoFileName);
-        
-        var packDetails = new Pack(name, description, authors, new InstalledMods()
-        {
-            Mods = _mods.Mods.Where(x => x.Value.Enabled).ToDictionary(x => x.Key, x => x.Value),
-            NotInModlinksMods = _mods.NotInModlinksMods.Where(x => x.Value.Enabled).ToDictionary(x => x.Key, x => x.Value),
-        });
-        
-        await using Stream fs = _fs.File.Exists(packInfo)
-            ? _fs.FileStream.New(packInfo, FileMode.Truncate)
-            : _fs.File.Create(packInfo);
-
-        await JsonSerializer.SerializeAsync(fs, packDetails, new JsonSerializerOptions() 
-        { 
-            WriteIndented = true
-        });
-        
-        var packInList = PackList.FirstOrDefault(x => x.Name == name);
-        if (packInList != null) // if the pack already exists, replace it
-            packInList.InstalledMods = packDetails.InstalledMods;
-        else // otherwise add it to the list
-            PackList.Add(packDetails); 
-        
-        PackList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
-
-        return PackList.First(x => x.Name == name);
+      if (res == ButtonResult.Yes)
+        proc.Kill();
     }
-    
-    /// <summary>
-    /// Saves the current instance of <paramref name="pack"/> to disk
-    /// </summary>
-    public async Task SaveEditedPack(Pack pack, string? oldPackName = null)
+  }
+
+  /// <summary>
+  /// Create a .zip file containing the pack in location specified by user
+  /// </summary>
+  /// <param name="packName"></param>
+  public async void SavePackToZip(string packName)
+  {
+    await EnsureGameClosed();
+
+    var pack = _packList.FirstOrDefault(x => x.Name == packName);
+    if (pack == null)
     {
-        // if the name changed, move the folder to reflect the change
-        if (oldPackName != null && oldPackName != pack.Name)
-        {
-            Directory.Move(Path.Combine(_settings.ManagedFolder, oldPackName), Path.Combine(_settings.ManagedFolder, pack.Name));
-        }
-
-        // write the new pack info to disk
-        var packFolder = Path.Combine(_settings.ManagedFolder, pack.Name);
-
-        FileUtil.CreateDirectory(packFolder);
-        
-        var packInfo = Path.Combine(packFolder, packInfoFileName);
-        
-        await using Stream fs = _fs.File.Exists(packInfo)
-            ? _fs.FileStream.New(packInfo, FileMode.Truncate)
-            : _fs.File.Create(packInfo);
-
-        await JsonSerializer.SerializeAsync(fs, pack, new JsonSerializerOptions() 
-        { 
-            WriteIndented = true
-        });
-        
-        PackList.SortBy((pack1, pack2) => string.CompareOrdinal(pack1.Name, pack2.Name));
+      await DisplayErrors.DisplayGenericError("Could not share profile: profile not found!");
+      return;
     }
 
-    /// <summary>
-    /// Remove a profile by object.
-    /// </summary>
-    /// <param name="packName">The pack to remove.</param>
-    /// <exception cref="ArgumentException">The profile to remove was not found in the profile list.</exception>
-    public void RemovePack(string packName)
+    var packFolder = Path.Combine(_settings.ManagedFolder, packName);
+
+    TopLevel? topLevel = TopLevel.GetTopLevel(AvaloniaUtils.GetMainWindow()); // Necessary for save file picker
+    if (topLevel == null) return;
+
+    var options = new FilePickerSaveOptions
     {
-        var pack = _packList.FirstOrDefault(x => x.Name == packName);
-        if (pack != null)
-        {
-            _packList.Remove(pack);
-        }
-
-        FileUtil.DeleteDirectory(Path.Combine(_settings.ManagedFolder, packName));
-    }
-    
-    /// <summary>
-    /// Adds a mods full dependency tree to the dependency list.
-    /// </summary>
-    private void AddDependency(ISet<string> fullDependencyList, string depName)
-    {
-        // so we don't unnecessarily go through the dependency list
-        if (fullDependencyList.Contains(depName)) return;
-                        
-        fullDependencyList.Add(depName);
-                        
-        // add all of its dependency to the dependency list
-        if (_items.TryGetValue(depName, out var depMod))
-        {
-            foreach (var dep in depMod.Dependencies)
-            {
-                AddDependency(fullDependencyList, dep);
-            }
-        }
-    }
-
-    private async Task EnsureGameClosed()
-    {
-        static bool IsHollowKnight(Process p) => (
-            p.ProcessName.StartsWith("hollow_knight")
-            || p.ProcessName.StartsWith("Hollow Knight")
-        );
-            
-        if (Process.GetProcesses().FirstOrDefault(IsHollowKnight) is { } proc)
-        {
-            var res = await MessageBoxUtil.GetMessageBoxStandardWindow(new MessageBoxStandardParams {
-                ContentTitle = Resources.MLVM_InternalUpdateInstallAsync_Msgbox_W_Title,
-                ContentMessage = Resources.MLVM_InternalUpdateInstallAsync_Msgbox_W_Text,
-                ButtonDefinitions = ButtonEnum.YesNo,
-                MinHeight = 200,
-                SizeToContent = SizeToContent.WidthAndHeight,
-            }).ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
-
-            if (res == ButtonResult.Yes)
-                proc.Kill();
-        }
-    }
-
-    /// <summary>
-    /// Create a .zip file containing the pack in location specified by user
-    /// </summary>
-    /// <param name="packName"></param>
-    public async void SavePackToZip(string packName)
-    {
-        await EnsureGameClosed();
-
-        var pack = _packList.FirstOrDefault(x => x.Name == packName);
-        if (pack == null)
-        {
-            await DisplayErrors.DisplayGenericError("Could not share profile: profile not found!");
-            return;
-        }
-
-        var packFolder = Path.Combine(_settings.ManagedFolder, packName);
-
-        TopLevel? topLevel = TopLevel.GetTopLevel(AvaloniaUtils.GetMainWindow()); // Necessary for save file picker
-        if (topLevel == null) return;
-
-        var options = new FilePickerSaveOptions
-        {
-            Title = "Select save location",
-            ShowOverwritePrompt = true,
-            DefaultExtension = "zip",
-            SuggestedFileName = packName,
-            FileTypeChoices = new List<FilePickerFileType>()
+      Title = "Select save location",
+      ShowOverwritePrompt = true,
+      DefaultExtension = "zip",
+      SuggestedFileName = packName,
+      FileTypeChoices = new List<FilePickerFileType>()
             {
                 new ("ZIP Archive")
                 {
                     Patterns = new List<string>() { "*.zip" }
                 }
             }
-        };
+    };
 
-        // This crashes on multiple repeated attempts due to avalonia issue
-        IStorageFile? storage_file = await topLevel.StorageProvider.SaveFilePickerAsync(options);
+    // This crashes on multiple repeated attempts due to avalonia issue
+    IStorageFile? storage_file = await topLevel.StorageProvider.SaveFilePickerAsync(options);
 
-        string? outputFilePath = storage_file?.TryGetLocalPath();
-        if (outputFilePath == null) return; // Couldn't get local path for some reason
+    string? outputFilePath = storage_file?.TryGetLocalPath();
+    if (outputFilePath == null) return; // Couldn't get local path for some reason
 
-        CreateZip(packFolder, outputFilePath);
-    }
+    CreateZip(packFolder, outputFilePath);
+  }
 
-    public static Window? CurrentPackWindow;
-    
-    /// <summary>
-    /// Opens a window to edit pack details
-    /// </summary>
-    /// <param name="pack">The pack to edit</param>
-    public async Task EditPack(Pack pack)
+  public static Window? CurrentPackWindow;
+
+  /// <summary>
+  /// Opens a window to edit pack details
+  /// </summary>
+  /// <param name="pack">The pack to edit</param>
+  public async Task EditPack(Pack pack)
+  {
+    string oldPackName = pack.Name;
+    Pack copiedPack = pack.DeepCopy();
+
+    CurrentPackWindow = new EditPackWindow
     {
-        string oldPackName = pack.Name;
-        Pack copiedPack = pack.DeepCopy();
+      DataContext = new EditPackWindowViewModel(copiedPack, _items.Values)
+    };
 
-        CurrentPackWindow = new EditPackWindow
-        {
-            DataContext = new EditPackWindowViewModel(copiedPack, _items.Values)
-        };
-        
-        var shouldSave = await CurrentPackWindow.ShowDialog<bool>(AvaloniaUtils.GetMainWindow());
+    var shouldSave = await CurrentPackWindow.ShowDialog<bool>(AvaloniaUtils.GetMainWindow());
 
-        if (shouldSave)
-        {
-            pack.Copy(copiedPack);
-            if (!string.IsNullOrEmpty(pack.SharingCode) && pack.IsSame(copiedPack)) 
-                pack.SharingCode = null;
-            await SaveEditedPack(copiedPack, oldPackName);
-        }
-    }
-
-    /// <summary>
-    /// Create a .zip file from a directory. Returns if the creation was successful
-    /// </summary>
-    /// <param name="sourcePath">Path to the directory to be zipped</param>
-    /// <param name="outputFilePath">Path to the new .zip file</param>
-    private bool CreateZip(string sourcePath, string outputFilePath)
+    if (shouldSave)
     {
-        try
-        {
-            if (!Directory.Exists(sourcePath))
-            {
-                throw new DirectoryNotFoundException("Couldn't find the source directory");
-            }
-
-            ZipFile.CreateFromDirectory(sourcePath, outputFilePath);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+      pack.Copy(copiedPack);
+      if (!string.IsNullOrEmpty(pack.SharingCode) && pack.IsSame(copiedPack))
+        pack.SharingCode = null;
+      await SaveEditedPack(copiedPack, oldPackName);
     }
+  }
 
-    /// <summary>
-    /// Uploads pack to an online text storage like pastebin
-    /// </summary>
-    public async Task UploadPack(string packName)
+  /// <summary>
+  /// Create a .zip file from a directory. Returns if the creation was successful
+  /// </summary>
+  /// <param name="sourcePath">Path to the directory to be zipped</param>
+  /// <param name="outputFilePath">Path to the new .zip file</param>
+  private bool CreateZip(string sourcePath, string outputFilePath)
+  {
+    try
     {
-        var pack = _packList.FirstOrDefault(x => x.Name == packName);
-        if (pack == null) return;
+      if (!Directory.Exists(sourcePath))
+      {
+        throw new DirectoryNotFoundException("Couldn't find the source directory");
+      }
 
-        try
-        {
-            var code = await _onlineTextStorage.Upload(packName, ConvertToHPackage(pack));
-            pack.SharingCode = code;
-            await SaveEditedPack(pack);
-        }
-        catch (Exception e)
-        {
-            await DisplayErrors.DisplayGenericError("Failed to upload pack", e);
-        }
+      ZipFile.CreateFromDirectory(sourcePath, outputFilePath);
+      return true;
     }
-    
-    /// <summary>
-    /// Imports a pack 
-    /// </summary>
-    /// <param name="code"></param>
-    /// <returns></returns>
-    public async Task<Pack?> ImportPack(string code)
+    catch
     {
-        try
-        {
-            var packJson = await _onlineTextStorage.Download(code);
-
-            var pack = ConvertFromHPackage(packJson);
-            pack.SharingCode = code; //since we have it lets save it
-
-            if (PackList.Any(x => x.Name == pack.Name))
-                throw new ReadableError("a pack with same name already exists");
-
-            PackList.Add(pack);
-            await SaveEditedPack(pack);
-            return pack;
-        }
-        catch (ReadableError re)
-        {
-            await MessageBoxUtil.GetMessageBoxStandardWindow("Failed to import pack", $"Failed to import pack from code: {code} as {re.Message}")
-                .ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
-            return null;
-        }
-        catch (Exception e)
-        {
-            await DisplayErrors.DisplayGenericError("Failed to import pack", e);
-            return null;
-        }
+      return false;
     }
+  }
 
-    /// <summary>
-    /// Converts a pack to a valid hpackage format
-    /// </summary>
-    /// <returns>The hpackage json as string</returns>
-    private string ConvertToHPackage(Pack pack)
+  /// <summary>
+  /// Uploads pack to an online text storage like pastebin
+  /// </summary>
+  public async Task UploadPack(string packName)
+  {
+    var pack = _packList.FirstOrDefault(x => x.Name == packName);
+    if (pack == null) return;
+
+    try
     {
-        var packageDef = new HollowKnightPackageDef()
+      var code = await _onlineTextStorage.Upload(packName, ConvertToHPackage(pack));
+      pack.SharingCode = code;
+      await SaveEditedPack(pack);
+    }
+    catch (Exception e)
+    {
+      await DisplayErrors.DisplayGenericError("Failed to upload pack", e);
+    }
+  }
+
+  /// <summary>
+  /// Imports a pack
+  /// </summary>
+  /// <param name="code"></param>
+  /// <returns></returns>
+  public async Task<Pack?> ImportPack(string code)
+  {
+    try
+    {
+      var packJson = await _onlineTextStorage.Download(code);
+
+      var pack = ConvertFromHPackage(packJson);
+      pack.SharingCode = code; //since we have it lets save it
+
+      if (PackList.Any(x => x.Name == pack.Name))
+        throw new ReadableError("a pack with same name already exists");
+
+      PackList.Add(pack);
+      await SaveEditedPack(pack);
+      return pack;
+    }
+    catch (ReadableError re)
+    {
+      await MessageBoxUtil.GetMessageBoxStandardWindow("Failed to import pack", $"Failed to import pack from code: {code} as {re.Message}")
+          .ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
+      return null;
+    }
+    catch (Exception e)
+    {
+      await DisplayErrors.DisplayGenericError("Failed to import pack", e);
+      return null;
+    }
+  }
+
+  /// <summary>
+  /// Converts a pack to a valid hpackage format
+  /// </summary>
+  /// <returns>The hpackage json as string</returns>
+  private string ConvertToHPackage(Pack pack)
+  {
+    var packageDef = new HollowKnightPackageDef()
+    {
+      Name = pack.Name,
+      Description = pack.Description,
+      Authors = new List<string> { pack.Authors },
+      Dependencies = new References()
+      {
+        AnythingMap = pack.InstalledMods.Mods.ToDictionary(
+                x => x.Key,
+                x => new ReferenceVersion()
+                {
+                  String = JsonSerializer.Serialize(x.Value)
+                })
+      }
+    };
+
+    return packageDef.ToJson();
+  }
+
+  /// <summary>
+  /// Converts a hpackage json string to a Pack
+  /// </summary>
+  private Pack ConvertFromHPackage(string json)
+  {
+    var packageDef = HollowKnightPackageDef.FromJson(json);
+
+    var pack = new Pack(
+        packageDef.Name,
+        packageDef.Description,
+        string.Join(',', packageDef.Authors),
+        new InstalledMods()
         {
-            Name = pack.Name,
-            Description = pack.Description,
-            Authors = new List<string> { pack.Authors },
-            Dependencies = new References()
-            {
-                AnythingMap = pack.InstalledMods.Mods.ToDictionary(
-                    x => x.Key, 
-                    x => new ReferenceVersion() 
-                    { 
-                        String = JsonSerializer.Serialize(x.Value) 
-                    })
-            }
-        };
+          Mods = packageDef.Dependencies!.Value.AnythingMap.ToDictionary(
+                x => x.Key,
+                x => JsonSerializer.Deserialize<InstalledState>(x.Value.String)!)
+        });
 
-        return packageDef.ToJson();
-    }
-    
-    /// <summary>
-    /// Converts a hpackage json string to a Pack
-    /// </summary>
-    private Pack ConvertFromHPackage(string json)
-    {
-        var packageDef = HollowKnightPackageDef.FromJson(json);
+    return pack;
+  }
 
-        var pack = new Pack(
-            packageDef.Name,
-            packageDef.Description,
-            string.Join(',', packageDef.Authors),
-            new InstalledMods()
-            {
-                Mods = packageDef.Dependencies!.Value.AnythingMap.ToDictionary(
-                    x => x.Key,
-                    x => JsonSerializer.Deserialize<InstalledState>(x.Value.String)!)
-            });
-        
-        return pack;
-    }
-
-    public async Task RevertToPreviousModsFolder()
-    {
-        FileUtil.DeleteDirectory(_settings.ModsFolder);
-        var installedMods = JsonSerializer.Deserialize<InstalledMods>(await File.ReadAllTextAsync(Path.Combine(TempModStorageLocation, InstalledMods.FILE_NAME)));
-        if (installedMods != null) 
-            await _mods.SetMods(installedMods.Mods, installedMods.NotInModlinksMods);
-        Directory.Move(TempModStorageLocation, _settings.ModsFolder);
-    }
+  public async Task RevertToPreviousModsFolder()
+  {
+    FileUtil.DeleteDirectory(_settings.ModsFolder);
+    var installedMods = JsonSerializer.Deserialize<InstalledMods>(await File.ReadAllTextAsync(Path.Combine(TempModStorageLocation, InstalledMods.FILE_NAME)));
+    if (installedMods != null)
+      await _mods.SetMods(installedMods.Mods, installedMods.NotInModlinksMods);
+    Directory.Move(TempModStorageLocation, _settings.ModsFolder);
+  }
 }
