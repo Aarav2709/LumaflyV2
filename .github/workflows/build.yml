@@ -22,7 +22,8 @@ jobs:
         dotnet publish -r win-x64 -p:PublishSingleFile=true -p:Configuration=Release --self-contained true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=embedded
         cd ..
     - name: Upload windows binary
-      uses: actions/upload-artifact@v3
+      # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
+      uses: actions/upload-artifact@v4
       with:
         name: Lumafly-Windows
         path: Lumafly/bin/Release/net7.0/win-x64/publish/
@@ -43,7 +44,8 @@ jobs:
         chmod +x Lumafly/bin/Release/net7.0/linux-x64/publish/Lumafly
         zip -jr linux.zip Lumafly/bin/Release/net7.0/linux-x64/publish/*
     - name: Upload linux binary
-      uses: actions/upload-artifact@v3
+      # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
+      uses: actions/upload-artifact@v4
       with:
         name: Lumafly-Linux
         path: linux.zip
@@ -67,7 +69,8 @@ jobs:
         python3 make_mac_app.py Lumafly.app ../Lumafly/bin/Release/net7.0/osx-x64/publish ../out
         cd ..
     - name: Upload macos binary
-      uses: actions/upload-artifact@v3
+      # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
+      uses: actions/upload-artifact@v4
       with:
         name: Lumafly-MacOS
         path: out/mac.zip
@@ -101,7 +104,8 @@ jobs:
         dotnet publish -r win-x64 -c Release --self-contained true
         cd ..
     - name: Upload windows binary
-      uses: actions/upload-artifact@v3
+      # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
+      uses: actions/upload-artifact@v4
       with:
         name: Lumafly-AU
         path: Lumafly.AU/bin/Release/net7.0/win-x64/publish/
