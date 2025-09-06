@@ -162,15 +162,20 @@ jobs:
       - name: Zip files
         if: steps.verify_tag.outputs.on_master == 'true'
         run: |
-          zip -jr Lumafly-Windows.zip ./artifacts/Lumafly-Windows/*
+          # Rename and package artifacts to the new branding 'LumaflyV2'.
+          # Windows: zip the uploaded Windows publish folder and name it LumaflyV2-Windows.zip
+          zip -jr LumaflyV2-Windows.zip ./artifacts/Lumafly-Windows/*
 
-          cp ./artifacts/Lumafly-Windows/Lumafly.exe ./Lumafly.exe
+          # Main Windows executable renamed to LumaflyV2.exe for the release
+          cp ./artifacts/Lumafly-Windows/Lumafly.exe ./LumaflyV2.exe
 
-          cp ./artifacts/Lumafly-AU/Lumafly.AU.exe ./Lumafly.AU.exe
+          # AU executable renamed to LumaflyV2.AU.exe
+          cp ./artifacts/Lumafly-AU/Lumafly.AU.exe ./LumaflyV2.AU.exe
 
-          mv ./artifacts/Lumafly-Linux/linux.zip Lumafly-Linux.zip
+          # Linux and Mac were already zipped by their build jobs; move them and rename
+          mv ./artifacts/Lumafly-Linux/linux.zip LumaflyV2-Linux.zip
 
-          mv ./artifacts/Lumafly-MacOS/mac.zip Lumafly-MacOS.zip
+          mv ./artifacts/Lumafly-MacOS/mac.zip LumaflyV2-MacOS.zip
 
       - name: Create release if a new tag is pushed
         if: steps.verify_tag.outputs.on_master == 'true'
@@ -179,11 +184,11 @@ jobs:
           # Ensure the action can create a release using the repository token
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            ./Lumafly.exe
-            ./Lumafly.AU.exe
-            ./Lumafly-Windows.zip
-            ./Lumafly-MacOS.zip
-            ./Lumafly-Linux.zip
+            ./LumaflyV2.exe
+            ./LumaflyV2.AU.exe
+            ./LumaflyV2-Windows.zip
+            ./LumaflyV2-MacOS.zip
+            ./LumaflyV2-Linux.zip
 
   # run after release so no one downloads non existent files
   create-appcast:
