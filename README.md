@@ -1,4 +1,4 @@
-# LumaflyV2 (previously Lumafly / LumaSong)
+# LumaflyV2 (previously Lumafly)
 
 LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
 
@@ -60,8 +60,7 @@ Screenshots will be updated to showcase the Game dropdown and Silksong profile. 
 - If you want to contribute, feel free to. You can see what features are currently requested over here.
   If you want to contribute to localizations, please use Crowdin to add the translations.
 
-<details>
-<summary><h3>Credits</h3></summary>
+## Credits
 
 - Source code adapted from https://github.com/TheMulhima/Lumafly
 
@@ -85,5 +84,3 @@ Screenshots will be updated to showcase the Game dropdown and Silksong profile. 
   - [Dwarfwoot](https://patreon.com/DwarfWoot), [SFGrenade](https://github.com/SFGrenade) - Images and icons used in the installer.
   - [Lime](https://www.tumblr.com/ded-lime) - The Lumafly banner.
   - [HBKit](https://ko-fi.com/hbkit) - The Lumafly icon.
-
-</details>
