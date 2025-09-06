@@ -15,6 +15,9 @@ public class GlobalSettingsFinder : IGlobalSettingsFinder
     Settings = settings;
   }
 
+  // Make GetSavesFolder independent of instance state to avoid static access to instance members.
+  // Instead of referencing the instance field `Settings` from a static method (which produced
+  // CS0120), load the persisted settings if available and fall back to the default profile.
   public static string GetSavesFolder()
   {
     var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -22,8 +25,11 @@ public class GlobalSettingsFinder : IGlobalSettingsFinder
         : OperatingSystem.IsMacOS() ? "mac"
         : OperatingSystem.IsLinux() ? "linux" : "";
 
-    // Use Hollow Knight as default if Settings is not available
-    var profile = Settings?.CurrentProfile ?? GameProfiles.HollowKnight;
+    // Load persisted settings (if any) to determine current profile. This avoids accessing
+    // the non-static instance field `Settings` from a static method.
+    var loadedSettings = Lumafly.Settings.Load();
+    var profile = loadedSettings?.CurrentProfile ?? GameProfiles.HollowKnight;
+
     if (string.IsNullOrEmpty(osKey) || !profile.SavePaths.TryGetValue(osKey, out var relPaths))
       return string.Empty;
 

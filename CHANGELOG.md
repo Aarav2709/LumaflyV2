@@ -1,5 +1,8 @@
-# Changelogs
+# LumaflyV2 Changelog
 
+Source code adapted from: https://github.com/TheMulhima/Lumafly
+
+- [v4.0.0.0](#changes-in-v4000)
 - [v3.2.0.0](#changes-in-v3200)
 - [v3.1.0.0](#changes-in-v3100)
 - [v3.0.0.0](#changes-in-v3000)
@@ -8,7 +11,18 @@
 - [v2.1.0.0](#changes-in-v2100)
 - [v2.0.0.0](#changes-in-v2000)
 
+- ## Changes in v4.0.0.0
+- DATE: YYYY-MM-DD
+- - LumaflyV2 launch: migration and rebrand from Scarab to LumaflyV2.
+- - Upgraded to .NET 7 and modernized build to reduce platform-specific issues.
+- - Compile-time fixes and resource sync to ensure a clean build.
+- - Refactored game launch logic to be profile-aware (Hollow Knight & Silksong support).
+- - Updated Silksong profile and default Steam App ID.
+- - Documentation rebrand (README -> LumaflyV2). More UI string updates TBD.
+-
+
 ## Changes in v3.2.0.0
+
 - Add ability to view release notes of mods that need updating.
 - Add support for Japanese localizations (thanks to [sawayoshi](https://twittter.com/sawayoshiyt))
 - Update Spanish, French, Portuguese, and Chinese localizations (thanks to [Helen](https://ko-fi.com/helensb), [Dastan](https://github.com/Dastan21), [luiz_eldorado](https://github.com/luizeldorado), and [lxymahatma](https://github.com/lxymahatma)).
@@ -18,6 +32,7 @@
 - Fix modlist side pane being too narrow on other languages.
 
 ## Changes in v3.1.0.0
+
 - Add button to revert changes to the mods before pack was loaded
 - Add prompt for updating outdated mods in packs.
 - Make edit pack button more visible
@@ -35,7 +50,7 @@
 - Allow searching through authors
 
 - Credits
-  - [TheMulhima](https://github.com/TheMulhima) - Most of the changes.
+  - Original project: https://github.com/TheMulhima/Lumafly
   - [Acu1000](https://github.com/Acu1000) - Helped with many changes
   - [Lime](https://www.tumblr.com/ded-lime) - Lumafly banner
   - [HBKit](https://ko-fi.com/hbkit) - Lumafly icon
@@ -55,7 +70,7 @@
 - If toggling will delete a folder, ask for confirmation before doing so
 
 - Credits
-  - [TheMulhima](https://github.com/TheMulhima) - Most of the changes.
+  - Original project: https://github.com/TheMulhima/Lumafly
   - [Adrin](https://twitter.com/Adrin63_?t=lbzYGgt-3Zybjb_S2xqt2A&s=09) and [Helen](https://ko-fi.com/helensb) - Spanish translations
   - [Страг](https://discordapp.com/users/274945280775028736) - Russain transaltions
 
@@ -68,11 +83,12 @@
 - Fix crash that happens on auto uninstall dependencies confimation window.
 
 - Credits
-  - [TheMulhima](https://github.com/TheMulhima) - All the changes.
-  
+  - Original project: https://github.com/TheMulhima/Lumafly
+
 ## Changes in v2.1.0.0
 
 - Additional Features
+
   - Improve performace by upgrading framework
   - Make it easier to update via the new auto updater in windows. Also shows change log before asking to update.
   - Add mod actions panel, a set of buttons in the mod's expander that allow you to
@@ -90,6 +106,7 @@
   - Add url scheme to remove global settings.
 
 - Bug Fixes
+
   - Fix the issue where scarab sometimes freezes on load.
   - Prevent occasional random crashes on load.
   - Fix the issue where toggling a mod causes it to appear in both mods folder and disabled folder.
@@ -105,13 +122,14 @@
   - Get correct vanilla assembly for each os on disable API
 
 - QoL Changes
+
   - Improve path selector.
   - New install and update button UI.
   - Ability to register mod as not from modlinks by right clicking it.
   - When updating, disable use of Install/Enable/Update buttons
 
 - Credits
-  - [TheMulhima](https://github.com/TheMulhima) - Most of the changes.
+  - Original project: https://github.com/TheMulhima/Lumafly
   - [Dastan21](https://github.com/Dastan21) - French Translation.
   - [luiz_eldorado](https://github.com/luizeldorado) - Portuguese translations.
   - [Clazex](https://github.com/Clazex) - Chinese translations.
@@ -119,6 +137,7 @@
 ## Changes in v2.0.0.0
 
 - Additional Features
+
   - Improved search options (Filter by tags, by authors, search for dependents).
   - An offline mode.
   - Filter for newly released/updated mods.
@@ -132,6 +151,7 @@
   - A settings tab for scarab's settings.
 
 - Bug Fixes
+
   - Fixes the bug where scarab sometimes didn't download a mod or update its dependencies properly.
   - Update on version difference instead of only on lower version.
   - Fixed bug where Scarab showed a modded install as vanilla. Instead now if that happens and scarab can't fix the issue by itself, it prompts to verify integrity.
@@ -142,6 +162,7 @@
   - Fixed Scarab showing blank screen on initial load.
 
 - QoL Changes
+
   - More detailed errors.
   - Mod details are more compact.
   - Better UI for repository link.
@@ -152,8 +173,8 @@
   - Adds more bulk actions (Disable All, Uninstall All, Update All, Enable All).
 
 - Credits
-  - [TheMulhima](https://github.com/TheMulhima) - Most of the changes
+  - Original project: https://github.com/TheMulhima/Lumafly
   - [Clazex](https://github.com/Clazex) - Chinese translations and compatibility
-  - [JacksonFaller](https://github.com/JacksonFaller) - Pinning Mods, Auto uninstall unused dependencies,   check dependencies are installed when toggling on a mod.
+  - [JacksonFaller](https://github.com/JacksonFaller) - Pinning Mods, Auto uninstall unused dependencies, check dependencies are installed when toggling on a mod.
   - [Italy](https://github.com/jngo102) - Tabs
   - [luiz_eldorado](https://github.com/luizeldorado) - Portuguese translations

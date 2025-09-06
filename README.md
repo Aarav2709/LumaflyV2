@@ -1,22 +1,19 @@
-# LumaSong (previously Lumafly)
+# LumaflyV2 (previously Lumafly / LumaSong)
 
-![build](https://github.com/TheMulhima/Lumafly/actions/workflows/build.yml/badge.svg)
-![test](https://github.com/TheMulhima/Lumafly/actions/workflows/test.yml/badge.svg)
-[![website](https://img.shields.io/website?down_color=red&down_message=offline&up_color=32c854&up_message=online&url=https%3A%2F%2Fthemulhima.github.io%2FLumafly)](https://themulhima.github.io/Lumafly)
-[![GitHub all releases](https://img.shields.io/github/downloads/TheMulhima/Lumafly/total)](https://github.com/TheMulhima/Lumafly/releases)
-[![contributors](https://img.shields.io/github/contributors/TheMulhima/Lumafly)](https://github.com/TheMulhima/Lumafly/graphs/contributors)
-[![Crowdin](https://badges.crowdin.net/lumafly/localized.svg)](https://crowdin.com/project/lumafly)
-[![discord](https://img.shields.io/discord/879125729936298015?label=discord)](https://discord.gg/VDsg3HmWuB)
+LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
 
-Cross‑platform mod manager for [Hollow Knight](https://www.hollowknight.com) and Hollow Knight: Silksong. Fully localized in English, Spanish, Portuguese, French, Chinese, Japanese, Russian, Dutch, Polish, and more.
+Key improvements in LumaflyV2:
 
-Note: The application and repository are still named "Lumafly". The LumaSong brand emphasizes first‑class Silksong support while remaining fully backward compatible with the Lumafly name.
+- Reworked game profile system: automatic detection and per-game executable resolution (better Silksong support).
+- Safer installer flow with improved error handling around file access and mod installation.
+- Better internationalization and updated translations.
+- Small UX improvements: clearer messages, improved settings persistence, and fewer edge-case crashes.
 
-Formerly known as **Scarab+**
+Note: repository and CI targets remain on the original `Lumafly` GitHub repository for now; links and badges will be migrated to a dedicated `LumaflyV2` organization/repo during release. Badges currently point to the existing CI and release pages to remain functional; update them during official v2 rollout.
 
 ## Usage
 
-- Download the latest version from the [download link](https://themulhima.github.io/Lumafly?download) (or manually from the [releases page](https://github.com/TheMulhima/Lumafly/releases/latest)).
+- Download the latest version from the releases page.
 - Default game = Hollow Knight. To manage Silksong, open Settings → Game → select "Silksong". The active profile changes immediately and persists to your config.
 - Search through and download the mods you like.
 - Mods appear in the top left corner of the game title screen after installation.
@@ -28,7 +25,7 @@ Formerly known as **Scarab+**
 - Multi‑game profiles: Switch between Hollow Knight and Hollow Knight: Silksong in Settings.
 - Automatically downloads the [Modding API](https://github.com/hk-modding/api) which is required for mods to load. It also allows switching between modded and vanilla via the Toggle API button.
 - Search through the 300+ mods available in the [official modlinks](https://github.com/hk-modding/modlinks).
-- Group mods in modpacks and share them using the [commands](https://github.com/TheMulhima/Lumafly/wiki/Commands).
+- Group mods in modpacks and share them using the commands.
 - Display mods that were recently updated or released.
 - A single place to install, update, configure, view readmes, and report issues for mods.
 - Manage mods not available through modlinks via the manual install button.
@@ -48,8 +45,7 @@ Formerly known as **Scarab+**
 
 ## Screenshot: What LumaSong looks like
 
-![info](https://github.com/TheMulhima/Lumafly/blob/static-resources/Readme%20Assets/Info.png?raw=true)
-![demo](https://github.com/TheMulhima/Lumafly/blob/static-resources/Readme%20Assets/ModList.png?raw=true)
+<!-- screenshots removed (previously referenced original repo's static resources) -->
 
 Screenshots will be updated to showcase the Game dropdown and Silksong profile. [TODO]
 
@@ -60,12 +56,14 @@ Screenshots will be updated to showcase the Game dropdown and Silksong profile. 
 
 ## Contributions
 
-- If you want to suggest a feature or report a bug, report it on the [issues page](https://github.com/TheMulhima/Lumafly/issues/new/choose).
-- If you want to contribute to Lumafly, feel free to. You can see what features are currently requested over [here](https://github.com/TheMulhima/Lumafly/labels/enhancement)
-- If you want to contribute to localizations, please use [crowdin](https://crowdin.com/project/lumafly) to add the translations.
+- If you want to suggest a feature or report a bug, report it on the issues page.
+- If you want to contribute, feel free to. You can see what features are currently requested over here.
+  If you want to contribute to localizations, please use Crowdin to add the translations.
 
 <details>
 <summary><h3>Credits</h3></summary>
+
+- Source code adapted from https://github.com/TheMulhima/Lumafly
 
 - Programming
 

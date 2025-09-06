@@ -524,6 +524,12 @@ namespace Lumafly.ViewModels
     private static async Task<string> GetSettingsPath()
     {
       var path = await Settings.TryAutoDetect();
+
+      // Ensure `profile` is available for both the "unable to detect" and "detected" UI flows.
+      // Previously `profile` was declared after being used which caused CS0103/CS0841 errors.
+      var loaded = Settings.Load();
+      var profile = loaded?.CurrentProfile ?? Lumafly.Models.GameProfiles.HollowKnight;
+
       if (path is null)
       {
         var info = MessageBoxUtil.GetMessageBoxStandardWindow
@@ -539,8 +545,6 @@ namespace Lumafly.ViewModels
         await info.ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
 
         // If we can load an existing settings just to get the game selection, pass its profile to the dialog
-        var loaded = Settings.Load();
-        var profile = loaded?.CurrentProfile ?? Lumafly.Models.GameProfiles.HollowKnight;
         return await PathUtil.SelectPath(profile: profile);
       }
 

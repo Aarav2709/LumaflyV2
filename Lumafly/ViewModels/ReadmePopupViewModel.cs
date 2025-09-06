@@ -16,7 +16,7 @@ namespace Lumafly.ViewModels
         private string requestName => IsRequestingReleaseNotes ? "Release Notes" : "Readme";
 
         private string ReadmeLink = "";
-        
+
         public ReadmePopupViewModel(ModItem modItem, bool requestingReleaseNotes = false)
         {
             _modItem = modItem;
@@ -25,7 +25,7 @@ namespace Lumafly.ViewModels
             Task.Run(async () =>
             {
                 var displayString = IsRequestingReleaseNotes ? await FetchReleaseNotes() : await FetchReadme();
-                
+
                 if (displayString is not null)
                 {
                     string rawLinkPattern = @"(?<!\([^)]*)https://\S+";
@@ -35,12 +35,12 @@ namespace Lumafly.ViewModels
                         string link = match.Value;
                         return $"[{link}]({link})";
                     });
-                    
+
                     string anchorPattern = @"\[(.*?)\]\(#(.*?)\)";
                     string anchorPatternReplacement = $"[$1]({ReadmeLink}#$2)";
-                    
+
                     displayString = Regex.Replace(displayString, anchorPattern, anchorPatternReplacement);
-                    
+
                     Readme = displayString;
 
                 }
@@ -69,14 +69,14 @@ namespace Lumafly.ViewModels
                 RaisePropertyChanged(nameof(Readme));
             }
         }
-        
+
         static ReadmePopupViewModel()
         {
             _hc = new HttpClient();
             _hc.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
             _hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Lumafly", "1.0"));
         }
-        
+
         private async Task<string?> FetchReadme()
         {
             try
@@ -93,10 +93,20 @@ namespace Lumafly.ViewModels
                     JsonDocument json = JsonDocument.Parse(jsonResponse);
                     json.RootElement.TryGetProperty("download_url", out var downloadUrlProperty);
 
-                    ReadmeLink = json.RootElement.GetProperty("html_url").GetString();
+                    // Safely read html_url and download_url from the JSON. Use empty string fallback to
+                    // avoid assigning a nullable value to the non-nullable `ReadmeLink` field (fixes CS8601).
+                    if (json.RootElement.TryGetProperty("html_url", out var htmlUrlProp))
+                        ReadmeLink = htmlUrlProp.GetString() ?? string.Empty;
+                    else
+                        ReadmeLink = string.Empty;
 
-                    // Make a request to fetch the README content
-                    HttpResponseMessage readmeResponse = await _hc.GetAsync(downloadUrlProperty.GetString());
+                    // Make a request to fetch the README content. Ensure download_url is present and non-null
+                    // before calling GetAsync to avoid passing null to HttpClient.
+                    var downloadUrl = downloadUrlProperty.GetString();
+                    if (string.IsNullOrWhiteSpace(downloadUrl))
+                        throw new Exception("Readme download URL not found");
+
+                    HttpResponseMessage readmeResponse = await _hc.GetAsync(downloadUrl);
 
                     if (readmeResponse.IsSuccessStatusCode)
                     {
@@ -111,7 +121,7 @@ namespace Lumafly.ViewModels
                 return null;
             }
         }
-        
+
         private async Task<string?> FetchReleaseNotes()
         {
             try
@@ -129,7 +139,7 @@ namespace Lumafly.ViewModels
                     // the release info is in the body property
                     return json.RootElement.GetProperty("body").ToString();
                 }
-                
+
                 throw new Exception($"Failed to fetch changelog for {_modItem.Name} from {releaseInfo}");
             }
             catch
@@ -137,7 +147,7 @@ namespace Lumafly.ViewModels
                 return null;
             }
         }
-        
+
         public void Close()
         {
             if (IsRequestingReleaseNotes)

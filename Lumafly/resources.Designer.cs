@@ -9,8 +9,8 @@
 
 namespace Lumafly {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace Lumafly {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace Lumafly {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace Lumafly {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to , .
         /// </summary>
@@ -67,7 +67,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("Array_Sep", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Available Mods.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("AvailableMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Available Packs:.
         /// </summary>
@@ -85,7 +85,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("AvailablePacks", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -94,7 +94,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
@@ -103,7 +103,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("Confirm", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Disable Mod.
         /// </summary>
@@ -112,7 +112,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("DisableMod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit Details.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("EditDetails", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit Mods.
         /// </summary>
@@ -130,7 +130,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("EditMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit Pack.
         /// </summary>
@@ -139,7 +139,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("EditPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable Mod.
         /// </summary>
@@ -148,7 +148,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("EnableMod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enter Sharing Code:.
         /// </summary>
@@ -157,7 +157,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("EnterSharingCode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Don&apos;t use latest modlinks version. Instead use current version.
         /// </summary>
@@ -166,7 +166,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("FixedVersion_Tooltip", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Load without replacing.
         /// </summary>
@@ -175,7 +175,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("LoadPackAdditive", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Load this pack without replacing mods in current mods folder.
         /// </summary>
@@ -184,7 +184,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("LoadPackAdditive_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Uninstall.
         /// </summary>
@@ -193,7 +193,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MI_InstallText_Installed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
@@ -202,7 +202,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MI_InstallText_NotInstalled", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Disable API.
         /// </summary>
@@ -211,7 +211,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_ApiButtonText_DisableAPI", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable API.
         /// </summary>
@@ -220,7 +220,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_ApiButtonText_EnableAPI", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Toggle API.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_ApiButtonText_ToggleAPI", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The download hash for {0} ({1}) didn&apos;t match the given signature ({2}). It is either corrupt or the entry is incorrect..
         /// </summary>
@@ -238,7 +238,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_DisplayHashMismatch_Msgbox_Text", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Hash mismatch!.
         /// </summary>
@@ -247,7 +247,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_DisplayHashMismatch_Msgbox_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unable to download {0}! The site may be down or you may lack network connectivity..
         /// </summary>
@@ -256,7 +256,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_DisplayNetworkError_Msgbox_Text", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Network Error.
         /// </summary>
@@ -265,7 +265,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_DisplayNetworkError_Msgbox_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Hollow Knight is open! This may lead to issues when installing mods. Close Hollow Knight?.
         /// </summary>
@@ -274,7 +274,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_InternalUpdateInstallAsync_Msgbox_W_Text", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Warning!.
         /// </summary>
@@ -283,7 +283,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_InternalUpdateInstallAsync_Msgbox_W_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select the mod dll or zip.
         /// </summary>
@@ -292,7 +292,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MLVM_Select_Mod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Boss.
         /// </summary>
@@ -301,7 +301,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Boss", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Cosmetic.
         /// </summary>
@@ -310,7 +310,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Cosmetic", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Expansion.
         /// </summary>
@@ -319,7 +319,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Expansion", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Gameplay.
         /// </summary>
@@ -328,7 +328,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Gameplay", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Library.
         /// </summary>
@@ -337,7 +337,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Library", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Untagged.
         /// </summary>
@@ -346,7 +346,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Untagged", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Utility.
         /// </summary>
@@ -355,7 +355,106 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModLinks_Tags_Utility", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is open! This may lead to issues when installing mods. Close {0}?.
+        /// </summary>
+        internal static string GAME_InternalUpdateInstallAsync_Msgbox_W_Text {
+            get {
+                return ResourceManager.GetString("GAME_InternalUpdateInstallAsync_Msgbox_W_Text", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The saved {0} path is invalid, please re-select a valid path.
+        /// </summary>
+        internal static string GAME_InvalidSavedPath_Message {
+            get {
+                return ResourceManager.GetString("GAME_InvalidSavedPath_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to detect your {0} installation. Please select it.
+        /// </summary>
+        internal static string GAME_UnableToDetect_Message {
+            get {
+                return ResourceManager.GetString("GAME_UnableToDetect_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Detected {0} install at {1}. Is this correct?.
+        /// </summary>
+        internal static string GAME_DetectedPath_Message {
+            get {
+                return ResourceManager.GetString("GAME_DetectedPath_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid {0} path!.
+        /// </summary>
+        internal static string GAME_InvalidPathHeader {
+            get {
+                return ResourceManager.GetString("GAME_InvalidPathHeader", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select your {0} executable or its shortcut.
+        /// </summary>
+        internal static string GAME_SelectEXE {
+            get {
+                return ResourceManager.GetString("GAME_SelectEXE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select your {0} app.
+        /// </summary>
+        internal static string GAME_SelectApp {
+            get {
+                return ResourceManager.GetString("GAME_SelectApp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select the folder containing {0}_Data or {1}_Data..
+        /// </summary>
+        internal static string GAME_InvalidPath {
+            get {
+                return ResourceManager.GetString("GAME_InvalidPath", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Hollow Knight app!.
+        /// </summary>
+        internal static string GAME_InvalidAppHeader {
+            get {
+                return ResourceManager.GetString("PU_InvalidAppHeader", resourceCulture) ?? ResourceManager.GetString("GAME_InvalidAppHeader", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Managed folder or Assembly-CSharp!.
+        /// </summary>
+        internal static string GAME_InvalidApp {
+            get {
+                return ResourceManager.GetString("PU_InvalidApp", resourceCulture) ?? ResourceManager.GetString("GAME_InvalidApp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Hollow Knight exe! Please select the hollow knight exe or its shortcut.
+        /// </summary>
+        internal static string GAME_InvalidExeHeader {
+            get {
+                return ResourceManager.GetString("PU_InvalidExeHeader", resourceCulture) ?? ResourceManager.GetString("GAME_InvalidExeHeader", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Use latest modlinks version.
         /// </summary>
@@ -364,7 +463,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ModlinksVersion_Tooltip", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Warning! Are you sure you want to do this?.
         /// </summary>
@@ -373,7 +472,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_AreYouSure", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to {0} is required for {1} to function properly. Do you want to install them?.
         /// </summary>
@@ -382,7 +481,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_DependenciesNotInstalledWarning_Body", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The mod has dependencies that are not installed!.
         /// </summary>
@@ -391,7 +490,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_DependenciesNotInstalledWarning_Header", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to {0} is required for {1} to function properly. Do you still want to continue?.
         /// </summary>
@@ -400,7 +499,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_DependentsWarning_Body", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Warning! This mod is required for other mods to function!.
         /// </summary>
@@ -409,7 +508,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_DependentsWarning_Header", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Possibly caused by poor or no internet connection. Please check that and try again.
         /// </summary>
@@ -418,7 +517,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_DNSError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to An exception occured while {0} {1}.
         /// </summary>
@@ -427,7 +526,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_ExceptionOccur", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
@@ -436,7 +535,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Install", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Do you want to launch lumafly in offline mode?.
         /// </summary>
@@ -445,7 +544,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_LaunchOfflineMode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Fetching mods from modlinks....
         /// </summary>
@@ -454,7 +553,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Loading1", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Waiting for response from github....
         /// </summary>
@@ -463,7 +562,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Loading2", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Still waiting....
         /// </summary>
@@ -472,7 +571,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Loading3", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Trying from fallback source....
         /// </summary>
@@ -481,7 +580,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Loading4", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Waiting for response from jsdelivr....
         /// </summary>
@@ -490,7 +589,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_Loading5", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Loading the newest mods that are on modlinks....
         /// </summary>
@@ -499,7 +598,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_LoadingWhatsNew", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly was unable to load the newest mods from modlinks..
         /// </summary>
@@ -508,7 +607,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_NotAbleToLoadWhatsNew", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to This mod was manually installed and is not from official modlinks.
         /// </summary>
@@ -517,7 +616,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_NotInModlinks_Description", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Version not from modlinks.
         /// </summary>
@@ -526,7 +625,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_NotInModlinks_Disclaimer", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Try running lumafly as an administrator, it may fix the issue.
         /// </summary>
@@ -535,7 +634,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_RunAsAdmin", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Please make sure to close all other apps that could be using the mods folder.
         /// </summary>
@@ -544,7 +643,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_SystemIOException_GeneralFileLock", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly was unable to access the file in the mods folder.
         /// </summary>
@@ -553,7 +652,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_SystemIOException_GeneralReason", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Please close the following processes as they are locking important files:.
         /// </summary>
@@ -562,7 +661,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_SystemIOException_LockingProcessesList", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly cannot access the file:.
         /// </summary>
@@ -571,7 +670,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_SystemIOException_LumaflyCantAccessFile", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Please make sure that the mods folder is not in a write protected location.
         /// </summary>
@@ -580,7 +679,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_SystemIOException_ProtectedLocation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unable to get modlinks.
         /// </summary>
@@ -589,7 +688,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MVVM_UnableToGetModlinks", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Detected Hollow Knight install at {0}. Is this correct?.
         /// </summary>
@@ -598,7 +697,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_DetectedPath_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Detected path!.
         /// </summary>
@@ -607,7 +706,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_DetectedPath_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to failed with HTTP error {0}.
         /// </summary>
@@ -616,7 +715,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Impl_Error_Fetch_ModLinks_Error", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unable to get list of mods from modlinks, the operation {0}.
         /// </summary>
@@ -625,7 +724,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Impl_Error_Fetch_ModLinks_Msgbox_Text", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error!.
         /// </summary>
@@ -634,7 +733,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Impl_Error_Fetch_ModLinks_Msgbox_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to timed out. Please check your internet connection and try again.
         /// </summary>
@@ -643,7 +742,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Impl_Error_Fetch_ModLinks_Timeout", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
@@ -652,7 +751,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Info", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The saved Hollow Knight path is invalid, please re-select a valid path..
         /// </summary>
@@ -661,7 +760,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_InvalidSavedPath_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Continue anyways..
         /// </summary>
@@ -670,7 +769,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_OutOfDate_ContinueAnyways", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Get the latest release.
         /// </summary>
@@ -679,7 +778,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_OutOfDate_GetLatest", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly has a new update available. Please download the newest update (v{0}) to get the latest bug fixes and features..
         /// </summary>
@@ -688,7 +787,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_OutOfDate_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Out of date!.
         /// </summary>
@@ -697,7 +796,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_OutOfDate_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unable to detect your Hollow Knight installation. Please select it..
         /// </summary>
@@ -706,7 +805,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_UnableToDetect_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly failed to download update automatically. Lumafly will now open the link to get the latest version.
         /// </summary>
@@ -715,7 +814,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_UpdateDownloadError_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
@@ -724,7 +823,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("MWVM_Warning", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Pack Description.
         /// </summary>
@@ -733,7 +832,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PackDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Pack Details.
         /// </summary>
@@ -742,7 +841,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PackDetails", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit the details of your pack here..
         /// </summary>
@@ -751,7 +850,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PackDetails_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Pack Name.
         /// </summary>
@@ -760,7 +859,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PackName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Some mods in the pack are outdated, do you want to update them?.
         /// </summary>
@@ -769,7 +868,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PackUpdatePrompt", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Missing Managed folder or Assembly-CSharp!.
         /// </summary>
@@ -778,7 +877,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidApp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Invalid Hollow Knight app!.
         /// </summary>
@@ -787,7 +886,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidAppHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Invalid Hollow Knight exe! Please select the hollow knight exe or its shortcut.
         /// </summary>
@@ -796,7 +895,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidExeHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select the folder containing hollow_knight_Data or Hollow Knight_Data..
         /// </summary>
@@ -805,7 +904,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidPath", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Invalid Hollow Knight path!.
         /// </summary>
@@ -814,7 +913,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidPathHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Path.
         /// </summary>
@@ -823,7 +922,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_InvalidPathTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to No path was selected!.
         /// </summary>
@@ -832,7 +931,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_NoSelect", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to No application was selected!.
         /// </summary>
@@ -841,7 +940,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_NoSelectMac", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select your Hollow Knight app..
         /// </summary>
@@ -850,7 +949,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_SelectApp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select your Hollow Knight executable or its shortcut..
         /// </summary>
@@ -859,7 +958,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_SelectEXE", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select your Hollow Knight folder..
         /// </summary>
@@ -868,7 +967,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("PU_SelectPath", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Revert to previous mods.
         /// </summary>
@@ -877,7 +976,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("RevertToPreviousMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Selected Mods.
         /// </summary>
@@ -886,7 +985,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("SelectedMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable/Disable the Modding API, the modification to the game files that allow mods to run.
         /// </summary>
@@ -895,7 +994,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ToggleAPI_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use Fixed Version.
         /// </summary>
@@ -904,7 +1003,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("UseFixedVersion", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use Modlinks Version.
         /// </summary>
@@ -913,7 +1012,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("UseModlinksVersion", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to View Readme.
         /// </summary>
@@ -922,7 +1021,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("ViewReadme", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Ask.
         /// </summary>
@@ -931,7 +1030,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Ask", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Ask for help.
         /// </summary>
@@ -940,7 +1039,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_AskForHelp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Authors:.
         /// </summary>
@@ -949,7 +1048,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Authors", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Automatically Remove Unused Dependencies.
         /// </summary>
@@ -958,7 +1057,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_AutoRemoveDeps", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to (Uses extra {0} of storage).
         /// </summary>
@@ -967,7 +1066,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CacheDownloads_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change Path.
         /// </summary>
@@ -976,7 +1075,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ChangPath", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Check For Updates.
         /// </summary>
@@ -985,7 +1084,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CheckForUpdates", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select manually.
         /// </summary>
@@ -994,7 +1093,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ChooseDependenciesToUninstall", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Copy Error.
         /// </summary>
@@ -1003,7 +1102,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CopyError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Create new pack.
         /// </summary>
@@ -1012,7 +1111,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CreateNewPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Normally Lumafly loads its list of mods from the official modlinks. If you want to load your own then enter its URI here it accepts https links or files (in the format file://{filepath}). \nEmpty links or invalid links will load official modlinks.
         /// </summary>
@@ -1021,7 +1120,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CustomModlinksExplanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enter link to custom modlinks. Needs a reload to take effect.
         /// </summary>
@@ -1030,7 +1129,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_CustomModlinksWatermark", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Delete pack.
         /// </summary>
@@ -1039,7 +1138,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_DeletePack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Dependencies:.
         /// </summary>
@@ -1048,7 +1147,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Dependencies", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Description:.
         /// </summary>
@@ -1057,7 +1156,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Description", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Disable All.
         /// </summary>
@@ -1066,7 +1165,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Disable_All_Installed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Donate.
         /// </summary>
@@ -1075,7 +1174,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Donate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit pack.
         /// </summary>
@@ -1084,7 +1183,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_EditPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit mod&apos;s settings file.
         /// </summary>
@@ -1093,7 +1192,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_EditSettings", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable All.
         /// </summary>
@@ -1102,7 +1201,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Enable_All_Installed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Exact Search.
         /// </summary>
@@ -1111,7 +1210,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Exact_Search", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Filter Mods:  .
         /// </summary>
@@ -1120,7 +1219,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_FilterMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Game Path.
         /// </summary>
@@ -1129,7 +1228,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_GamePath", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Generate a 8 digit sharing code. This can be given to someone else and they can use this pack.
         /// </summary>
@@ -1138,7 +1237,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_GenerateSharingCode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enter format to github mirror. Needs a reload to take effect.
         /// </summary>
@@ -1147,7 +1246,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_GithubMirrorFormatWatermark", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Import pack.
         /// </summary>
@@ -1156,7 +1255,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ImportPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
@@ -1165,7 +1264,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Info", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Lumafly is an installer for Hollow Knight version 1.5. It will not work for older versions of Hollow Knight..
         /// </summary>
@@ -1174,7 +1273,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoBody", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Discord\n.
         /// </summary>
@@ -1183,7 +1282,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkDiscord", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Github\n.
         /// </summary>
@@ -1192,7 +1291,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkGithub", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to HK Mod\nManager.
         /// </summary>
@@ -1201,7 +1300,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkHKMM", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to An Alternate Installer.
         /// </summary>
@@ -1210,7 +1309,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkHKMMToolTip", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Create Mods\n.
         /// </summary>
@@ -1219,7 +1318,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkModdingDocs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Readme\n.
         /// </summary>
@@ -1228,7 +1327,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkReadme", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Relevant Links.
         /// </summary>
@@ -1237,7 +1336,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinksHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Modding\nTutorial.
         /// </summary>
@@ -1246,7 +1345,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkTutorial", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Website\n.
         /// </summary>
@@ -1255,7 +1354,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_InfoLinkWebsite", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Integrations:.
         /// </summary>
@@ -1264,7 +1363,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Integrations", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
@@ -1273,7 +1372,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Language", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Last Month.
         /// </summary>
@@ -1282,7 +1381,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_LastMonth", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Last Week.
         /// </summary>
@@ -1291,7 +1390,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_LastWeek", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Launch Modded Game.
         /// </summary>
@@ -1300,7 +1399,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_LaunchModded", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Launch Vanilla Game.
         /// </summary>
@@ -1309,7 +1408,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_LaunchVanilla", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Load Pack.
         /// </summary>
@@ -1318,7 +1417,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_LoadPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Low Storage Mode.
         /// </summary>
@@ -1327,7 +1426,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Low_Storage_Mode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Manually Install.
         /// </summary>
@@ -1336,7 +1435,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Manual_Install", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Note: they may be used by any mods you have installed manually.
         /// </summary>
@@ -1345,7 +1444,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ManuallyInstalledModesNote", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mods.
         /// </summary>
@@ -1354,7 +1453,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Mods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
@@ -1363,7 +1462,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_All", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
@@ -1372,7 +1471,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_Enabled", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
@@ -1381,7 +1480,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_Installed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Out of date.
         /// </summary>
@@ -1390,7 +1489,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_OutOfDate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Update All.
         /// </summary>
@@ -1399,7 +1498,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_OutOfDate_Update", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Whats New.
         /// </summary>
@@ -1408,7 +1507,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsFilter_WhatsNew", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mods In Pack:.
         /// </summary>
@@ -1417,7 +1516,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ModsInPack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to New Mods.
         /// </summary>
@@ -1426,7 +1525,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_NewMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to No mods to display.
         /// </summary>
@@ -1435,7 +1534,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_No_Items", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -1444,7 +1543,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_None", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Normal Search.
         /// </summary>
@@ -1453,7 +1552,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Normal_Search", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
@@ -1462,7 +1561,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Off", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
@@ -1471,7 +1570,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Ok", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to On.
         /// </summary>
@@ -1480,7 +1579,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_On", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Bulk Actions.
         /// </summary>
@@ -1489,7 +1588,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Open_Bulk_Action", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open folder where this mod is installed.
         /// </summary>
@@ -1498,7 +1597,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_OpenFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Please wait launching game....
         /// </summary>
@@ -1507,7 +1606,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_OpeningGame", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open Logs Folder.
         /// </summary>
@@ -1516,7 +1615,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_OpenLogsFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open Mods Folder.
         /// </summary>
@@ -1525,7 +1624,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_OpenMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
@@ -1534,7 +1633,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_OpenModsOrSaves", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Packs.
         /// </summary>
@@ -1543,7 +1642,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Packs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Pin.
         /// </summary>
@@ -1552,7 +1651,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Pin", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Pin a mod so it isn&apos;t automatically replaced by Lumafly.
         /// </summary>
@@ -1561,7 +1660,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_PinMod_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Record as custom version.
         /// </summary>
@@ -1570,7 +1669,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_RegisterNotInModlinks", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Record this mod&apos;s version as not from modlinks. Doesn&apos;t affect the mod in any way only affects how lumafly handles it. A pinned custom version mod will never be replaced by lumafly.
         /// </summary>
@@ -1579,7 +1678,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_RegisterNotInModlinks_Explanation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Reload Lumafly.
         /// </summary>
@@ -1588,7 +1687,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ReloadLumafly", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to (Reload for changes to take effect).
         /// </summary>
@@ -1597,7 +1696,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ReloadPrompt", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Report a bug or an issue with this mod.
         /// </summary>
@@ -1606,7 +1705,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ReportBug", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Report Error.
         /// </summary>
@@ -1615,7 +1714,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ReportError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Repository.
         /// </summary>
@@ -1624,7 +1723,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Repository", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Reset Mod: force re-installs the mod and removes its persistent settings.
         /// </summary>
@@ -1633,7 +1732,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ResetMod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open Saves Folder.
         /// </summary>
@@ -1642,7 +1741,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SavesFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Search by Dependencies and Integrations.
         /// </summary>
@@ -1651,7 +1750,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Search_Dependents", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Search by Integrations.
         /// </summary>
@@ -1660,7 +1759,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Search_Integrations", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Advanced Search.
         /// </summary>
@@ -1669,7 +1768,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Search_Options", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Search Type.
         /// </summary>
@@ -1678,7 +1777,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Search_Type", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Search Author.
         /// </summary>
@@ -1687,7 +1786,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SearchAuthor", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mod Search.
         /// </summary>
@@ -1696,7 +1795,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SearchMark", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select Authors.
         /// </summary>
@@ -1705,7 +1804,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Select_Authors", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select Mod.
         /// </summary>
@@ -1714,7 +1813,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Select_Mod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select Tags.
         /// </summary>
@@ -1723,7 +1822,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Select_Tags", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
@@ -1732,7 +1831,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Settings", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Get the shareable download link of this mod..
         /// </summary>
@@ -1741,7 +1840,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Share", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Share this pack.
         /// </summary>
@@ -1750,7 +1849,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SharePack", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Share this pack as a zip file. You will need to send this zip file yourself..
         /// </summary>
@@ -1759,7 +1858,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SharePackManually", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Sharing Code:.
         /// </summary>
@@ -1768,7 +1867,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_SharingCode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Click to show full error.
         /// </summary>
@@ -1777,7 +1876,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_ShowError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Tags:.
         /// </summary>
@@ -1786,7 +1885,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Tags", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Toggle All.
         /// </summary>
@@ -1795,7 +1894,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Toggle_All", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Disable all mods if any are enabled, Enable all mods if all are disabled.
         /// </summary>
@@ -1804,7 +1903,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Toggle_All_Tooltip", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Uninstall All.
         /// </summary>
@@ -1813,7 +1912,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Uninstall_All", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Uninstalling this mod will leave dependencies that appear to be unused now.
         /// </summary>
@@ -1822,7 +1921,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UninstallDependencies", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Auto remove dependencies?.
         /// </summary>
@@ -1831,7 +1930,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UninstallDependencies_Title", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unpin.
         /// </summary>
@@ -1840,7 +1939,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Unpin", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
@@ -1849,7 +1948,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Update", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Update API.
         /// </summary>
@@ -1858,7 +1957,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UpdateAPI", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Updated Mods.
         /// </summary>
@@ -1867,7 +1966,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UpdatedMods", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use Custom Modlinks.
         /// </summary>
@@ -1876,7 +1975,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UseCustomModlinks", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use Github Mirror.
         /// </summary>
@@ -1885,7 +1984,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_UseGithubMirror", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
@@ -1894,7 +1993,7 @@ namespace Lumafly {
                 return ResourceManager.GetString("XAML_Version", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Warn before removing a dependent mod.
         /// </summary>

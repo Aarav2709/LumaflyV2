@@ -62,14 +62,19 @@
 
     public static readonly GameProfile Silksong = new()
     {
-      Name = "Silksong",
-      SteamAppId = "", // TODO: Confirm Silksong Steam App ID
-      ExeNames = new[] { "Silksong.exe" }, // TODO: Confirm actual Windows exe name(s)
-      DataFolder = "Silksong_Data", // TODO: Confirm exact data folder name
+      // Use the full Steam folder name so Settings.TryAutoDetect (which composes
+      // steamapps/common/{profile.Name}) will find the Silksong installation in the
+      // Steam default location: ".../steamapps/common/Hollow Knight Silksong".
+      Name = "Hollow Knight Silksong",
+  SteamAppId = "1030300", // Silksong Steam App ID (provided)
+      // Use the Steam game executable name as observed in the official Steam folder.
+      ExeNames = new[] { "Hollow Knight Silksong.exe", "Silksong.exe" }, // include common variants
+      // Data folder name in Steam common directory; keep consistent with exe prefix + _Data
+      DataFolder = "Hollow Knight Silksong_Data",
       GogIds = new string[] { /* TODO: Confirm GOG IDs if applicable */ },
       SavePaths = new Dictionary<string, string[]>
       {
-        // TODO: Confirm save locations per OS
+        // Likely save locations - mirror Hollow Knight pattern but use Silksong naming
         ["windows"] = new[] { "AppData/LocalLow/Team Cherry/Silksong" },
         ["mac"] = new[] { "Library/Application Support/unity.Team Cherry.Silksong" },
         ["linux"] = new[] { ".config/unity3d/Team Cherry/Silksong" }

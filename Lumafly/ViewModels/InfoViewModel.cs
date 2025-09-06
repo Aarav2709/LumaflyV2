@@ -83,35 +83,65 @@ public partial class InfoViewModel : ViewModelBase
         }
       }
 
-      var exeDetails = GetExecutableDetails();
+      // Resolve install directory and executable from the currently selected profile.
+      // We derive the install folder from the configured Managed folder (which points to the Managed directory inside the game's Data folder).
+      var currentProfile = _settings.CurrentProfile;
 
-      if (exeDetails.isSteam)
+      // ManagedFolder is expected to point at the game's Managed folder (e.g., .../Hollow Knight_Data/Managed).
+      // Navigate up to the install folder (exe folder). This mirrors previous logic but centralizes resolution here so
+      // launching always uses the selected profile and its configured ExeNames.
+      var managedFolderInfo = new DirectoryInfo(_settings.ManagedFolder);
+      var managedParent = managedFolderInfo.Parent; // *_Data or Data folder
+      var installFolder = managedParent?.Parent; // exe folder (two levels up from Managed)
+
+      // Mac has an extra nested structure; preserve previous mac handling by walking up additional folders when needed.
+      if (OperatingSystem.IsMacOS() && managedParent?.Parent != null)
       {
-        var appId = _settings.CurrentProfile.SteamAppId;
-        // If AppId unknown, fall back to direct exe launch
-        if (!string.IsNullOrWhiteSpace(appId))
+        // On macOS, the structure can add two extra levels; follow prior approach to reach exe folder.
+        installFolder = managedParent.Parent.Parent; // safe to use Parent twice -- will be null if structure differs
+      }
+
+      if (installFolder == null)
+      {
+        // Preserve original behavior: user-facing exception when executable cannot be resolved.
+        throw new Exception($"{currentProfile.Name} executable not found");
+      }
+
+      // Build executable path from profile's configured exe names. Use the first name as canonical launch target.
+      var exeNameFromProfile = currentProfile.ExeNames.FirstOrDefault() ?? string.Empty;
+      var exeFullPath = Path.Combine(installFolder.FullName, exeNameFromProfile);
+
+      // Determine whether the install appears to be a Steam install by checking for steam_api64.dll in the Managed plugins folder.
+      var isSteam = false;
+      try
+      {
+        if (managedParent != null)
         {
-          Process.Start(new ProcessStartInfo($"steam://rungameid/{appId}")
-          {
-            UseShellExecute = true
-          });
+          isSteam = File.Exists(Path.Combine(managedParent.FullName, "Plugins", "x86_64", "steam_api64.dll"));
         }
-        else
-        {
-          Process.Start(new ProcessStartInfo
-          {
-            FileName = exeDetails.name,
-            WorkingDirectory = exeDetails.path,
-            UseShellExecute = true,
-          });
-        }
+      }
+      catch
+      {
+        // Keep existing behavior of ignoring detection exceptions.
+        isSteam = false;
+      }
+
+      // Launch via Steam protocol if Steam AppId is known.
+      var appId = currentProfile.SteamAppId;
+      if (isSteam && !string.IsNullOrWhiteSpace(appId))
+      {
+        Process.Start(new ProcessStartInfo($"steam://rungameid/{appId}") { UseShellExecute = true });
       }
       else
       {
+        // Validate exe exists before attempting to launch; if not, surface a descriptive, user-facing exception (preserving behavior).
+        if (!File.Exists(exeFullPath))
+          throw new Exception($"{currentProfile.Name} executable not found at {exeFullPath}");
+
         Process.Start(new ProcessStartInfo
         {
-          FileName = exeDetails.name,
-          WorkingDirectory = exeDetails.path,
+          FileName = exeFullPath,
+          WorkingDirectory = installFolder.FullName,
           UseShellExecute = true,
         });
       }
