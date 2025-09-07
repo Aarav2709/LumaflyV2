@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 import argparse
 
-''' 
+'''
 This creates a xml file to make net sparkle updater find updates to the app
 see more info here https://github.com/NetSparkleUpdater/NetSparkle#app-cast
 
@@ -31,19 +31,19 @@ if os.path.exists("appcast.xml"):
 xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
-        <title>Lumafly Update</title>
-        <link>https://raw.githubusercontent.com/TheMulhima/Lumafly/master/appcast.xml</link>
+    <title>LumaflyV2 Update</title>
+    <link>https://raw.githubusercontent.com/TheMulhima/Lumafly/master/appcast.xml</link>
         <language>en</language>
     </channel>
 </rss>'''
 
 item = f'''        <item>
-            <title>Lumafly Update v{version}</title>
+            <title>LumaflyV2 Update v{version}</title>
             <sparkle:releaseNotesLink>
                 https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v{version}.md
             </sparkle:releaseNotesLink>
             <pubDate>{formatted_pubdate}</pubDate>
-            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v{version}/Lumafly.AU.exe"
+            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v{version}/LumaflyV2.AU.exe"
                 sparkle:version="{version}"
                 sparkle:os="windows"
                 length="12288"

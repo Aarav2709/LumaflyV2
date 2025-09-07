@@ -19,6 +19,25 @@
             x:CompileBindings="True"
             Name="UserControl"
             KeyDown="OnKeyDown">
+    <UserControl.Styles>
+        <!-- Hard-disable hover visuals in Mods view -->
+        <Style Selector="Expander /template/ ToggleButton#PART_Toggle">
+            <Setter Property="Transitions"><Transitions/></Setter>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        <Style Selector="Expander /template/ ToggleButton#PART_Toggle:pointerover">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        <Style Selector="ToggleSwitch:pointerover">
+            <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+        </Style>
+    </UserControl.Styles>
     <SplitView
         DisplayMode="CompactOverlay"
         OpenPaneLength="{Binding PaneWidth}"
@@ -27,13 +46,13 @@
         Background="{DynamicResource RegionColor}"
         IsPaneOpen="{Binding PaneOpen, Mode=TwoWay}"
         PanePlacement="Left">
-        <!-- Sidebar -->
+    <!-- Sidebar -->
         <SplitView.Pane>
             <Border
                 PointerEntered="OpenPane"
                 PointerExited="ClosePane"
                 Background="{DynamicResource BackgroundColor}"
-                BorderBrush="#a9a9a9"
+        BorderBrush="{DynamicResource Brush.BorderSubtle}"
                 BorderThickness="0 1 0 0">
                 <StackPanel
                     Margin="2 0 0 4"
@@ -76,7 +95,8 @@
                     </Button>
                     <Button
                         Command="{Binding UpdateUnupdated}"
-                        IsEnabled="{Binding CanUpdateAll}">
+                        IsEnabled="{Binding CanUpdateAll}"
+                        IsVisible="{Binding CanUpdateAll}">
                         <StackPanel>
                             <PathIcon Data="{StaticResource arrow_sync_regular}" />
                             <TextBlock Text="{ext:Localize XAML_ModsFilter_OutOfDate_Update}" />
@@ -121,13 +141,15 @@
             </Border>
         </SplitView.Pane>
     <DockPanel>
-    
+
+
+
     <ProgressBar
         DockPanel.Dock="Bottom"
 
         MaxHeight="8"
         MinHeight="8"
-            
+
         Margin="0 0 0 1"
 
         Name="Bar"
@@ -139,16 +161,16 @@
         Minimum="0"
         Maximum="100"
         Value="{Binding Progress}" />
-    
+
     <Border
-        BorderBrush="#a9a9a9"
+        BorderBrush="{DynamicResource Brush.BorderSubtle}"
         BorderThickness="0 0 0 1"
         DockPanel.Dock="Top">
         <DockPanel>
-            <Menu 
-                DockPanel.Dock="{Binding ModFilterDocking}" 
+            <Menu
+                DockPanel.Dock="{Binding ModFilterDocking}"
                 HorizontalAlignment="Stretch">
-                
+
                 <Menu.Styles>
                     <Style Selector="MenuItem">
                         <Setter Property="Padding" Value="6 0" />
@@ -156,7 +178,7 @@
                 </Menu.Styles>
 
                 <!-- The PointerPressed un highlights all the filter buttons except the one that's pressed
-                    the name prefix "ModFilter_" helps find all buttons in code behind. The All button is 
+                    the name prefix "ModFilter_" helps find all buttons in code behind. The All button is
                     highlighted by default on app open-->
                 <MenuItem
                     IsEnabled="False"
@@ -197,7 +219,7 @@
             </Menu>
             <StackPanel>
                 <Border
-                    BorderBrush="#a9a9a9"
+                    BorderBrush="{DynamicResource Brush.BorderSubtle}"
                     BorderThickness="0 1 0 0">
                     <Grid
                         ColumnDefinitions="Auto Auto Auto"
@@ -224,14 +246,14 @@
                             Text="How Recent:"/>
                         <RadioButton
                             Grid.Column="1" Grid.Row="0"
-                            IsChecked="{Binding HowRecentModChanged, 
+                            IsChecked="{Binding HowRecentModChanged,
                             Converter={StaticResource HowRecentEnumConvertor},
                             ConverterParameter={x:Static enums:HowRecentModChanged.Week}}"
                             GroupName="Recent"
                             Content="{ext:Localize XAML_LastWeek}" />
                         <RadioButton
                             Grid.Column="2" Grid.Row="0"
-                            IsChecked="{Binding HowRecentModChanged, 
+                            IsChecked="{Binding HowRecentModChanged,
                             Converter={StaticResource HowRecentEnumConvertor},
                             ConverterParameter={x:Static enums:HowRecentModChanged.Month}}"
                             GroupName="Recent"
@@ -307,13 +329,13 @@
                         Grid.Column="2">
 
                         <pages:SearchOptionsMenu />
-                        
+
                     </customControls:TextButtonFlyout>
                 </Grid>
             </StackPanel>
         </DockPanel>
     </Border>
-    
+
     <TextBlock
         DockPanel.Dock="Top"
         Margin="0 -25 10 0"
@@ -358,28 +380,62 @@
               FontSize="16"
               VerticalAlignment="Center"/>
         </Grid>
-        <TextBlock
-            IsVisible="{Binding NoFilteredItems}"
-            Text="{ext:Localize XAML_No_Items}"
-            Margin="15"
-            Foreground="{DynamicResource DisabledColor}"/>
-        
+                        <!-- Centered empty-state banner when no items match (bigger, red-highlighted) -->
+            <Grid IsVisible="{Binding NoFilteredItems}" MinHeight="420">
+                            <Border
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="32"
+                                    CornerRadius="10"
+                    Background="{DynamicResource Brush.SurfaceElevated}"
+                    BorderBrush="{DynamicResource Brush.BorderSubtle}"
+                                    BorderThickness="2">
+                                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <PathIcon Data="{StaticResource dismiss_circle_regular}" Width="36" Height="36" Foreground="{DynamicResource Brush.Accent}"/>
+                                    <TextBlock
+                                            Text="{ext:Localize XAML_No_Items}"
+                                            FontSize="28"
+                                            FontWeight="Bold"
+                        Foreground="{DynamicResource Brush.TextPrimary}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                <!-- Success notification when What's New has loaded: maroon background + green tick -->
+        <Border
+                        IsVisible="{Binding LoadedWhatsNew}"
+                        Margin="0 8 0 8"
+                        Padding="14"
+                        CornerRadius="6"
+            Background="{DynamicResource Brush.SurfaceElevated}"
+            BorderBrush="{DynamicResource Brush.BorderSubtle}"
+            BorderThickness="1">
+                    <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                        <PathIcon Data="{StaticResource checkmark_circle_regular}"
+                                            Width="20" Height="20"
+                                            Foreground="#2ECC71"/>
+            <TextBlock Text="Latest updates loaded."
+                                             FontSize="14"
+                                             Foreground="{DynamicResource Brush.TextPrimary}"/>
+                    </StackPanel>
+                </Border>
+
         <ItemsRepeater ItemsSource="{Binding FilteredItems}" ElementPrepared="PrepareElement" VerticalCacheLength="20">
           <ItemsRepeater.ItemTemplate>
             <DataTemplate DataType="models:ModItem">
               <Grid Margin="8 12 12 0">
                 <Grid.ContextMenu>
                   <ContextMenu IsEnabled="{Binding IsModContextMenuEnabled}">
-                    <MenuItem 
-                        IsEnabled="{Binding CanBePinned}" 
+                    <MenuItem
+                        IsEnabled="{Binding CanBePinned}"
                         Header="{ext:Localize XAML_Pin}"
-                        Command="{ReflectionBinding $parent[pages:ModListView].DataContext.PinMod}" 
+                        Command="{ReflectionBinding $parent[pages:ModListView].DataContext.PinMod}"
                         CommandParameter="{Binding .}"
                         ToolTip.Tip="{ext:Localize XAML_PinMod_Explanation}" ToolTip.ShowDelay="0"/>
-                    <MenuItem 
+                    <MenuItem
                         IsEnabled="{Binding CanBeRegisteredNotInModlinks}"
-                        Header="{ext:Localize XAML_RegisterNotInModlinks}" 
-                        Command="{ReflectionBinding $parent[pages:ModListView].DataContext.RegisterNotInModlinks}" 
+                        Header="{ext:Localize XAML_RegisterNotInModlinks}"
+                        Command="{ReflectionBinding $parent[pages:ModListView].DataContext.RegisterNotInModlinks}"
                         CommandParameter="{Binding .}"
                         ToolTip.Tip="{ext:Localize XAML_RegisterNotInModlinks_Explanation}" ToolTip.ShowDelay="0"/>
                   </ContextMenu>
@@ -389,7 +445,7 @@
                   <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
 
-                <Expander Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Background="{DynamicResource RegionColor}">
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Background="{DynamicResource Brush.Surface}">
                   <Expander.Header>
                     <Grid>
                       <Grid.ColumnDefinitions>
@@ -435,10 +491,10 @@
                               Command="{ReflectionBinding $parent[pages:ModListView].DataContext.OnUpdate}"
                               VerticalAlignment="Top">
                               <StackPanel Orientation="Horizontal">
-                                <PathIcon 
-                                    Data="{StaticResource history_regular}" 
-                                    Height="15" 
-                                    Width="15" 
+                                <PathIcon
+                                    Data="{StaticResource history_regular}"
+                                    Height="15"
+                                    Width="15"
                                     VerticalAlignment="Center"
                                     Margin="0 0 5 0"/>
                                 <TextBlock Text="{ext:Localize XAML_Update}"/>
@@ -449,7 +505,7 @@
                                                 Command="{Binding OpenReleaseNotes}" />
                                   </MenuFlyout>
                               </SplitButton.Flyout>
-                            </SplitButton>   
+                            </SplitButton>
                       </Panel>
                       <Panel
                           VerticalAlignment="Center"
@@ -463,26 +519,27 @@
                               Command="{ReflectionBinding $parent[pages:ModListView].DataContext.OnInstall}"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Center"
-                              HorizontalContentAlignment="Center">
+                              HorizontalContentAlignment="Center"
+                              Classes="primary">
                               <StackPanel Orientation="Horizontal">
-                                  <PathIcon 
-                                      Data="{Binding InstallIcon}" 
-                                      Height="15" 
-                                      Width="15" 
+                                  <PathIcon
+                                      Data="{Binding InstallIcon}"
+                                      Height="15"
+                                      Width="15"
                                       VerticalAlignment="Center"
                                       Margin="0 0 5 0"/>
                                   <TextBlock Text="{Binding InstallText}"/>
                               </StackPanel>
                           </Button>
                       </Panel>
-                      <Button Grid.Column="4" 
+                      <Button Grid.Column="4"
                               Margin="0 -5 0 0"
                               VerticalAlignment="Center"
                               Background="Transparent"
                               BorderBrush="Transparent"
                               IsVisible="{Binding Pinned}"
                               ToolTip.Tip="{ext:Localize XAML_Unpin}" ToolTip.ShowDelay="0"
-                              Command="{ReflectionBinding $parent[pages:ModListView].DataContext.PinMod}" 
+                              Command="{ReflectionBinding $parent[pages:ModListView].DataContext.PinMod}"
                               CommandParameter="{Binding .}"
                               HorizontalAlignment="Right">
                         <PathIcon
@@ -523,7 +580,7 @@
                                     </TextBlock.Resources>
                                 </TextBlock>
                             </StackPanel>
-                            
+
                             <StackPanel IsVisible="{Binding HasDependencies}" Margin="0 10 0 0">
                                 <TextBlock Text="{ext:Localize XAML_Dependencies}" FontWeight="Bold" />
                                 <TextBlock Text="{Binding DependenciesDesc}" TextWrapping="Wrap" />

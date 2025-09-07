@@ -1,0 +1,134 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Elevated surface panel -->
+  <Style Selector="Border.elevated">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceElevated}"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="{DynamicResource Space.4}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderSubtle}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+  </Style>
+
+  <!-- Silksong-style primary button -->
+  <Style Selector="Button.primary">
+    <Setter Property="Background" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="16,10"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderSubtle}"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="FontFamily" Value="{DynamicResource UIFont}"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+    <Setter Property="RenderTransform">
+      <ScaleTransform ScaleX="1" ScaleY="1"/>
+    </Setter>
+  </Style>
+  <Style Selector="Button.primary:pointerover">
+    <Setter Property="Background" Value="{DynamicResource Brush.AccentHover}"/>
+    <Setter Property="RenderTransform">
+      <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+    </Setter>
+  </Style>
+  <Style Selector="Button.primary:pressed">
+    <Setter Property="RenderTransform">
+      <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+    </Setter>
+  </Style>
+
+  <!-- Modern ListBox styling -->
+  <Style Selector="ListBox">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderSubtle}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+  </Style>
+  <Style Selector="ListBoxItem">
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="16,12"/>
+  </Style>
+  <Style Selector="ListBoxItem:pointerover">
+    <Setter Property="Background" Value="#2A2A2E40"/>
+  </Style>
+  <Style Selector="ListBoxItem:selected">
+    <Setter Property="Background" Value="#2A2A2E80"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="BorderThickness" Value="1,0,0,0"/>
+  </Style>
+
+  <!-- Status pills -->
+  <Style Selector="Border.pill">
+    <Setter Property="CornerRadius" Value="12"/>
+    <Setter Property="Padding" Value="10,6"/>
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderSubtle}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+  </Style>
+  <Style Selector="Border.pill.silksong">
+    <Setter Property="Background" Value="#C1272D20"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+
+  <!-- Focus visual enhancement -->
+  <Style Selector="Button:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="BorderThickness" Value="2"/>
+  </Style>
+
+  <!-- Bottom Navigation Styles -->
+  <Style Selector="ListBox.bottom-nav">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="0,1,0,0"/>
+    <Setter Property="Height" Value="65"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="CornerRadius" Value="0"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem">
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="12,6"/>
+    <Setter Property="CornerRadius" Value="0"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2"/>
+        <BrushTransition Property="Foreground" Duration="0:0:0.2"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem:pointerover">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceHover}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem:selected">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem:selected:pointerover">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceHover}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+
+  <!-- Perfect centering for navigation items -->
+  <Style Selector="ListBox.bottom-nav StackPanel">
+    <Setter Property="HorizontalAlignment" Value="Center"/>
+    <Setter Property="VerticalAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav Path">
+    <Setter Property="HorizontalAlignment" Value="Center"/>
+    <Setter Property="VerticalAlignment" Value="Center"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav TextBlock">
+    <Setter Property="HorizontalAlignment" Value="Center"/>
+    <Setter Property="VerticalAlignment" Value="Center"/>
+    <Setter Property="TextAlignment" Value="Center"/>
+  </Style>
+</Styles>

@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Base Palette (Dark, HK + Silksong inspired) -->
+  <!-- Dim red scheme to match request -->
+  <Color x:Key="Color.Background">#1A0E0E</Color>
+  <Color x:Key="Color.Surface">#2A1111</Color>
+  <Color x:Key="Color.SurfaceElevated">#3B1717</Color>
+  <Color x:Key="Color.Border">#4A1E1E</Color>
+
+  <!-- Text -->
+  <Color x:Key="Color.Text">#E6EAF3</Color>
+  <Color x:Key="Color.TextSecondary">#B7C0D6</Color>
+  <Color x:Key="Color.TextMuted">#8A94AB</Color>
+
+  <!-- Accents -->
+  <Color x:Key="Color.Primary">#C1372A</Color>            <!-- Silksong red -->
+  <Color x:Key="Color.PrimaryHover">#D4483B</Color>
+  <Color x:Key="Color.Info">#88B6F1</Color>
+  <Color x:Key="Color.Danger">#F05B5B</Color>
+  <Color x:Key="Color.DangerHover">#DC4B4B</Color>
+
+  <!-- Legacy compatibility brushes/keys used across views -->
+  <SolidColorBrush x:Key="HighlightBlue">#C1272D</SolidColorBrush>
+  <SolidColorBrush x:Key="BackgroundColor">#1A0E0E</SolidColorBrush>
+  <SolidColorBrush x:Key="HighlightRed">#C1272D</SolidColorBrush>
+  <SolidColorBrush x:Key="DefaultButtonColor">#505050</SolidColorBrush>
+  <SolidColorBrush x:Key="TextColor">#E6EAF3</SolidColorBrush>
+  <SolidColorBrush x:Key="DisabledColor">#8A94AB</SolidColorBrush>
+
+  <!-- Brushes -->
+  <SolidColorBrush x:Key="Brush.Background" Color="{DynamicResource Color.Background}"/>
+  <SolidColorBrush x:Key="Brush.Surface" Color="{DynamicResource Color.Surface}"/>
+  <SolidColorBrush x:Key="Brush.SurfaceElevated" Color="{DynamicResource Color.SurfaceElevated}"/>
+  <SolidColorBrush x:Key="Brush.BorderSubtle" Color="{DynamicResource Color.Border}"/>
+
+  <SolidColorBrush x:Key="Brush.TextPrimary" Color="{DynamicResource Color.Text}"/>
+  <SolidColorBrush x:Key="Brush.TextSecondary" Color="{DynamicResource Color.TextSecondary}"/>
+  <SolidColorBrush x:Key="Brush.TextMuted" Color="{DynamicResource Color.TextMuted}"/>
+
+  <SolidColorBrush x:Key="Brush.Accent" Color="{DynamicResource Color.Primary}"/>
+  <SolidColorBrush x:Key="Brush.AccentHover" Color="{DynamicResource Color.PrimaryHover}"/>
+
+  <!-- Spacing & Radius Tokens -->
+  <Thickness x:Key="Space.1">4</Thickness>
+  <Thickness x:Key="Space.2">8</Thickness>
+  <Thickness x:Key="Space.3">12</Thickness>
+  <Thickness x:Key="Space.4">16</Thickness>
+  <Thickness x:Key="Space.5">24</Thickness>
+  <CornerRadius x:Key="Radius.Small">6</CornerRadius>
+  <CornerRadius x:Key="Radius.Medium">8</CornerRadius>
+  <CornerRadius x:Key="Radius.XL">14</CornerRadius>
+  <CornerRadius x:Key="Radius.2XL">16</CornerRadius>
+
+  <!-- Font -->
+  <FontFamily x:Key="AppFont">Segoe UI, Inter, Arial</FontFamily>
+
+  <!-- Text styles -->
+  <Style x:Key="Text.Heading" Selector="TextBlock">
+  <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
+    <Setter Property="FontSize" Value="20"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+  <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+  </Style>
+  <Style x:Key="Text.Body" Selector="TextBlock">
+  <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
+    <Setter Property="FontSize" Value="14"/>
+  <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
+  </Style>
+</ResourceDictionary>

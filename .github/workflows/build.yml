@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Lumafly-MacOS
-          path: out/mac.zip
+          path: out/LumaflyV2-mac.zip
 
   # needs to run when releasing but before main release action
   build-auto-updater:
@@ -175,7 +175,7 @@ jobs:
           # Linux and Mac were already zipped by their build jobs; move them and rename
           mv ./artifacts/Lumafly-Linux/linux.zip LumaflyV2-Linux.zip
 
-          mv ./artifacts/Lumafly-MacOS/mac.zip LumaflyV2-MacOS.zip
+          mv ./artifacts/Lumafly-MacOS/LumaflyV2-mac.zip LumaflyV2-MacOS.zip
 
       - name: Create release if a new tag is pushed
         if: steps.verify_tag.outputs.on_master == 'true'

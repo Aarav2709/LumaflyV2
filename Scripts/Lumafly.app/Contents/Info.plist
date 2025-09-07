@@ -5,11 +5,11 @@
 	<key>CFBundleExecutable</key>
 	<string>Lumafly</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Lumafly</string>
+	<string>LumaflyV2</string>
 	<key>CFBundleIconFile</key>
 	<string>Lumafly</string>
 	<key>CFBundleName</key>
-	<string>Lumafly</string>
+	<string>LumaflyV2</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>NSHighResolutionCapable</key>

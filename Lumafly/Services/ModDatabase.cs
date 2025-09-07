@@ -21,9 +21,9 @@ namespace Lumafly.Services
 
         private const string FALLBACK_MODLINKS_URI = "https://cdn.jsdelivr.net/gh/hk-modding/modlinks@latest/ModLinks.xml";
         private const string FALLBACK_APILINKS_URI = "https://cdn.jsdelivr.net/gh/hk-modding/modlinks@latest/ApiLinks.xml";
-        
+
         private const string VanillaApiRepo = "https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/AssemblyLinks.json";
-        
+
         public static string GetModlinksUri(ISettings settings) => LINKS_BASE + "/ModLinks.xml";
 
         private static string GetAPILinksUri(ISettings settings) => LINKS_BASE + "/ApiLinks.xml";
@@ -37,10 +37,10 @@ namespace Lumafly.Services
         private readonly List<ModItem> _items = new();
         private readonly List<string> _itemNames = new();
 
-        private ModDatabase(IModSource mods, 
-            IGlobalSettingsFinder _settingsFinder, 
-            ModLinks ml, 
-            ApiLinks al, 
+        private ModDatabase(IModSource mods,
+            IGlobalSettingsFinder _settingsFinder,
+            ModLinks ml,
+            ApiLinks al,
             ISettings? settings = null)
         {
             foreach (var mod in ml.Manifests)
@@ -56,15 +56,15 @@ namespace Lumafly.Services
                     repository: mod.Repository,
                     issues: mod.Issues,
                     dependencies: mod.Dependencies,
-                    
+
                     tags: mod.Tags,
                     integrations: mod.Integrations,
                     authors: mod.Authors,
-                    
+
                     state: mods.FromManifest(mod)
-                    
+
                 );
-                
+
                 _items.Add(item);
                 _itemNames.Add(mod.Name);
             }
@@ -95,26 +95,26 @@ namespace Lumafly.Services
             Api = (al.Manifest.Links.OSUrl, al.Manifest.Version, al.Manifest.Links.SHA256);
         }
 
-        public ModDatabase(IModSource mods, IGlobalSettingsFinder settingsFinder, (ModLinks ml, ApiLinks al) links, ISettings settings) 
+        public ModDatabase(IModSource mods, IGlobalSettingsFinder settingsFinder, (ModLinks ml, ApiLinks al) links, ISettings settings)
             : this(mods, settingsFinder, links.ml, links.al, settings) { }
 
-        public ModDatabase(IModSource mods, IGlobalSettingsFinder settingsFinder, string modlinks, string apilinks) 
+        public ModDatabase(IModSource mods, IGlobalSettingsFinder settingsFinder, string modlinks, string apilinks)
             : this(mods, settingsFinder, FromString<ModLinks>(modlinks), FromString<ApiLinks>(apilinks)) { }
-        
+
         public static async Task<(ModLinks, ApiLinks)> FetchContent(HttpClient hc, ISettings settings, bool fetchOfficial = true)
         {
-            // although slower to fetch one by one, prevents silent errors and hence resulting in 
+            // although slower to fetch one by one, prevents silent errors and hence resulting in
             // empty screen with no error
             ModLinks ml = await FetchModLinks(hc, settings, fetchOfficial);
             ApiLinks al = await FetchApiLinks(hc, settings);
 
             return (ml, al);
         }
-        
+
         public static T FromString<T>(string xml) where T : XmlDataContainer
         {
             var serializer = new XmlSerializer(typeof(T));
-            
+
             using TextReader reader = new StringReader(xml);
 
             var obj = (T?) serializer.Deserialize(reader);
@@ -129,16 +129,57 @@ namespace Lumafly.Services
 
         private static async Task<ApiLinks> FetchApiLinks(HttpClient hc, ISettings settings)
         {
-            return FromString<ApiLinks>(await FetchWithFallback(hc, settings, new Uri(GetAPILinksUri(settings)), new Uri(FALLBACK_APILINKS_URI)));
+            // If Silksong is selected and no custom modlinks are configured, return a minimal API stub
+            if (string.Equals(settings?.Game, GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase)
+                && !(settings?.UseCustomModlinks ?? false))
+            {
+                return new ApiLinks
+                {
+                    Manifest = new ApiManifest
+                    {
+                        Version = 0,
+                        Files = new List<string>(),
+                        Links = new Links
+                        {
+                            Windows = new Link { SHA256 = string.Empty, URL = string.Empty },
+                            Mac = new Link { SHA256 = string.Empty, URL = string.Empty },
+                            Linux = new Link { SHA256 = string.Empty, URL = string.Empty }
+                        }
+                    }
+                };
+            }
+
+            var apisettings = settings ?? Settings.Load() ?? new Settings();
+            return FromString<ApiLinks>(await FetchWithFallback(hc, apisettings, new Uri(GetAPILinksUri(apisettings)), new Uri(FALLBACK_APILINKS_URI)));
         }
-        
+
         private static async Task<ModLinks> FetchModLinks(HttpClient hc, ISettings settings, bool fetchOfficial)
         {
-            if (!fetchOfficial && settings.UseCustomModlinks)
+            // Normalize settings to a guaranteed non-null instance for the rest of this method.
+            var effectiveSettings = settings ?? Settings.Load() ?? new Settings();
+
+            // When Silksong is selected and user hasn't provided a custom list, don't fetch HK modlinks;
+            // instead, return an empty mod list so the UI reflects no available mods for Silksong yet.
+            if (fetchOfficial)
+            {
+                var selectedGame = effectiveSettings.Game;
+                var useCustom = effectiveSettings.UseCustomModlinks;
+                if (string.Equals(selectedGame, GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase) && !useCustom)
+                {
+                    return new ModLinks { Manifests = Array.Empty<Manifest>(), Raw = string.Empty };
+                }
+            }
+
+            if (!fetchOfficial && effectiveSettings.UseCustomModlinks)
             {
                 try
                 {
-                    var modlinksUri = new Uri(settings.CustomModlinksUri);
+                    // Copy to local to satisfy nullable flow analysis and avoid mid-flow mutations.
+                    var customUri = effectiveSettings.CustomModlinksUri;
+                    if (string.IsNullOrWhiteSpace(customUri))
+                        throw new InvalidModlinksException();
+
+                    var modlinksUri = new Uri(customUri);
                     if (modlinksUri.IsFile)
                     {
                         return FromString<ModLinks>(await File.ReadAllTextAsync(modlinksUri.LocalPath));
@@ -146,21 +187,20 @@ namespace Lumafly.Services
 
                     var cts = new CancellationTokenSource(TIMEOUT);
 
-                    //get raw versions of common urls
+                    // Get raw versions of common URLs.
                     Regex githubRegex = new Regex(@"^(http(s?):\/\/)?(www\.)?github.com?");
                     Regex pasteBinRegex = new Regex(@"^(http(s?):\/\/)?(www\.)?pastebin.com?");
 
-                    if (githubRegex.IsMatch(settings.CustomModlinksUri))
+                    if (githubRegex.IsMatch(customUri))
                     {
-                        settings.CustomModlinksUri = settings.CustomModlinksUri
-                            .Replace("github.com", "raw.githubusercontent.com").Replace("/blob/", "/");
+                        customUri = customUri.Replace("github.com", "raw.githubusercontent.com").Replace("/blob/", "/");
                     }
-                    if (pasteBinRegex.IsMatch(settings.CustomModlinksUri))
+                    if (pasteBinRegex.IsMatch(customUri))
                     {
-                        settings.CustomModlinksUri = settings.CustomModlinksUri.Replace("pastebin.com", "pastebin.com/raw");
+                        customUri = customUri.Replace("pastebin.com", "pastebin.com/raw");
                     }
-                    
-                    return FromString<ModLinks>(await hc.GetStringAsync2(settings, new Uri(settings.CustomModlinksUri), cts.Token));
+
+            return FromString<ModLinks>(await hc.GetStringAsync2(effectiveSettings, new Uri(customUri), cts.Token));
                 }
                 catch (Exception e)
                 {
@@ -169,8 +209,9 @@ namespace Lumafly.Services
                 }
             }
 
-            return FromString<ModLinks>(await FetchWithFallback(hc, settings, new Uri(GetModlinksUri(settings)), new Uri(FALLBACK_MODLINKS_URI)));
-            
+        var mlsettings = effectiveSettings;
+        return FromString<ModLinks>(await FetchWithFallback(hc, mlsettings, new Uri(GetModlinksUri(mlsettings)), new Uri(FALLBACK_MODLINKS_URI)));
+
         }
 
         private static async Task<string> FetchWithFallback(HttpClient hc, ISettings? settings, Uri uri, Uri fallback)
@@ -191,16 +232,16 @@ namespace Lumafly.Services
         {
             var cts = new CancellationTokenSource(TIMEOUT);
             var hc = new HttpClient();
-            hc.DefaultRequestHeaders.Add("User-Agent", "Lumafly");
+            hc.DefaultRequestHeaders.Add("User-Agent", "LumaflyV2");
             var json = JsonDocument.Parse(await hc.GetStringAsync2(settings, VanillaApiRepo, cts.Token));
-            
+
             var jsonKey = "Assembly-CSharp.dll.v";
             // windows assembly is just called that because initially this was overlooked and only windows assembly was downloaded
             if (OperatingSystem.IsMacOS()) jsonKey = "Mac-Assembly-CSharp.dll.v";
             if (OperatingSystem.IsLinux()) jsonKey = "Linux-Assembly-CSharp.dll.v";
-            
+
             json.RootElement.TryGetProperty(jsonKey, out var linkElem);
-            
+
             var link = linkElem.GetString();
             if (link != null)
                 return link;
@@ -210,6 +251,6 @@ namespace Lumafly.Services
 
     public class InvalidModlinksException : Exception
     {
-        public InvalidModlinksException() { } 
+        public InvalidModlinksException() { }
     }
 }

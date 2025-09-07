@@ -1,104 +1,91 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Width="825" Height="500"
-        MinWidth="600" 
-        MinHeight="500"
-        x:Class="Lumafly.Views.Windows.MainWindow"
-        Icon="/Assets/Lumafly.ico"
-        Title="Lumafly"
-		xmlns:vm="using:Lumafly.ViewModels"
-		ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaTitleBarHeightHint="-1"
-        x:DataType="vm:MainWindowViewModel"
-        TransparencyLevelHint="Transparent">
-    <Border 
-		CornerRadius="{CompiledBinding CornerRadius}" 
-		BorderBrush="{CompiledBinding BorderBrush}" 
-		BorderThickness="{CompiledBinding BorderThickness}">
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:vm="using:Lumafly.ViewModels"
+                Width="1200" Height="800"
+                MinWidth="900"
+                MinHeight="650"
+                x:Class="Lumafly.Views.Windows.MainWindow"
+                Icon="/Assets/Lumafly.ico"
+                Title="LumaflyV2"
+                WindowState="Maximized"
+                x:DataType="vm:MainWindowViewModel"
+                Background="{DynamicResource Brush.Background}">
 
-        <Grid
-			ColumnDefinitions="Auto Auto Auto Auto * Auto"
-			RowDefinitions="Auto 1 Auto *">
+    <!-- Main Layout: Flat Top Bar | Content | Smaller Bottom Nav -->
+    <Grid RowDefinitions="Auto,*,Auto">
 
-            <Rectangle
-				Grid.Row="0" Grid.RowSpan="3"
-				Grid.Column="0" Grid.ColumnSpan="6"
-				IsHitTestVisible="False" />
+        <!-- Top Bar - Flat and Square -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource Brush.Surface}"
+                BorderBrush="{DynamicResource Brush.Border}"
+                BorderThickness="0,0,0,1"
+                Padding="24,16">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- Left: Branding and Version -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="LumaflyV2"
+                               FontFamily="{DynamicResource GameFont}"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource Brush.TextPrimary}"/>
+                    <TextBlock Text="{CompiledBinding AppVersion}"
+                               VerticalAlignment="Center"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="14"
+                               Foreground="{DynamicResource Brush.TextSecondary}"/>
+                </StackPanel>
+                <!-- Right: Game selector on top bar -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="Game:" VerticalAlignment="Center"
+                               FontFamily="{DynamicResource UIFont}"
+                               Foreground="{DynamicResource Brush.TextSecondary}"/>
+                    <ComboBox MinWidth="220"
+                              ItemsSource="{CompiledBinding TopBarAvailableGames}"
+                              SelectedItem="{CompiledBinding TopBarSelectedGame, Mode=TwoWay}"
+                              FontFamily="{DynamicResource UIFont}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-            <Rectangle
-				Name="MacSpacer"
-				IsVisible="False"
-				Grid.Row="0" Grid.Column="0"
-				Width="70" Height="1"
-				Fill="Transparent"
-				IsHitTestVisible="False"
-				/>
-            <Rectangle
-				Name="NonMacSpacer"
-				IsVisible="True"
-				Grid.Row="0" Grid.Column="5"
-				Width="125" Height="1"
-				Fill="Transparent"
-				IsHitTestVisible="False"
-				/>
+        <!-- Content Area with Transitions -->
+        <TransitioningContentControl Grid.Row="1"
+                                     Content="{Binding Content}"
+                                     Background="{DynamicResource Brush.Background}"/>
 
-            <Image
-				Grid.Column="1" Grid.Row="0"
-				Width="30" Height="30"
-				Source="/Assets/Lumafly.png"
-				VerticalAlignment="Center" 
-				HorizontalAlignment="Left"
-				Margin="5,0,0,5"/>
-			
-			<TextBlock
-				Name="AppName"
-				Grid.Column="2" Grid.Row="0"
-				Height="30" 
-				FontSize="23"
-				MaxWidth="200"
-				Text="{CompiledBinding AppName}" 
-				VerticalAlignment="Center"
-				Margin="5,0,0,5" />
-            
-            <TextBlock
-				Name="AppVersion"
-				Grid.Column="3" Grid.Row="0"
-				Height="12" 
-				FontSize="12"
-				MaxWidth="200"
-				Text="{CompiledBinding AppVersion}" 
-				VerticalAlignment="Center"
-				Margin="1,5,0,0" />
-            
-            <TabStrip Grid.Row="0" Grid.Column="4"
-                      HorizontalAlignment="Center"
-                      Name="TabStrip"
-                      SelectedIndex="{Binding SelectedTabIndex}"
-                      ItemsSource="{CompiledBinding Tabs}">
-	            <TabStrip.Styles>
-		            <Style Selector="TabStripItem">
-			            <Setter Property="Margin" Value="1"/>
-			            <Setter Property="Padding" Value="6"/>
-			            <Setter Property="VerticalContentAlignment" Value="Center"/>
-		            </Style>
-	            </TabStrip.Styles>
-	            <TabStrip.ItemTemplate>
-		            <DataTemplate>
-			            <Label Content="{ReflectionBinding DisplayName}"/>
-		            </DataTemplate>
-	            </TabStrip.ItemTemplate>
-            </TabStrip>
-
-            <Rectangle
-				Grid.Column="0" Grid.ColumnSpan="6"
-				Grid.Row="1" 
-				Fill="#a9a9a9"/>
-
-            <UserControl
-	            Grid.Column="0" Grid.ColumnSpan="6"
-	            Grid.Row="3"
-	            Content="{Binding Content}">
-            </UserControl>
-        </Grid>
-    </Border>
+        <!-- Bottom Navigation - Icon + Text, centered -->
+        <ListBox Grid.Row="2"
+                 Classes="bottom-nav"
+                 SelectedIndex="{Binding BottomNavIndex, Mode=TwoWay}">
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <PathIcon Data="{StaticResource apps_regular}" Width="18" Height="18"/>
+                    <TextBlock Text="Game Launcher"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <PathIcon Data="{StaticResource book_database_regular}" Width="18" Height="18"/>
+                    <TextBlock Text="Mods"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <PathIcon Data="{StaticResource settings_regular}" Width="18" Height="18"/>
+                    <TextBlock Text="Settings"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
+    </Grid>
 </Window>

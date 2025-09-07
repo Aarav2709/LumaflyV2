@@ -7,7 +7,6 @@ using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Lumafly.Interfaces;
-using Lumafly.Models;
 using Lumafly.Services;
 using Lumafly.Util;
 using System;
@@ -25,6 +24,7 @@ using System.Threading.Tasks;
 using PropertyChanged.SourceGenerator;
 using Lumafly.Enums;
 using FileSystem = System.IO.Abstractions.FileSystem;
+using Lumafly.Models;
 
 namespace Lumafly.ViewModels
 {
@@ -56,8 +56,56 @@ namespace Lumafly.ViewModels
     public IBrush BorderBrush => new SolidColorBrush(Color.FromRgb(0x28, 0x28, 0x28));
     public Thickness BorderThickness => new(1);
     public CornerRadius CornerRadius => new(3);
-    public string AppName => $"Lumafly";
+  public string AppName => "LumaflyV2";
     public string AppVersion => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
+
+    // Expose mode/profile for app bar pills; sensible defaults if services not yet initialized
+    public string CurrentMode => "Modded";
+    public string ActiveProfileName
+    {
+      get
+      {
+        try
+        {
+          var s = Settings.Load();
+          var key = s?.Game ?? Lumafly.Models.GameProfiles.HollowKnightKey;
+          return Lumafly.Models.GameProfiles.GetByKey(key).Name;
+        }
+        catch
+        {
+          return Lumafly.Models.GameProfiles.HollowKnight.Name;
+        }
+      }
+    }
+
+    // Top bar game selector backing properties
+    public ObservableCollection<string> TopBarAvailableGames { get; } = new(new[] { GameProfiles.HollowKnight.Name, GameProfiles.Silksong.Name });
+
+    public string TopBarSelectedGame
+    {
+      get
+      {
+        try
+        {
+          var s = Settings.Load();
+          var key = s?.Game ?? GameProfiles.HollowKnightKey;
+          return GameProfiles.GetByKey(key).Name;
+        }
+        catch
+        {
+          return GameProfiles.HollowKnight.Name;
+        }
+      }
+      set
+      {
+        var key = value == GameProfiles.Silksong.Name ? GameProfiles.SilksongKey : GameProfiles.HollowKnightKey;
+        // Defer to a centralized async switch that updates ManagedFolder and reloads services.
+        Dispatcher.UIThread.Post(async () =>
+        {
+          await SwitchGameAsync(key);
+        });
+      }
+    }
 
     [Notify]
     private ObservableCollection<SelectableItem<ViewModelBase>> _tabs = new();
@@ -67,6 +115,37 @@ namespace Lumafly.ViewModels
 
     [Notify]
     private bool _loading = true;
+
+  private int _bottomNavIndex;
+
+    public int BottomNavIndex
+    {
+      get => SelectedTabIndex switch
+      {
+        // Map existing tabs to: 0=Game Launcher(Info), 1=Mods, 2=Settings
+        0 => 0,
+        1 => 1,
+        3 => 2,
+        _ => 0
+      };
+      set
+      {
+        // Remap bottom nav to actual SelectedTabIndex: 0->0 (Info), 1->1 (Mods), 2->3 (Settings)
+        var mapped = value switch
+        {
+          0 => 0,
+          1 => 1,
+          2 => 3,
+          _ => 0
+        };
+        if (SelectedTabIndex != mapped)
+          SelectedTabIndex = mapped;
+        _bottomNavIndex = value;
+        RaisePropertyChanged(nameof(BottomNavIndex));
+      }
+    }
+
+  // BottomNavIndex getter maps to SelectedTabIndex; bindings will re-evaluate when SelectedTabIndex changes.
 
     /// <summary>
     /// The main function that loads the data the app needs and sets up all the services
@@ -85,7 +164,7 @@ namespace Lumafly.ViewModels
         LoadingPage = new LoadingViewModel();
       }
 
-      Trace.WriteLine($"Opening Lumafly Version: {Assembly.GetExecutingAssembly().GetName().Version}");
+  Trace.WriteLine($"Opening LumaflyV2 Version: {Assembly.GetExecutingAssembly().GetName().Version}");
 
       var urlSchemeHandler = new UrlSchemeHandler(handled: !isFirstLoad);
 
@@ -135,7 +214,7 @@ namespace Lumafly.ViewModels
           MustRevalidate = true
         };
 
-        hc.DefaultRequestHeaders.Add("User-Agent", "Lumafly");
+  hc.DefaultRequestHeaders.Add("User-Agent", "LumaflyV2");
       }
 
       HttpClient hc = new HttpClient();
@@ -161,9 +240,9 @@ namespace Lumafly.ViewModels
           }
           catch (InvalidModlinksException)
           {
-            await MessageBoxUtil.GetMessageBoxStandardWindow(
-                "Invalid Custom Modlinks",
-                $"Lumafly was unable to load modlinks from {settings.CustomModlinksUri}. Lumafly will load official modlinks instead.",
+      await MessageBoxUtil.GetMessageBoxStandardWindow(
+        "Invalid Custom Modlinks",
+        $"LumaflyV2 was unable to load modlinks from {settings.CustomModlinksUri}. LumaflyV2 will load official modlinks instead.",
                 icon: Icon.Error
             ).ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
           }
@@ -301,7 +380,7 @@ namespace Lumafly.ViewModels
         var prompt = urlSchemeHandler.UrlSchemeCommand switch
         {
           UrlSchemeCommands.download => $"Download the following mods: {GetListOfMods()}",
-          UrlSchemeCommands.reset => $"Reset Lumafly's persistent settings",
+          UrlSchemeCommands.reset => $"Reset LumaflyV2's persistent settings",
           UrlSchemeCommands.forceUpdateAll => $"Reinstall all mods which could help fix issues that happened because mods are not downloaded correctly.",
           UrlSchemeCommands.customModLinks => $"Load a custom mod list from: {urlSchemeHandler.Data}",
           UrlSchemeCommands.removeAllModsGlobalSettings => $"Reset all mods' global settings",
@@ -434,7 +513,7 @@ namespace Lumafly.ViewModels
 
           Dispatcher.UIThread.InvokeAsync(async () => await urlSchemeHandler.ShowConfirmation(
               title: "Use official modlinks url command",
-              message: "Lumafly will now use official modlinks"));
+              message: "LumaflyV2 will now use official modlinks"));
         }
 
         settings.Save();
@@ -456,7 +535,9 @@ namespace Lumafly.ViewModels
 
     private static async Task EnsureAccessToConfigFile()
     {
-      if (!File.Exists(InstalledMods.ConfigPath)) return;
+      var s = Settings.Load();
+      var cfgPath = s is null ? InstalledMods.LegacyConfigPath : InstalledMods.GetConfigPathFor(s);
+      if (!File.Exists(cfgPath)) return;
       try
       {
         bool configAccessSuccess = false;
@@ -464,7 +545,7 @@ namespace Lumafly.ViewModels
         {
           try
           {
-            var configFile = File.Open(InstalledMods.ConfigPath, FileMode.Open, FileAccess.ReadWrite,
+            var configFile = File.Open(cfgPath, FileMode.Open, FileAccess.ReadWrite,
                 FileShare.None);
             configFile.Close();
             configAccessSuccess = true;
@@ -476,7 +557,7 @@ namespace Lumafly.ViewModels
             {
               if (OperatingSystem.IsWindows())
               {
-                var processes = FileAccessLookup.WhoIsLocking(InstalledMods.ConfigPath);
+                var processes = FileAccessLookup.WhoIsLocking(cfgPath);
                 additionalInfo =
                     $"\n\nProcesses that are locking the file:\n{string.Join("\n", processes.Select(x => x.ProcessName))}";
               }
@@ -489,7 +570,7 @@ namespace Lumafly.ViewModels
             await MessageBoxUtil.GetMessageBoxStandardWindow
             (
                 title: "File access error!!",
-                text: $"Lumafly cannot run without being able to access {InstalledMods.ConfigPath}.\n" +
+                text: $"LumaflyV2 cannot run without being able to access {cfgPath}.\n" +
                       $"Please close any other apps that could be using that" + additionalInfo,
                 icon: Icon.Error
             ).ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
@@ -523,12 +604,13 @@ namespace Lumafly.ViewModels
 
     private static async Task<string> GetSettingsPath()
     {
-      var path = await Settings.TryAutoDetect();
+  // Detect based on currently selected/loaded profile, not whatever was persisted before
+  var loaded = Settings.Load();
+  var profile = loaded?.CurrentProfile ?? Lumafly.Models.GameProfiles.HollowKnight;
+  var path = await Settings.TryAutoDetect(profile);
 
-      // Ensure `profile` is available for both the "unable to detect" and "detected" UI flows.
-      // Previously `profile` was declared after being used which caused CS0103/CS0841 errors.
-      var loaded = Settings.Load();
-      var profile = loaded?.CurrentProfile ?? Lumafly.Models.GameProfiles.HollowKnight;
+  // Ensure `profile` is available for both the "unable to detect" and "detected" UI flows.
+  // Previously `profile` was declared after being used which caused CS0103/CS0841 errors.
 
       if (path is null)
       {
@@ -602,6 +684,91 @@ namespace Lumafly.ViewModels
 
       Loading = false;
       if (isFirstLoad) isFirstLoad = false;
+    }
+
+    /// <summary>
+    /// Switches the active game profile, updates the ManagedFolder if a matching install is detected,
+    /// saves settings, and reloads the app while preserving the current tab.
+    /// </summary>
+    public async Task SwitchGameAsync(string key)
+    {
+      try
+      {
+        var s = Settings.Load();
+        if (s is null) return;
+        var oldKey = s.Game ?? GameProfiles.HollowKnightKey;
+        if (string.Equals(oldKey, key, StringComparison.OrdinalIgnoreCase))
+        {
+          // no change
+          return;
+        }
+
+        s.Game = key;
+        // Persist the selected Game immediately so other components see it if they read from disk.
+        s.Save();
+
+        // Try to auto-detect install for the selected game and update ManagedFolder accordingly.
+        var selectedProfile = Lumafly.Models.GameProfiles.GetByKey(key);
+        bool detectedForSelected = false;
+        try
+        {
+          var vp = await Settings.TryAutoDetect(selectedProfile);
+          if (vp is not null)
+          {
+            var managed = System.IO.Path.Combine(vp.Root, vp.Suffix);
+            if (System.IO.Directory.Exists(managed))
+            {
+              s.ManagedFolder = managed;
+              detectedForSelected = true;
+            }
+          }
+        }
+        catch { /* best-effort; keep existing ManagedFolder if detection fails */ }
+
+        // If we didn’t detect a matching install and the current ManagedFolder doesn’t belong to the selected profile,
+        // clear it to force a re-selection on reload. This prevents using HK’s path when Silksong is selected (and vice versa).
+        if (!detectedForSelected)
+        {
+          try
+          {
+            var dataFolders = Lumafly.Models.GameProfiles.GetDataFolderCandidates(selectedProfile)
+                .Concat(new[] { System.IO.Path.Combine("Contents", "Resources", "Data") })
+                .Distinct()
+                .Select(df => System.IO.Path.Combine(df, "Managed"));
+
+            bool managedMatchesSelected = dataFolders.Any(df => s.ManagedFolder?.Replace('/', System.IO.Path.DirectorySeparatorChar)
+                .EndsWith(df.Replace('/', System.IO.Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase) == true);
+
+            if (!managedMatchesSelected)
+            {
+              s.ManagedFolder = string.Empty; // invalidate to trigger ResetSettings()
+            }
+          }
+          catch { /* ignore */ }
+        }
+
+        // Clear InstalledMods cache when switching games to avoid cross-game leakage.
+        try
+        {
+          var currentConfigPath = InstalledMods.GetConfigPathFor(s);
+          if (System.IO.File.Exists(currentConfigPath))
+          {
+            System.IO.File.Delete(currentConfigPath);
+          }
+        }
+        catch { /* ignore */ }
+
+        s.Save();
+
+        // Notify header bindings right away
+        RaisePropertyChanged(nameof(TopBarSelectedGame));
+        RaisePropertyChanged(nameof(ActiveProfileName));
+
+        // Preserve current selected tab when reloading
+  var currentTab = SelectedTabIndex;
+  await LoadApp(currentTab < 0 ? 0 : currentTab);
+      }
+      catch { /* ignore dispatch-time errors */ }
     }
   }
 }

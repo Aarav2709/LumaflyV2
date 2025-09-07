@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Exact Color Palette from Requirements -->
+  <!-- Dim red background & maroonish surface per request -->
+  <Color x:Key="Color.Background">#1A0E0E</Color>
+  <Color x:Key="Color.Surface">#2A1111</Color> <!-- maroonish dim red for top bar/cards -->
+  <Color x:Key="Color.SurfaceElevated">#3B1717</Color>
+  <Color x:Key="Color.Accent">#C1272D</Color>
+  <Color x:Key="Color.AccentHover">#E03A40</Color>
+  <Color x:Key="Color.TextPrimary">#E5E5E5</Color>
+  <Color x:Key="Color.TextSecondary">#9C9C9C</Color>
+  <Color x:Key="Color.Shadow">#00000066</Color>
+
+  <!-- Brushes from exact palette -->
+  <SolidColorBrush x:Key="Brush.Background" Color="{DynamicResource Color.Background}"/>
+  <SolidColorBrush x:Key="Brush.Surface" Color="{DynamicResource Color.Surface}"/>
+  <SolidColorBrush x:Key="Brush.SurfaceElevated" Color="{DynamicResource Color.SurfaceElevated}"/>
+  <SolidColorBrush x:Key="Brush.Accent" Color="{DynamicResource Color.Accent}"/>
+  <SolidColorBrush x:Key="Brush.AccentHover" Color="{DynamicResource Color.AccentHover}"/>
+  <SolidColorBrush x:Key="Brush.TextPrimary" Color="{DynamicResource Color.TextPrimary}"/>
+  <SolidColorBrush x:Key="Brush.TextSecondary" Color="{DynamicResource Color.TextSecondary}"/>
+  <SolidColorBrush x:Key="Brush.Shadow" Color="{DynamicResource Color.Shadow}"/>
+
+  <!-- Derived colors for borders and states -->
+  <SolidColorBrush x:Key="Brush.Border" Color="#4A1E1E"/>
+  <SolidColorBrush x:Key="Brush.BorderSubtle" Color="#3A1717"/>
+  <SolidColorBrush x:Key="Brush.TextInverted" Color="#0E0E10"/>
+
+  <!-- Design tokens -->
+  <Thickness x:Key="Space.1">4</Thickness>
+  <Thickness x:Key="Space.2">8</Thickness>
+  <Thickness x:Key="Space.3">12</Thickness>
+  <Thickness x:Key="Space.4">16</Thickness>
+  <Thickness x:Key="Space.5">24</Thickness>
+  <Thickness x:Key="Space.6">32</Thickness>
+
+  <CornerRadius x:Key="Radius.SM">4</CornerRadius>
+  <CornerRadius x:Key="Radius.MD">8</CornerRadius>
+  <CornerRadius x:Key="Radius.LG">12</CornerRadius>
+
+  <!-- Typography - Consistent font families -->
+  <FontFamily x:Key="GameFont">Segoe UI, Inter, Arial, sans-serif</FontFamily>
+  <FontFamily x:Key="UIFont">Segoe UI, Inter, Arial, sans-serif</FontFamily>
+  <FontFamily x:Key="AppFont">Segoe UI, Inter, Arial, sans-serif</FontFamily>
+</ResourceDictionary>

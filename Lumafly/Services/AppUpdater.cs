@@ -35,7 +35,7 @@ public class AppUpdater : IAppUpdater
             UIFactory = new UIFactory(null)
             {
                 AdditionalReleaseNotesHeaderHTML = """
-                <style> 
+                <style>
                 html {background: #101727; background-color: #101727; color: #dedede;}
                 </style>
                 """,
@@ -60,10 +60,10 @@ public class AppUpdater : IAppUpdater
             CheckServerFileName = false,
             RelaunchAfterUpdate = true,
         };
-        
+
         _sparkleUpdater.DownloadHadError += OnDownloadError;
     }
-    
+
     /// <summary>
     /// Runs the code to check for update. If its windows it uses NetSparkle, otherwise it does it manually
     /// </summary>
@@ -109,7 +109,7 @@ public class AppUpdater : IAppUpdater
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
             var links = GetUpdateLinks();
-            
+
             await DisplayErrors.DisplayGenericError(Resources.MWVM_UpdateDownloadError_Message, exception);
 
             var updateLink = (await links)?.updateLink ?? "https://github.com/TheMulhima/Lumafly/releases/latest";
@@ -148,30 +148,30 @@ public class AppUpdater : IAppUpdater
             const string LatestReleaseLinkJson =
                 "https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/UpdateLinks.json";
             string? latestRelease, updateLink, changelog;
-            
+
             var hc = new HttpClient();
-            hc.DefaultRequestHeaders.Add("User-Agent", "Lumafly");
-            
+            hc.DefaultRequestHeaders.Add("User-Agent", "LumaflyV2");
+
             CancellationTokenSource cts = new CancellationTokenSource(Timeout);
             var links = await hc.GetStringAsync2(_settings, new Uri(LatestReleaseLinkJson), cts.Token);
-            
+
             JsonDocument linksDoc = JsonDocument.Parse(links);
-            if (!linksDoc.RootElement.TryGetProperty(nameof(latestRelease), out JsonElement latestReleaseLinkElem)) 
+            if (!linksDoc.RootElement.TryGetProperty(nameof(latestRelease), out JsonElement latestReleaseLinkElem))
                 return null;
-            if (!linksDoc.RootElement.TryGetProperty(nameof(updateLink), out JsonElement updateLinkElem)) 
+            if (!linksDoc.RootElement.TryGetProperty(nameof(updateLink), out JsonElement updateLinkElem))
                 return null;
-            if (!linksDoc.RootElement.TryGetProperty(nameof(changelog), out JsonElement changeLogElem)) 
+            if (!linksDoc.RootElement.TryGetProperty(nameof(changelog), out JsonElement changeLogElem))
                 return null;
-            
+
             latestRelease = latestReleaseLinkElem.GetString();
             updateLink = updateLinkElem.GetString();
             changelog = changeLogElem.GetString();
             if (latestRelease is null || updateLink is null || changelog is null)
                 return null;
-            
+
             return (latestRelease, updateLink, changelog);
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             Trace.WriteLine(e);
             return null;
@@ -186,12 +186,12 @@ public class AppUpdater : IAppUpdater
         try
         {
             var hc = new HttpClient();
-            hc.DefaultRequestHeaders.Add("User-Agent", "Lumafly");
-            
+            hc.DefaultRequestHeaders.Add("User-Agent", "LumaflyV2");
+
             var links = await GetUpdateLinks();
             if (links is null)
                 return;
-            
+
             var cts = new CancellationTokenSource(Timeout);
             var latestRepoInfo = await hc.GetStringAsync2(_settings, new Uri(links.Value.latestReleaseInfo), cts.Token);
 
@@ -207,7 +207,7 @@ public class AppUpdater : IAppUpdater
                 return;
             if (version <= current_version)
                 return;
-            
+
             string? res = await MessageBoxUtil.GetMessageBoxCustomWindow
             (
                 new MessageBoxCustomParams {
@@ -224,7 +224,7 @@ public class AppUpdater : IAppUpdater
             if (res == Resources.MWVM_OutOfDate_GetLatest)
             {
                 Process.Start(new ProcessStartInfo(links.Value.updateLink) { UseShellExecute = true });
-                
+
                 ((IClassicDesktopStyleApplicationLifetime?) Application.Current?.ApplicationLifetime)?.Shutdown();
             }
             else
@@ -237,6 +237,6 @@ public class AppUpdater : IAppUpdater
             Trace.WriteLine(e);
         }
     }
-    
+
     const int Timeout = 15_000;
 }

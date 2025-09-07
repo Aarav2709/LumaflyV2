@@ -175,10 +175,10 @@
     <value>有更新！</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Lumafly 有更新，建议更新到最新版（v{0}）以获取最新的 bug 修复以及功能。</value>
+    <value>LumaflyV2 有更新，建议更新到最新版（v{0}）以获取最新的 bug 修复以及功能。</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly 下载自动更新失败，将会在浏览器中打开最新版下载链接。</value>
+    <value>LumaflyV2 自动下载更新失败，将在浏览器中打开最新版下载链接。</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>警告</value>
@@ -427,7 +427,7 @@
     <value>正在等待 JsDelivr 响应……</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>以管理员身份运行 Lumafly 可能会解决这个问题</value>
+    <value>以管理员身份运行 LumaflyV2 可能会解决这个问题</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>在 {0} {1} 时出现错误</value>
@@ -469,7 +469,7 @@
     <value>固定</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>固定 Mod 以使 Lumafly 不再自动替换它</value>
+    <value>固定 Mod 以使 LumaflyV2 不再自动替换它</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value>取消固定</value>
@@ -478,7 +478,7 @@
     <value>无法获取 Mod 列表</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>是否以离线模式启动 Lumafly？</value>
+    <value>是否以离线模式启动 LumaflyV2？</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>选择作者</value>
@@ -505,13 +505,13 @@
     <value>使用自定义 Mod 列表</value>
   </data>
   <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
-    <value>通常情况下，Lumafly 加载官方的 Mod 列表。如需自定义，则需输入其 URI，可为 HTTPS 或文件（格式为 file://{filepath}）。\n输入空链接或无效链接将会加载官方 Mod 列表</value>
+    <value>通常情况下，LumaflyV2 加载官方的 Mod 列表。如需自定义，请在此输入其 URI，可为 HTTPS 或文件（格式为 file://{filepath}）。\n输入空链接或无效链接将会加载官方 Mod 列表</value>
   </data>
   <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
     <value>输入自定义 Mod 列表链接。需要重新加载生效</value>
   </data>
   <data name="XAML_ReloadLumafly" xml:space="preserve">
-    <value>重新加载 Lumafly</value>
+    <value>重新加载 LumaflyV2</value>
   </data>
   <data name="XAML_ReloadPrompt" xml:space="preserve">
     <value>（重新加载来应用更改）</value>
@@ -520,7 +520,7 @@
     <value>关于</value>
   </data>
   <data name="XAML_InfoBody" xml:space="preserve">
-    <value>Lumafly 是适用于《空洞骑士》1.5 版本的 Mod 安装器，不适用于更旧版的《空洞骑士》。</value>
+    <value>LumaflyV2 是适用于《空洞骑士》1.5 版本的 Mod 安装器，不适用于更旧版的《空洞骑士》。</value>
   </data>
   <data name="XAML_InfoLinksHeader" xml:space="preserve">
     <value>相关链接</value>

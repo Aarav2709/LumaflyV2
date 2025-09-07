@@ -175,10 +175,10 @@
     <value>Desatualizado!</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Lumafly tem uma nova atualização disponível. Por favor baixe a atualização mais nova (v{0}) para obter as últimas correções de erros e funcionalidades.</value>
+    <value>LumaflyV2 tem uma nova atualização disponível. Por favor, baixe a versão mais recente (v{0}) para obter as últimas correções e funcionalidades.</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly falhou em baixar atualização automaticamente. Lumafly abrirá agora o link para obter a última versão</value>
+    <value>O LumaflyV2 não conseguiu baixar a atualização automaticamente. O LumaflyV2 abrirá o link para obter a versão mais recente</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>Aviso</value>
@@ -427,7 +427,7 @@
     <value>Esperando uma resposta de jsdelivr...</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>Tente executar Lumafly como um administrador, isso pode resolver o problema</value>
+    <value>Tente executar o LumaflyV2 como administrador; isso pode resolver o problema</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>Uma exceção ocorrer enquanto {0} {1}</value>
@@ -469,7 +469,7 @@
     <value>Fixar</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>Fixar um mod para que não seja automaticamente substituído por Lumafly</value>
+    <value>Fixe um mod para que ele não seja substituído automaticamente pelo LumaflyV2</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value> Desafixar</value>
@@ -478,7 +478,7 @@
     <value>Impossível obter modlinks</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Você quer iniciar Lumafly no modo offline?</value>
+    <value>Você quer iniciar o LumaflyV2 no modo offline?</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>Selecionar Autores</value>
@@ -505,13 +505,13 @@
     <value>Usar Modlinks Personalizado</value>
   </data>
   <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
-    <value> Normalmente, Lumafly carrega sua lista de mods do modlinks oficial. Se você quiser carregar o seu próprio então insira sua URI aqui. Aceita-se links https ou arquivos (no formato file://{caminho do arquivo}). \nLinks vazios ou links inválidos vão carregar o modlinks oficial</value>
+    <value>Normalmente, o LumaflyV2 carrega sua lista de mods do modlinks oficial. Se quiser usar um próprio, insira aqui sua URI; aceita links https ou arquivos (no formato file://{caminho do arquivo}). \nLinks vazios ou inválidos carregarão o modlinks oficial</value>
   </data>
   <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
     <value>Insira o link para o modlinks personalizado. Necessita-se recarregar para fazer efeito</value>
   </data>
   <data name="XAML_ReloadLumafly" xml:space="preserve">
-    <value> Recarregar Lumafly</value>
+    <value> Recarregar LumaflyV2</value>
   </data>
   <data name="XAML_ReloadPrompt" xml:space="preserve">
     <value>(Recarregue para que mudanças façam efeito)</value>

@@ -23,12 +23,12 @@ public class ModLinksChanges : IModLinksChanges
     private readonly ISettings settings;
     private readonly LumaflyMode lumaflyMode;
     private readonly IEnumerable<ModItem> currentItems;
-    
+
     /// <summary>
     /// TriState variable to decide if whats new should be displayed.
     /// Default (null) means its not loaded yet
     /// True means it has successfully loaded
-    /// False means something has failed and nothing should be displayed as it would be undefined behaviour 
+    /// False means something has failed and nothing should be displayed as it would be undefined behaviour
     /// </summary>
     public bool? IsLoaded { get; private set; }
 
@@ -39,7 +39,7 @@ public class ModLinksChanges : IModLinksChanges
         lumaflyMode = _lumaflyMode;
         Trace.WriteLine("ModlinksChanges service created");
     }
-    
+
     /// <summary>
     /// Actually runs the service. Needs to be called in <see cref="ViewModels.ModListViewModel"/> because after its
     /// completion, we need raise property changed and reselect the mods which we can't access here.
@@ -53,15 +53,15 @@ public class ModLinksChanges : IModLinksChanges
             IsLoaded = false;
             return;
         }
-        
+
         var result = await WorkaroundHttpClient.TryWithWorkaroundAsync(
-            settings.RequiresWorkaroundClient 
+            settings.RequiresWorkaroundClient
                 ? HttpSetting.OnlyWorkaround
                 : HttpSetting.TryBoth,
             FetchContent,
             AddHttpConfig
         );
-        
+
         IsLoaded = result.Result;
     }
 
@@ -81,8 +81,8 @@ public class ModLinksChanges : IModLinksChanges
         var fetch_new_month = await GetAndUpdateRecentChangeInfo(hc, links.Value.new_month, ModChangeState.New, HowRecentModChanged.Month);
         var fetch_updated_week = await GetAndUpdateRecentChangeInfo(hc, links.Value.updated_week, ModChangeState.Updated, HowRecentModChanged.Week);
         var fetch_updated_month = await GetAndUpdateRecentChangeInfo(hc, links.Value.updated_month, ModChangeState.Updated, HowRecentModChanged.Month);
-        
-        // we don't need to worry about concurrent running tasks throwing unhandled errors as the function will not throw 
+
+        // we don't need to worry about concurrent running tasks throwing unhandled errors as the function will not throw
         var success = new List<bool>
         {
             fetch_new_week,
@@ -90,7 +90,7 @@ public class ModLinksChanges : IModLinksChanges
             fetch_updated_week,
             fetch_updated_month,
         };
-        
+
         // fetch sorting after all others finished
         var fetch_sortOrder = await GetAndUpdateSortOrder(hc, links.Value.sortOrder);
         success.Add(fetch_sortOrder);
@@ -102,7 +102,7 @@ public class ModLinksChanges : IModLinksChanges
         // only make IsLoaded true if all are true
         return success.All(x => x);
     }
-    
+
     /// <summary>
     /// Get links from the json in static resources branch
     /// </summary>
@@ -113,15 +113,15 @@ public class ModLinksChanges : IModLinksChanges
             JsonDocument linkJson = JsonDocument.Parse(
                 await hc.GetStringAsync2(
                     settings,
-                    new Uri("https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/ModlinksChanges.json"), 
+                    new Uri("https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/ModlinksChanges.json"),
                     new CancellationTokenSource(ModDatabase.TIMEOUT).Token));
 
             string GetPropertyFromDocument(string keyName)
             {
-                return linkJson.RootElement.GetProperty(keyName).GetString() 
+                return linkJson.RootElement.GetProperty(keyName).GetString()
                        ?? throw new Exception($"{keyName} not found in links json");
             }
-            
+
             ChangesLinks result = new (
                 GetPropertyFromDocument(nameof(result.new_week)),
                 GetPropertyFromDocument(nameof(result.new_month)),
@@ -150,7 +150,7 @@ public class ModLinksChanges : IModLinksChanges
         {
             var modNamesString = await hc.GetStringAsync2(
                 settings,
-                new Uri(link), 
+                new Uri(link),
                 new CancellationTokenSource(ModDatabase.TIMEOUT).Token);
 
             var modList = modNamesString
@@ -158,7 +158,7 @@ public class ModLinksChanges : IModLinksChanges
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Where(x => currentItems.Any(mod => x == mod.Name))
                 .Select(x => currentItems.First(y => y.Name == x));
-            
+
             foreach (var mod in modList)
             {
                 mod.RecentChangeInfo.AddChanges(changeState, howRecentModChanged);
@@ -170,9 +170,9 @@ public class ModLinksChanges : IModLinksChanges
         {
             Trace.WriteLine($"An exception occured when trying to get the modlinks changes: {e}" );
             return false;
-        } 
+        }
     }
-    
+
     /// <summary>
     /// Get the last modlinks.xml file used by HKModLinksHistory and compare it with current modlinks to get todays changes
     /// </summary>
@@ -183,7 +183,7 @@ public class ModLinksChanges : IModLinksChanges
         {
             var oldModlinks = ModDatabase.FromString<ModLinks>(await hc.GetStringAsync2(
                 settings,
-                lastUsedModlinks, 
+                lastUsedModlinks,
                 new CancellationTokenSource(ModDatabase.TIMEOUT).Token));
 
             foreach (var mod in currentItems.Where(x => x.State is not NotInModLinksState { ModlinksMod: false }))
@@ -203,7 +203,7 @@ public class ModLinksChanges : IModLinksChanges
                     mod.RecentChangeInfo.AddSortOrder(-1); // not going to bother sorting further should just appear at the top
                 }
             }
-            
+
             return true;
         }
         catch(Exception e)
@@ -212,7 +212,7 @@ public class ModLinksChanges : IModLinksChanges
             return false;
         }
     }
-    
+
     /// <summary>
     /// Get the sort order from ChangedMods-month which will be used to sort instead of alphabetical
     /// </summary>
@@ -223,7 +223,7 @@ public class ModLinksChanges : IModLinksChanges
         {
             var modNamesString = await hc.GetStringAsync2(
                 settings,
-                new Uri(link), 
+                new Uri(link),
                 new CancellationTokenSource(ModDatabase.TIMEOUT).Token);
 
             var modNamesList = modNamesString
@@ -234,10 +234,10 @@ public class ModLinksChanges : IModLinksChanges
 
             // it gives us the opposite order we need
             modNamesList.Reverse();
-            
+
             // remove all but the first instance of each mod
             var sortedModNamesList = new HashSet<string>(modNamesList);
-            
+
             // remove mods that are not in this list to prevent undefined behaviour
             foreach (var item in currentItems)
             {
@@ -268,8 +268,8 @@ public class ModLinksChanges : IModLinksChanges
             NoCache = false,
             MustRevalidate = false
         };
-                
-        hc.DefaultRequestHeaders.Add("User-Agent", "Lumafly");
+
+    hc.DefaultRequestHeaders.Add("User-Agent", "LumaflyV2");
     }
 
     private record struct ChangesLinks(

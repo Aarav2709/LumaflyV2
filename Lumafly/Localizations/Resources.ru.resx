@@ -175,10 +175,10 @@
     <value>Устарело!</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>У Lumafly появилось новое обновление. Пожалуйста, загрузите новейшую версию (v{0}), чтобы получить последние исправления ошибок и функции.</value>
+    <value>У LumaflyV2 появилось новое обновление. Пожалуйста, загрузите новейшую версию (v{0}), чтобы получить последние исправления ошибок и функции.</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly не удалось автоматически загрузить обновление. Lumafly откроет ссылку для получения последней версии</value>
+    <value>LumaflyV2 не удалось автоматически загрузить обновление. LumaflyV2 откроет ссылку для получения последней версии</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>Внимание</value>
@@ -469,7 +469,7 @@
     <value>Закрепить</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>Закрепить мод, чтобы он автоматически не заменялся в Lumafly</value>
+    <value>Закрепить мод, чтобы он автоматически не заменялся в LumaflyV2</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value>Открепить</value>
@@ -478,7 +478,7 @@
     <value>Не удалось получить modlinks</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Вы хотите запустить lumafly в автономном режиме?</value>
+    <value>Вы хотите запустить LumaflyV2 в автономном режиме?</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>Отобрать по Авторам</value>

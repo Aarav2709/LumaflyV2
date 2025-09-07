@@ -10,270 +10,199 @@
             x:DataType="viewModels:SettingsViewModel"
             x:CompileBindings="True"
             x:Class="Lumafly.Views.Pages.SettingsView">
-	<ScrollViewer>
-		<Grid
-			ShowGridLines="False"
-			Margin="20 10"
-			ColumnDefinitions="Auto * Auto"
-			RowDefinitions="Auto Auto Auto Auto Auto Auto Auto Auto Auto *">
 
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="0"
-				Margin="0 15"
-				VerticalAlignment="Center"
-				Text="{ext:Localize XAML_GamePath}"/>
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="1"
-				Margin="0 15"
-				Text="{ext:Localize XAML_WarnBeforeRemovingDependentMods}"
-				VerticalAlignment="Center"/>
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="2"
-				Margin="0 15"
-				Text="{ext:Localize XAML_UseCustomModlinks}"
-				VerticalAlignment="Center"/>
+    <ScrollViewer>
+        <StackPanel Margin="40" Spacing="32" MaxWidth="600" HorizontalAlignment="Center">
 
-			<!-- 3 reserved for custom modlinks text box -->
-			<StackPanel
-				Grid.Column="0"
-				Grid.Row="4"
-				VerticalAlignment="Center"
-				Orientation="Horizontal"
-				Margin="0 15">
-				<TextBlock
-					Text="{ext:Localize XAML_Low_Storage_Mode}"
-					VerticalAlignment="Center"/>
-				<PathIcon
-					Data="{StaticResource info_regular}"
-					Width="12"
-					Height="12"
-					HorizontalAlignment="Left"
-					VerticalAlignment="Center"
-					Margin="7 0 5 0"
-					ToolTip.Tip="{Binding ExtraSpaceTaken}" ToolTip.ShowDelay="0"/>
-			</StackPanel>
+            <!-- Header -->
+            <StackPanel Spacing="8" HorizontalAlignment="Center">
+                <TextBlock Text="Settings"
+                           FontFamily="{DynamicResource GameFont}"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="Configure your LumaflyV2 experience"
+                           FontFamily="{DynamicResource UIFont}"
+                           FontSize="14"
+                           Foreground="{DynamicResource Brush.TextSecondary}"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
 
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="5"
-				Margin="0 15"
-				Text="{ext:Localize XAML_AutoRemoveDeps}"
-				VerticalAlignment="Center"/>
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="9"
-				Margin="0 15"
-				VerticalAlignment="Center"
-				Text="{ext:Localize XAML_GameLabel}"/>
-			<TextBlock
-				Grid.Column="0"
-				Grid.Row="6"
-				Margin="0 15"
-				Text="{ext:Localize XAML_Language}"
-				VerticalAlignment="Center"/>
+        <!-- General Settings -->
+            <Border Classes="card">
+                <StackPanel Spacing="24">
+                    <TextBlock Text="General"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Brush.TextPrimary}"/>
 
-	    <TextBlock
-				Grid.Column="0"
-				Grid.Row="7"
-				Margin="0 15"
-				Text="{ext:Localize XAML_UseGithubMirror}"
-				VerticalAlignment="Center"/>
-	    <!-- 3 reserved for github mirror format text box -->
+            <!-- Removed in favor of top bar game selector -->
 
-			<TextBox
-				Grid.Column="1"
-				Grid.Row="0"
-				Text="{Binding CurrentPath}"
-				AcceptsReturn="False"
-				IsReadOnly="True"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Center"/>
+                    <!-- Language -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Language"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Select your preferred language"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="1"
+                                  MinWidth="150"
+                                  VerticalAlignment="Center"
+                                  ItemsSource="{Binding LanguageOptions}"
+                                  SelectedItem="{Binding LanguageSelection}"/>
+                    </Grid>
 
-			<Button
-				Grid.Column="2"
-				Grid.Row="0"
-				Padding="20 5"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				HorizontalContentAlignment="Center"
-				Margin="5 0"
-				Command="{Binding ChangePath}"
-				Content="{ext:Localize XAML_ChangPath}"/>
+                    <!-- Low Storage Mode -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Low Storage Mode"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Reduces disk space usage for mod downloads"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding LowStorageMode}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
 
-			<ToggleSwitch
-				Grid.Column="1"
-				Grid.Row="1"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				OnContent="{ext:Localize XAML_On}"
-				OffContent="{ext:Localize XAML_Off}"
-				IsChecked="{Binding WarnBeforeRemovingDependents}"/>
+            <!-- Mod Management -->
+            <Border Classes="card">
+                <StackPanel Spacing="24">
+                    <TextBlock Text="Mod Management"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Brush.TextPrimary}"/>
 
-			<ToggleSwitch
-				Grid.Column="1"
-				Grid.Row="2"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				OnContent="{ext:Localize XAML_On}"
-				OffContent="{ext:Localize XAML_Off}"
-				IsChecked="{Binding UseCustomModlinks}"
-			/>
-			<TextBox
-				Grid.Column="0"
-				Grid.ColumnSpan="2"
-				Grid.Row="3"
-				Margin="0 0 5 15"
-				IsVisible="{Binding UseCustomModlinks}"
-				HorizontalAlignment="Stretch"
-				Watermark="{ext:Localize XAML_CustomModlinksWatermark}"
-				UseFloatingWatermark="True"
-				Text="{Binding CustomModlinksUri}"
-				AcceptsReturn="False"/>
+                    <!-- Warn Before Removing Dependencies -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Dependency Warnings"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Warn before removing mods that other mods depend on"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding WarnBeforeRemovingDependents}"/>
+                    </Grid>
 
-			<ToggleSwitch
-				Grid.Column="1"
-				Grid.Row="4"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				OnContent="{ext:Localize XAML_On}"
-				OffContent="{ext:Localize XAML_Off}"
-				IsChecked="{Binding LowStorageMode}"
-			/>
+                    <!-- Auto Remove Dependencies -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Auto Remove Dependencies"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Automatically handle unused dependencies"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="1"
+                                  MinWidth="150"
+                                  VerticalAlignment="Center"
+                                  ItemsSource="{Binding AutoRemoveDepsOptions}"
+                                  SelectedItem="{Binding AutoRemoveDepSelection}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
 
-			<PathIcon
-				Grid.Column="2"
-				Grid.Row="3"
-				Data="{StaticResource info_regular}"
-				FontSize="15"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				Margin="5 0 5 10"
-				IsVisible="{Binding UseCustomModlinks}"
-				ToolTip.Tip="{ext:Localize XAML_CustomModlinksExplanation}" ToolTip.ShowDelay="0"/>
+            <!-- Advanced Settings -->
+            <Border Classes="card">
+                <StackPanel Spacing="24">
+                    <TextBlock Text="Advanced"
+                               FontFamily="{DynamicResource UIFont}"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Brush.TextPrimary}"/>
 
-			<ComboBox
-				Grid.Column="1"
-				Grid.Row="5"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				MinWidth="75"
-				ItemsSource="{Binding AutoRemoveDepsOptions}"
-				SelectedItem="{Binding AutoRemoveDepSelection}"/>
+                    <!-- Custom Modlinks -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Custom Mod Links"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Use a custom source for mod information"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding UseCustomModlinks}"/>
+                    </Grid>
 
-			<ComboBox
-				Grid.Column="1"
-				Grid.Row="6"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				MinWidth="75"
-				ItemsSource="{Binding LanguageOptions}"
-				SelectedItem="{Binding LanguageSelection}"/>
+                    <!-- Custom Modlinks URL -->
+                    <TextBox IsVisible="{Binding UseCustomModlinks}"
+                             Text="{Binding CustomModlinksUri}"
+                             Watermark="https://example.com/modlinks.xml"
+                             HorizontalAlignment="Stretch"/>
 
-			<ComboBox
-				Grid.Column="1"
-				Grid.Row="9"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				MinWidth="150"
-				ItemsSource="{Binding AvailableGames}"
-				SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
+                    <!-- GitHub Mirror -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Use GitHub Mirror"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource Brush.TextPrimary}"/>
+                            <TextBlock Text="Download mods from GitHub mirror for faster speeds"
+                                       FontFamily="{DynamicResource UIFont}"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding UseGithubMirror}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
 
-	    <ToggleSwitch
-				Grid.Column="1"
-				Grid.Row="7"
-				Margin="10 0 5 0"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				OnContent="{ext:Localize XAML_On}"
-				OffContent="{ext:Localize XAML_Off}"
-				IsChecked="{Binding UseGithubMirror}"
-			/>
-
-	    <TextBox
-				Grid.Column="0"
-				Grid.ColumnSpan="2"
-				Grid.Row="8"
-				Margin="0 0 5 15"
-				IsVisible="{Binding UseGithubMirror}"
-				HorizontalAlignment="Stretch"
-				Watermark="{ext:Localize XAML_GithubMirrorFormatWatermark}"
-				UseFloatingWatermark="True"
-				Text="{Binding GithubMirrorFormat}"
-				AcceptsReturn="False"/>
-
-			<Grid
-				Grid.Column="0" Grid.ColumnSpan="3"
-				Grid.Row="10"
-				HorizontalAlignment="Right"
-				ColumnDefinitions="Auto Auto Auto Auto">
-
-
-				<Button
-					Grid.Column="0"
-					Padding="20 5"
-					Margin="8 0"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					HorizontalContentAlignment="Center"
-					Command="{Binding Donate}"
-					Content="{ext:Localize XAML_Donate}"/>
-
-				<Button
-					Grid.Column="1"
-					Padding="20 5"
-					Margin="8 0"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					HorizontalContentAlignment="Center"
-					Command="{Binding CheckForUpdates}"
-					Content="{ext:Localize XAML_CheckForUpdates}"/>
-
-				<Button
-					Grid.Column="2"
-					Padding="20 5"
-					Margin="8 0"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					HorizontalContentAlignment="Center"
-					Command="{Binding OpenLogsFolder}"
-					Content="{ext:Localize XAML_OpenLogsFolder}"/>
-
-				<StackPanel
-					Grid.Column="3"
-					VerticalAlignment="Bottom">
-
-					<TextBlock
-						IsVisible="{Binding AskForReload}"
-						FontSize="10"
-						MaxWidth="100"
-						TextWrapping="Wrap"
-						TextAlignment="Center"
-						VerticalAlignment="Bottom"
-						HorizontalAlignment="Center"
-						Foreground="Orange"
-						Margin="8 10"
-						Text="{ext:Localize XAML_ReloadPrompt}"/>
-
-					<Button
-						Padding="20 5"
-						Margin="8 0"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Bottom"
-						HorizontalContentAlignment="Center"
-						Command="{Binding ReloadApp}"
-						Content="{ext:Localize XAML_ReloadLumafly}"/>
-				</StackPanel>
-			</Grid>
-		</Grid>
-	</ScrollViewer>
+    <!-- Action Buttons -->
+    <StackPanel Orientation="Horizontal"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="12">
+      <Button Classes="secondary"
+          Content="Reset to Defaults"
+          MinWidth="160"
+          Width="160"
+          Height="44"
+          FontFamily="{DynamicResource UIFont}"
+          FontWeight="Medium"
+          FontSize="13"
+          HorizontalContentAlignment="Center"
+          VerticalContentAlignment="Center"
+          ToolTip.Tip="Reset all settings to their default values"/>
+      <Button Classes="primary"
+          Content="Save Settings"
+          MinWidth="160"
+          Width="160"
+          Height="44"
+          FontFamily="{DynamicResource UIFont}"
+          FontWeight="Medium"
+          FontSize="13"
+          HorizontalContentAlignment="Center"
+          VerticalContentAlignment="Center"/>
+    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </views:View>

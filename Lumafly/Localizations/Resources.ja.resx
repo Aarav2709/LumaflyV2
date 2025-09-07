@@ -175,10 +175,10 @@
     <value>更新があります！</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Lumaflyの更新データが見つかりました。バグ修正や最新の機能を使用するために、最新の更新データ（v{0}）をダウンロードしてください。</value>
+    <value>LumaflyV2の更新データが見つかりました。バグ修正や最新の機能を使用するために、最新の更新データ（v{0}）をダウンロードしてください。</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumaflyの自動更新に失敗しました。最新版へのリンクを開きます。</value>
+    <value>LumaflyV2の自動更新に失敗しました。最新版へのリンクを開きます。</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>注意</value>
@@ -427,7 +427,7 @@
     <value>JSDelivrからの応答を待機中…</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>Lumaflyを管理者として立ち上げて、再度お試しください。</value>
+    <value>LumaflyV2を管理者として起動して、再度お試しください。</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>次の処理の中で問題が発生しました：{0} {1}</value>
@@ -469,7 +469,7 @@
     <value>ピン止め</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>Lumaflyに自動で上書きされないようにピン止めする</value>
+    <value>LumaflyV2 に自動で上書きされないようにピン止めする</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value>ピン止めを解除</value>
@@ -478,7 +478,7 @@
     <value>modlinksの取得に失敗</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Lumaflyをオフラインモードで使用しますか？</value>
+    <value>LumaflyV2 をオフラインモードで使用しますか？</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>開発者で検索</value>

@@ -180,6 +180,8 @@ namespace Lumafly.ViewModels
       Dispatcher.UIThread.InvokeAsync(async () => await HandleOutdatedPackMods());
     }
 
+  // banner removed per user request
+
     private async Task HandleLocationURLScheme()
     {
       if (_urlSchemeHandler is { Handled: false, UrlSchemeCommand: UrlSchemeCommands.location })
@@ -583,9 +585,8 @@ namespace Lumafly.ViewModels
                 : Resources.MLVM_ApiButtonText_EnableAPI
         )
         : Resources.MLVM_ApiButtonText_ToggleAPI;
-    public bool CanUpdateAll => (_items.Any(x => x.State is InstalledState { Updated: false }) ||
-                                 _mods.ApiInstall is InstalledState { Version: var v } && v.Major < _db.Api.Version)
-                                && !_updating;
+  // Only show Update All when any installed mod is actually outdated; ignore API updates here to avoid false prompts.
+  public bool CanUpdateAll => _items.Any(x => x.State is InstalledState { Updated: false }) && !_updating;
     public bool CanUninstallAll => _items.Any(x => x.State is ExistsModState);
     public bool CanToggleAll => _items.Any(x => x.State is ExistsModState);
     public float PaneWidth => (_settings.PreferredLanguage ?? SupportedLanguages.en) == SupportedLanguages.en ? 200 : 350;

@@ -1,0 +1,219 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Fast 200ms Transitions for better responsiveness -->
+  <Style Selector="Button">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2"/>
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="ToggleButton">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2"/>
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="Border">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2"/>
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- Game-style Launch Buttons -->
+  <Style Selector="Button.game-launch">
+    <Setter Property="Background" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="32,16"/>
+    <Setter Property="FontFamily" Value="{DynamicResource GameFont}"/>
+    <Setter Property="FontSize" Value="18"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+    <Setter Property="MinWidth" Value="200"/>
+    <Setter Property="MinHeight" Value="60"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+  </Style>
+  <Style Selector="Button.game-launch:pointerover">
+    <Setter Property="Background" Value="{DynamicResource Brush.AccentHover}"/>
+    <Setter Property="RenderTransform">
+      <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+    </Setter>
+  </Style>
+  <Style Selector="Button.game-launch:pressed">
+    <Setter Property="RenderTransform">
+      <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+    </Setter>
+  </Style>
+
+  <!-- Secondary Action Buttons -->
+  <Style Selector="Button.secondary">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="16,12"/>
+    <Setter Property="FontFamily" Value="{DynamicResource UIFont}"/>
+    <Setter Property="FontWeight" Value="Medium"/>
+  </Style>
+  <Style Selector="Button.secondary:pointerover">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceElevated}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+
+  <!-- Bottom Navigation - Smaller Height with Thin Underline -->
+  <Style Selector="ListBox.bottom-nav">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="0,1,0,0"/>
+    <Setter Property="Padding" Value="10,8"/>
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+      </ItemsPanelTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem">
+    <Setter Property="MinWidth" Value="120"/>
+    <Setter Property="Margin" Value="8,0"/>
+    <Setter Property="Padding" Value="12,8"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0,0,0,2"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
+    <Setter Property="CornerRadius" Value="0"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+
+  <Style Selector="ListBox.bottom-nav > ListBoxItem:selected">
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="Background" Value="Transparent"/>
+  </Style>
+
+  <!-- Elevated Cards -->
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceElevated}"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="{DynamicResource Space.4}"/>
+  </Style>
+
+  <!-- Mod Card specific styling -->
+  <Style Selector="Border.mod-card">
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceElevated}"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="20"/>
+    <Setter Property="Margin" Value="0,0,0,12"/>
+  </Style>
+  <Style Selector="Border.mod-card:pointerover">
+  <!-- Keep hover subtle; no glow -->
+  <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+  <Setter Property="Background" Value="{DynamicResource Brush.SurfaceElevated}"/>
+  </Style>
+
+  <!-- Settings Controls -->
+  <Style Selector="ComboBox">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="12,8"/>
+  </Style>
+  <Style Selector="ComboBox:pointerover">
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+  <Style Selector="ComboBox:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+
+  <!-- Toggle Switches -->
+  <Style Selector="ToggleSwitch">
+    <Setter Property="OnContent" Value=""/>
+    <Setter Property="OffContent" Value=""/>
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.15"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- Mod List Expanders with fast transitions and no hover animations -->
+  <Style Selector="Expander">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- Smooth expand/collapse animation for mod details -->
+  <Style Selector="Expander /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Height" Duration="0:0:0.2" Easing="QuadraticEaseOut"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- Expander header: disable hover transitions to avoid chevron/arrow blink -->
+  <Style Selector="Expander /template/ ToggleButton#PART_Toggle">
+    <Setter Property="Transitions">
+  <Transitions/>
+    </Setter>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+  </Style>
+
+  <!-- ListBox Items for faster color changes -->
+  <Style Selector="ListBoxItem">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.15"/>
+        <BrushTransition Property="Foreground" Duration="0:0:0.15"/>
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.15"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- Clean TextBox styling -->
+  <Style Selector="TextBox">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="12,8"/>
+  </Style>
+  <Style Selector="TextBox:focus">
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+  </Style>
+</Styles>

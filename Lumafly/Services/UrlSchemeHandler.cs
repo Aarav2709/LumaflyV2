@@ -52,21 +52,21 @@ public class UrlSchemeHandler : IUrlSchemeHandler
     {
         UrlSchemeCommand = arg;
     }
-    
+
     public void SetCommand(string arg)
     {
         if (Handled) return;
 
         arg = arg.Trim();
-        
+
         var UriPrefix = UriScheme + "://";
 
         if (arg.Length < UriPrefix.Length || !arg.StartsWith(UriPrefix))
         {
             Dispatcher.UIThread.InvokeAsync(async () =>
                 await ShowConfirmation(
-                    title: "Invalid URL Scheme Command", 
-                    message: $"{arg} is an invalid command.\\nLumafly only accepts command prefixed by scarab://", 
+                    title: "Invalid URL Scheme Command",
+                    message: $"{arg} is an invalid command.\\nLumaflyV2 only accepts commands prefixed by scarab://",
                     Icon.Warning));
             return;
         }
@@ -78,7 +78,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
         {
             var commandName = command.ToString();
             if (!UriParam.StartsWith(commandName)) continue;
-            
+
             UrlSchemeCommand = command;
             setData?.Invoke(UriParam[commandName.Length..].Trim('/'));
             break; // only 1 command allowed for now
@@ -89,7 +89,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             Dispatcher.UIThread.InvokeAsync(async () =>
                 await ShowConfirmation(
                     title: "Invalid URL Scheme Command",
-                    message: $"{arg}  is an invalid command.\\nIt was not found in lumafly's accepted command list",
+                    message: $"{arg}  is an invalid command.\\nIt was not found in LumaflyV2's accepted command list",
                     Icon.Warning));
         }
     }
@@ -98,7 +98,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
     {
         int index = 0;
         Dictionary<string, string?> modNamesAndUrls = new Dictionary<string, string?>();
-        
+
         while (index < data.Length)
         {
             string modName = string.Empty;
@@ -108,11 +108,11 @@ public class UrlSchemeHandler : IUrlSchemeHandler
                 if (data[index] == ':') // starter of url
                 {
                     index++; // consume :
-                    
+
                     const char LinkSep = '\'';
-                    
+
                     if (index >= data.Length || data[index] != LinkSep) return new Dictionary<string, string?>(); // invalid format refuse to parse
-                    
+
                     index++; // consume "
                     while (index < data.Length && data[index] != LinkSep)
                     {
@@ -135,7 +135,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             // windows folder regex
             var invalidChars = Path.GetInvalidFileNameChars().Concat(Path.GetInvalidPathChars());
             if (invalidChars.Any(x => modName.Contains(x))) return new Dictionary<string, string?>(); // invalid string refuse to parse
-            
+
             modNamesAndUrls[modName] = url;
             index++; // consume /
         }
@@ -153,7 +153,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
         {
             SetupLinux(Environment.GetCommandLineArgs()[0]);
         }
-        
+
         // the mac way of doing it is the only sane one where we add what it needs to the Info.plist at compile time
     }
 
@@ -163,7 +163,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
         try
         {
             using var key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Classes\\" + UriScheme);
-            
+
             key.SetValue(null, "URL:" + FriendlyName);
             key.SetValue("URL Protocol", string.Empty, RegistryValueKind.String);
 
@@ -184,10 +184,10 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             // for now not show any error as its not critical
             Trace.WriteLine("Unable to setup registry for windows uri scheme" + e.Message);
         }
-        
+
         try
         {
-            WindowsStartMenu.CreateShortcutInStartMenu("Lumafly", exePath);
+            WindowsStartMenu.CreateShortcutInStartMenu("LumaflyV2", exePath);
         }
         catch (Exception e)
         {
@@ -195,7 +195,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             Trace.WriteLine("Unable to setup start menu shortcut for windows" + e.Message);
         }
     }
-    
+
     [SupportedOSPlatform(nameof(OSPlatform.Linux))]
     private static void SetupLinux(string exePath)
     {
@@ -205,17 +205,17 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             var _desktopLocations = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create),
                 "applications");
-            
+
             FileUtil.CreateDirectory(_desktopLocations);
 
             var desktopFile = Path.Combine(_desktopLocations, "scarab.desktop");
-            
+
             File.WriteAllText(desktopFile,
-            $""" 
+            $"""
             [Desktop Entry]
-            Name=Lumafly
+            Name=LumaflyV2
             Comment=Hollow Knight Mod Manager
-            GenericName=Lumafly
+            GenericName=LumaflyV2
             Exec={exePath} %U
             Type=Application
             StartupNotify=true
@@ -233,11 +233,11 @@ public class UrlSchemeHandler : IUrlSchemeHandler
     public async Task ShowConfirmation(MessageBoxStandardParams param)
     {
         if (Handled) return;
-        
+
         Handled = true;
         await MessageBoxUtil.GetMessageBoxStandardWindow(param).ShowAsPopupAsync(AvaloniaUtils.GetMainWindow());
     }
-    
+
     /// <summary>
     /// To be called when finished handling the url scheme when you want to show a confirmation box
     /// </summary>
@@ -252,7 +252,7 @@ public class UrlSchemeHandler : IUrlSchemeHandler
             MinHeight = 150,
         });
     }
-    
+
     /// <summary>
     /// To be called when finished handling the url scheme when you don't want to show a confirmation box
     /// </summary>

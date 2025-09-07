@@ -59,7 +59,7 @@ public partial class InfoViewModel : ViewModelBase
     IsLaunchingGame = true;
     try
     {
-      // remove any existing instance of the selected game (match by exe name prefixes without extension)
+  // remove any existing instance of the selected game (match by exe name prefixes without extension)
       bool IsGameProcess(Process p)
       {
         var prefixes = _settings.CurrentProfile.ExeNames
@@ -83,7 +83,7 @@ public partial class InfoViewModel : ViewModelBase
         }
       }
 
-      // Resolve install directory and executable from the currently selected profile.
+  // Resolve install directory and executable from the currently selected profile.
       // We derive the install folder from the configured Managed folder (which points to the Managed directory inside the game's Data folder).
       var currentProfile = _settings.CurrentProfile;
 
@@ -111,7 +111,7 @@ public partial class InfoViewModel : ViewModelBase
       var exeNameFromProfile = currentProfile.ExeNames.FirstOrDefault() ?? string.Empty;
       var exeFullPath = Path.Combine(installFolder.FullName, exeNameFromProfile);
 
-      // Determine whether the install appears to be a Steam install by checking for steam_api64.dll in the Managed plugins folder.
+  // Determine whether the install appears to be a Steam install by checking for steam_api64.dll in the Managed plugins folder.
       var isSteam = false;
       try
       {
@@ -127,7 +127,7 @@ public partial class InfoViewModel : ViewModelBase
       }
 
       // Launch via Steam protocol if Steam AppId is known.
-      var appId = currentProfile.SteamAppId;
+  var appId = currentProfile.SteamAppId;
       if (isSteam && !string.IsNullOrWhiteSpace(appId))
       {
         Process.Start(new ProcessStartInfo($"steam://rungameid/{appId}") { UseShellExecute = true });
@@ -155,55 +155,7 @@ public partial class InfoViewModel : ViewModelBase
     IsLaunchingGame = false;
   }
 
-  private (string path, string name, bool isSteam) GetExecutableDetails()
-  {
-    string exeName;
-
-    // get exe path
-    var managedFolder = new DirectoryInfo(_settings.ManagedFolder);
-    var managedParent = managedFolder.Parent; // now in *_Data or (for mac) Data folder
-
-    var hkExeFolder = managedParent!.Parent; // now in the hk exe folder or (for mac) resources folder;
-
-    // mac os path has 2 extra folders
-    if (OperatingSystem.IsMacOS())
-    {
-      hkExeFolder = managedParent.Parent! // now in contents folder
-          .Parent; // now in hk exe folder
-
-      // Use the first configured exe name without extension as mac executable name (TODO confirm for Silksong)
-      exeName = Path.GetFileNameWithoutExtension(_settings.CurrentProfile.ExeNames.FirstOrDefault() ?? "");
-    }
-    else
-    {
-      // Prefer profile-configured exe names on Windows; fallback to deriving from *_Data
-      if (OperatingSystem.IsWindows())
-      {
-        var preferred = _settings.CurrentProfile.ExeNames.FirstOrDefault();
-        exeName = !string.IsNullOrWhiteSpace(preferred)
-          ? preferred
-          : managedParent.Name.Replace("_Data", string.Empty) + ".exe"; // unity appends _Data; add .exe
-      }
-      else
-      {
-        // Non-Windows (Linux): executable typically matches *_Data prefix
-        exeName = managedParent.Name.Replace("_Data", string.Empty);
-      }
-    }
-
-    if (hkExeFolder is null) throw new Exception($"{_settings.CurrentProfile.Name} executable not found");
-    string exePath = hkExeFolder.FullName;
-
-    // check if path contains steam_api64.dll
-    var isSteam = File.Exists(Path.Combine(
-        managedParent.FullName,
-        "Plugins",
-        "x86_64",
-        "steam_api64.dll"
-    ));
-
-    return (exePath, exeName, isSteam);
-  }
+  // Removed legacy GetExecutableDetails; all launch resolution is profile-driven in _LaunchGame.
 
   public async Task FetchAdditionalInfo()
   {

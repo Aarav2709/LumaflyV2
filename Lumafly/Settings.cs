@@ -152,9 +152,8 @@ namespace Lumafly
       return dirPath;
     }
 
-    internal static async Task<ValidPath?> TryAutoDetect()
+    internal static Task<ValidPath?> TryAutoDetect()
     {
-      ValidPath? path = null;
       // Resolve profile for path detection: if a config file already exists, prefer its Game value
       var profile = GameProfiles.HollowKnight; // default fallback
       try
@@ -164,6 +163,17 @@ namespace Lumafly
           profile = loaded.CurrentProfile;
       }
       catch { /* ignore and fallback to HK */ }
+
+      return TryAutoDetect(profile);
+    }
+
+    /// <summary>
+    /// Attempts to auto-detect a valid Managed folder for the provided game profile, without
+    /// consulting on-disk settings. Returns null if nothing is found.
+    /// </summary>
+    internal static async Task<ValidPath?> TryAutoDetect(GameProfile profile)
+    {
+      ValidPath? path = null;
 
       // Try static paths first
       var staticPaths = BuildStaticPaths(profile);

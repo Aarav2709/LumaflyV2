@@ -29,12 +29,12 @@ namespace Lumafly.Services
         /// Expected SHA256 value
         /// </summary>
         public string Expected { get; }
-        
+
         /// <summary>
         ///  The name of the object being checked
         /// </summary>
         public string Name { get; }
-        
+
         public HashMismatchException(string name, string actual, string expected)
         {
             Name = name;
@@ -43,9 +43,10 @@ namespace Lumafly.Services
         }
 
     }
-    
+
     public class Installer : IInstaller
     {
+    private const string BepInExZipUrl = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip";
         private enum Update
         {
             ForceUpdate,
@@ -57,9 +58,9 @@ namespace Lumafly.Services
         private readonly IModDatabase _db;
         private readonly IFileSystem _fs;
         private readonly ICheckValidityOfAssembly _checkValidityOfAssembly;
-        
+
         // If we're going to have one be internal, might as well be consistent
-        // ReSharper disable MemberCanBePrivate.Global 
+        // ReSharper disable MemberCanBePrivate.Global
         internal const string Modded = "Assembly-CSharp.dll.m";
         internal const string Vanilla = "Assembly-CSharp.dll.v";
         internal const string Current = "Assembly-CSharp.dll";
@@ -73,8 +74,8 @@ namespace Lumafly.Services
         private readonly ISettings _settings;
 
         public Installer(
-            ISettings config, 
-            IModSource installed, 
+            ISettings config,
+            IModSource installed,
             IModDatabase db,
             IFileSystem fs,
             HttpClient hc,
@@ -90,13 +91,13 @@ namespace Lumafly.Services
             _checkValidityOfAssembly = checkValidityOfAssembly;
 
             // run some tasks on installer init
-            Task.Run(async () => 
+            Task.Run(async () =>
             {
                 try
                 {
-                    if (_config.LowStorageMode && _fs.Directory.Exists(_config.CacheFolder)) 
+                    if (_config.LowStorageMode && _fs.Directory.Exists(_config.CacheFolder))
                         _fs.Directory.Delete(_config.CacheFolder, true);
-                    
+
                     await CheckAPI();
                     Trace.WriteLine("Initial API check complete");
                 }
@@ -116,7 +117,7 @@ namespace Lumafly.Services
 
             _fs.Directory.CreateDirectory(_config.ModsFolder);
         }
-        
+
         public async Task Pin(ModItem mod, bool pinned)
         {
             if (mod.State is not ExistsModState state)
@@ -144,7 +145,7 @@ namespace Lumafly.Services
                     await Toggle(dep);
                 }
             }
-            
+
             await _modToggleSemaphore.WaitAsync();
 
             try
@@ -175,12 +176,12 @@ namespace Lumafly.Services
             if (!_fs.Directory.Exists(prev))
                 throw new ReadableError("because it doesn't exist where it is supposed to. Please try to reinstall the mod");
 
-            // just in case the destination already has same folder 
+            // just in case the destination already has same folder
             if (_fs.Directory.Exists(after))
             {
                 // ask the user if they want to delete the existing mod
                 if (await ShouldStopToggle(mod, enabled)) return;
-                
+
                 _fs.Directory.Delete(after, true);
             }
 
@@ -226,13 +227,13 @@ namespace Lumafly.Services
                 await CheckAPI();
                 if (_installed.HasVanilla)
                     return;
-                
+
                 string managed = _config.ManagedFolder;
 
                 var url = await ModDatabase.FetchVanillaAssemblyLink(_settings);
 
                 (ArraySegment<byte> data, _) = await DownloadFile(url, _ => { });
-                
+
                 await _fs.File.WriteAllBytesAsync(Path.Combine(managed, Vanilla), data.Array!);
 
                 await CheckAPI();
@@ -250,6 +251,13 @@ namespace Lumafly.Services
 
             try
             {
+                // For Silksong, ensure BepInEx is installed instead of HK API
+                if (string.Equals(_settings.Game, GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase))
+                {
+                    await EnsureBepInExForSilksong();
+                    return;
+                }
+
                 await CheckAPI();
                 if (_installed.ApiInstall is InstalledState { Enabled: false })
                 {
@@ -265,6 +273,31 @@ namespace Lumafly.Services
             }
         }
 
+        private async Task EnsureBepInExForSilksong()
+        {
+            // Determine game root from Managed folder: .../GameName_Data/Managed -> root is parent of Data folder
+            var managed = _config.ManagedFolder;
+            var dataDir = _fs.Path.GetDirectoryName(managed);
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var rootDir = _fs.Path.GetDirectoryName(dataDir);
+            if (string.IsNullOrEmpty(rootDir)) return;
+
+            var bepFolder = _fs.Path.Combine(rootDir, "BepInEx");
+            if (_fs.Directory.Exists(bepFolder))
+                return; // already installed
+
+            try
+            {
+                (ArraySegment<byte> zip, _) = await DownloadFile(BepInExZipUrl, _ => { });
+                ExtractZip(zip, rootDir);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError($"Failed to install BepInEx: {e}");
+                throw;
+            }
+        }
+
         private async Task _InstallApi((string Url, int Version, string SHA256) manifest)
         {
             bool was_vanilla = true;
@@ -275,13 +308,13 @@ namespace Lumafly.Services
 
                 was_vanilla = false;
             }
-            
+
             (string api_url, int ver, string hash) = manifest;
 
             string managed = _config.ManagedFolder;
 
             (ArraySegment<byte> data, string _) = await DownloadFile(api_url, _ => { });
-            
+
             ThrowIfInvalidHash("the API", data, hash);
 
             // Backup the vanilla assembly
@@ -310,13 +343,13 @@ namespace Lumafly.Services
         private async Task _ToggleApi(Update update = Update.ForceUpdate)
         {
             if (!await CheckAPI()) return;
-            
+
             string managed = _config.ManagedFolder;
 
             Contract.Assert(_installed.ApiInstall is InstalledState);
 
             var st = (InstalledState) _installed.ApiInstall;
-            
+
             if (st.Enabled && !_installed.HasVanilla) return;
 
             var (move_to, move_from) = st.Enabled
@@ -326,7 +359,7 @@ namespace Lumafly.Services
                 // Otherwise, we're enabling the api, so move the current (vanilla) dll
                 // And take from our .m file
                 : (Vanilla, Modded);
-            
+
             _fs.File.Move(Path.Combine(managed, Current), Path.Combine(managed, move_to), true);
             _fs.File.Move(Path.Combine(managed, move_from), Path.Combine(managed, Current), true);
 
@@ -367,7 +400,7 @@ namespace Lumafly.Services
                 setProgress(new ModProgressArgs());
 
                 await _Install(mod, DownloadProgressed, enable, clearDlls);
-                
+
                 setProgress(new ModProgressArgs {
                     Completed = true
                 });
@@ -403,10 +436,10 @@ namespace Lumafly.Services
                 {
                     if (!enabled)
                         await Toggle(dep);
-                    
+
                     continue;
                 }
-                
+
                 if (dep.State is NotInModLinksState)
                 {
                     continue; // if its in not in modlinks state, its user's job to update
@@ -433,15 +466,15 @@ namespace Lumafly.Services
 
             if (!string.IsNullOrEmpty(mod.Sha256) && mod.State is not NotInModLinksState)
                 ThrowIfInvalidHash(mod.Name, data, mod.Sha256);
-            
+
             if (cachedModData is null && !string.IsNullOrEmpty(mod.Sha256))
                 await CacheMod(mod, filename, data);
 
-            if (clearDlls) 
+            if (clearDlls)
                 ClearDllsFromFolder(mod, enable);
 
             await PlaceMod(mod, enable, filename, data);
-            
+
             mod.State = mod.State switch {
                 ExistsModState ins => new InstalledState(
                     Version: mod.Version,
@@ -462,10 +495,10 @@ namespace Lumafly.Services
         {
             string base_folder = enable ? _config.ModsFolder : _config.DisabledFolder;
             string mod_folder = Path.Combine(base_folder, mod.Name);
-            
-            if (!Directory.Exists(mod_folder)) 
+
+            if (!Directory.Exists(mod_folder))
                 return;
-            
+
             foreach (var dll_file in Directory.EnumerateFiles(mod_folder).Where(f => f.EndsWith(".dll")))
             {
                 try
@@ -500,7 +533,7 @@ namespace Lumafly.Services
                 Trace.TraceError(e.ToString());
             }
         }
-        
+
         /// <summary>
         /// Get a cached mod, returns the data and file name if it is valid
         /// </summary>
@@ -509,7 +542,7 @@ namespace Lumafly.Services
             try
             {
                 if (string.IsNullOrEmpty(mod.Sha256)) return null;
-                
+
                 if (!_fs.Directory.Exists(_config.CacheFolder)) return null;
 
                 if (!_fs.Directory.Exists(Path.Combine(_config.CacheFolder, mod.Name))) return null;
@@ -592,7 +625,7 @@ namespace Lumafly.Services
         {
             (ArraySegment<byte> bytes, HttpResponseMessage response) = await _hc.DownloadBytesWithProgressAsync(
                 _settings,
-                new Uri(uri), 
+                new Uri(uri),
                 new Progress<DownloadProgressArgs>(setProgress)
             );
 
@@ -701,12 +734,12 @@ namespace Lumafly.Services
             }
             await _installed.RecordUninstall(mod);
         }
-        
+
         public async Task<bool> CheckAPI()
         {
             _installed.HasVanilla =
                 _checkValidityOfAssembly.CheckVanillaFileValidity(Vanilla);
-            
+
             int? current_version = _checkValidityOfAssembly.GetAPIVersion(Current);
             bool enabled = true;
             if(current_version == null)
@@ -714,24 +747,24 @@ namespace Lumafly.Services
                 enabled = false;
                 current_version = _checkValidityOfAssembly.GetAPIVersion(Modded);
             }
-            
+
             if (current_version == null)
             {
                 await _installed.RecordApiState(new NotInstalledState());
                 return false;
             }
-            
+
             if (_installed.ApiInstall is not InstalledState api_state)
             {
                 await _installed.RecordApiState(new InstalledState(enabled, new((int)current_version, 0, 0), false));
                 return true;
             }
-            
+
             if (api_state.Version.Major != current_version || api_state.Enabled != enabled)
             {
                 await _installed.RecordApiState(new InstalledState(enabled, new((int)current_version, 0, 0), api_state.Updated));
             }
-            
+
             return true;
         }
     }

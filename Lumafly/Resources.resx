@@ -178,10 +178,10 @@
     <value>Out of date!</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Lumafly has a new update available. Please download the newest update (v{0}) to get the latest bug fixes and features.</value>
+    <value>LumaflyV2 has a new update available. Please download the newest update (v{0}) to get the latest bug fixes and features.</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly failed to download update automatically. Lumafly will now open the link to get the latest version</value>
+  <value>LumaflyV2 failed to download update automatically. LumaflyV2 will now open the link to get the latest version</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>Warning</value>
@@ -394,7 +394,7 @@
     <value>Loading the newest mods that are on modlinks...</value>
   </data>
   <data name="MVVM_NotAbleToLoadWhatsNew" xml:space="preserve">
-    <value>Lumafly was unable to load the newest mods from modlinks.</value>
+    <value>LumaflyV2 was unable to load the newest mods from modlinks.</value>
   </data>
   <data name="MVVM_DNSError" xml:space="preserve">
     <value>Possibly caused by poor or no internet connection. Please check that and try again</value>
@@ -409,13 +409,13 @@
     <value>Warning! Are you sure you want to do this?</value>
   </data>
   <data name="MVVM_SystemIOException_GeneralReason" xml:space="preserve">
-    <value>Lumafly was unable to access the file in the mods folder</value>
+    <value>LumaflyV2 was unable to access the file in the mods folder</value>
   </data>
   <data name="MVVM_SystemIOException_ProtectedLocation" xml:space="preserve">
     <value>Please make sure that the mods folder is not in a write protected location</value>
   </data>
   <data name="MVVM_SystemIOException_LumaflyCantAccessFile" xml:space="preserve">
-    <value>Lumafly cannot access the file:</value>
+    <value>LumaflyV2 cannot access the file:</value>
   </data>
   <data name="MVVM_SystemIOException_GeneralFileLock" xml:space="preserve">
     <value>Please make sure to close all other apps that could be using the mods folder</value>
@@ -457,7 +457,7 @@
     <value>Waiting for response from jsdelivr...</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>Try running lumafly as an administrator, it may fix the issue</value>
+  <value>Try running LumaflyV2 as an administrator, it may fix the issue</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>An exception occured while {0} {1}</value>
@@ -508,7 +508,7 @@
     <value>Unable to get modlinks</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Do you want to launch lumafly in offline mode?</value>
+  <value>Do you want to launch LumaflyV2 in offline mode?</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>Select Authors</value>
@@ -535,7 +535,7 @@
     <value>Use Custom Modlinks</value>
   </data>
   <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
-    <value>Normally Lumafly loads its list of mods from the official modlinks. If you want to load your own then enter its URI here it accepts https links or files (in the format file://{filepath}). \nEmpty links or invalid links will load official modlinks</value>
+  <value>Normally LumaflyV2 loads its list of mods from the official modlinks. If you want to load your own then enter its URI here it accepts https links or files (in the format file://{filepath}). \nEmpty links or invalid links will load official modlinks</value>
   </data>
   <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
     <value>Enter link to custom modlinks. Needs a reload to take effect</value>
@@ -589,7 +589,7 @@
     <value>Record as custom version</value>
   </data>
   <data name="XAML_RegisterNotInModlinks_Explanation" xml:space="preserve">
-    <value>Record this mod's version as not from modlinks. Doesn't affect the mod in any way only affects how lumafly handles it. A pinned custom version mod will never be replaced by lumafly</value>
+  <value>Record this mod's version as not from modlinks. Doesn't affect the mod in any way only affects how LumaflyV2 handles it. A pinned custom version mod will never be replaced by LumaflyV2</value>
   </data>
   <data name="XAML_ResetMod" xml:space="preserve">
     <value>Reset Mod: force re-installs the mod and removes its persistent settings</value>

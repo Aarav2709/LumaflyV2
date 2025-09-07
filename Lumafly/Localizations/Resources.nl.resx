@@ -175,10 +175,10 @@
     <value>Verouderd!</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Lumafly heeft een nieuwe update beschikbaar. Download alstublieft de nieuwste update (v{0}) om de nieuwste bugfixes en functies te krijgen.</value>
+    <value>LumaflyV2 heeft een nieuwe update beschikbaar. Download alstublieft de nieuwste update (v{0}) om de nieuwste bugfixes en functies te krijgen.</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly kon niet automatisch de update downloaden. Lumafly opent nu de link om de nieuwste versie te downloaden</value>
+    <value>LumaflyV2 kon de update niet automatisch downloaden. LumaflyV2 opent nu de link om de nieuwste versie te downloaden</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>Waarschuwing</value>
@@ -427,7 +427,7 @@
     <value>Wachten op reactie van jsdelivr...</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>Probeer Lumafly als administrator uit te voeren, mogelijk lost dat het probleem op</value>
+    <value>Probeer LumaflyV2 als administrator uit te voeren, mogelijk lost dat het probleem op</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>Er is een fout opgetreden gedurende {0} {1}</value>
@@ -469,7 +469,7 @@
     <value>Vastzetten</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>Zet een mod vast zodat hij niet vervangen wordt door Lumafly</value>
+    <value>Zet een mod vast zodat hij niet vervangen wordt door LumaflyV2</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value>Losmaken</value>
@@ -478,7 +478,7 @@
     <value>Kan modlinks niet opvragen</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Wilt u Lumafly in de offline modus opstarten?</value>
+    <value>Wilt u LumaflyV2 in de offline modus opstarten?</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>Zoek op Auteurs</value>
@@ -505,13 +505,13 @@
     <value>Gebruik Aangepaste Modlinks</value>
   </data>
   <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
-    <value>Normaal laad Lumafly de lijst met mods van de officiële modlinks. Als u uw eigen mods wilt laden, vult hier de URI in; Https links of bestanden (in het formaat file://{filepath}) worden geaccepteerd. \nLege of ongeldige links zullen de officiële modlinks laden</value>
+    <value>Normaal laadt LumaflyV2 de lijst met mods van de officiële modlinks. Als u uw eigen mods wilt laden, vul hier de URI in; https-links of bestanden (in het formaat file://{filepath}) worden geaccepteerd. \nLege of ongeldige links zullen de officiële modlinks laden</value>
   </data>
   <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
     <value>Voer de link in voor aangepaste modlinks. Herladen is vereist voordat het effect heeft</value>
   </data>
   <data name="XAML_ReloadLumafly" xml:space="preserve">
-    <value>Herlaad Lumafly</value>
+    <value>Herlaad LumaflyV2</value>
   </data>
   <data name="XAML_ReloadPrompt" xml:space="preserve">
     <value>(Herlaad om veranderingen door te voeren)</value>
@@ -520,7 +520,7 @@
     <value>Informatie</value>
   </data>
   <data name="XAML_InfoBody" xml:space="preserve">
-    <value>Lumafly is een installatieprogramma voor de Hollow Knight versie 1.5. Het zal niet werken voor oudere versies van Hollow Knight.</value>
+    <value>LumaflyV2 is een installatieprogramma voor Hollow Knight versie 1.5. Het zal niet werken voor oudere versies van Hollow Knight.</value>
   </data>
   <data name="XAML_InfoLinksHeader" xml:space="preserve">
     <value>Relevante Links</value>

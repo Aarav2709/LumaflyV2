@@ -44,11 +44,11 @@ def write_executable(zfile, path, zip_path=None):
     info.create_system = 3
 
     zip_f.writestr(info, fbytes, ZIP_DEFLATED)
-    
+
 if not Path(out).exists():
     Path(out).mkdir()
 
-with ZipFile(out / "mac.zip", 'w', ZIP_DEFLATED) as zip_f:
+with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
     for root, dirs, files in walk(app_dir):
         root = Path(root)
 
@@ -69,8 +69,8 @@ with ZipFile(out / "mac.zip", 'w', ZIP_DEFLATED) as zip_f:
                 if fname == "Lumafly":
                     continue
 
-                overrides = { 
-                        "Lumafly.pdb": "run.pdb"
+                overrides = {
+                    "Lumafly.pdb": "run.pdb"
                 }
 
                 path = publish_root / fname
@@ -81,4 +81,4 @@ with ZipFile(out / "mac.zip", 'w', ZIP_DEFLATED) as zip_f:
         write_executable(zip_f, publish_root / "Lumafly", root / "MacOS" / "run")
 
 
-print("Created mac.zip")
+print("Created LumaflyV2-mac.zip")

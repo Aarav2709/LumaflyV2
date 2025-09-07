@@ -175,10 +175,10 @@
     <value>Périmé !</value>
   </data>
   <data name="MWVM_OutOfDate_Message" xml:space="preserve">
-    <value>Une nouvelle version de Lumafly est disponible. Merci de télécharger la nouvelle version (v{0}) pour avoir les dernières fonctionnalités et corrections de bugs.</value>
+    <value>Une nouvelle version de LumaflyV2 est disponible. Merci de télécharger la nouvelle version (v{0}) pour avoir les dernières fonctionnalités et corrections de bugs.</value>
   </data>
   <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
-    <value>Lumafly n'a pas réussi à télécharger la nouvelle version de Lumafly automatiquement. Lumafly va donc ouvrir le lien pour obtenir la dernière version.</value>
+    <value>LumaflyV2 n'a pas réussi à télécharger la mise à jour automatiquement. LumaflyV2 va ouvrir le lien pour obtenir la dernière version.</value>
   </data>
   <data name="MWVM_Warning" xml:space="preserve">
     <value>Alerte</value>
@@ -427,7 +427,7 @@
     <value>En attente d'une réponse de jsdelivr...</value>
   </data>
   <data name="MVVM_RunAsAdmin" xml:space="preserve">
-    <value>Essayez de lancer Lumafly en tant qu'administrateur, cela pourrait corriger le problème</value>
+    <value>Essayez de lancer LumaflyV2 en tant qu'administrateur, cela pourrait corriger le problème</value>
   </data>
   <data name="MVVM_ExceptionOccur" xml:space="preserve">
     <value>Une exception est apparue {0} {1}</value>
@@ -469,7 +469,7 @@
     <value>Épingler</value>
   </data>
   <data name="XAML_PinMod_Explanation" xml:space="preserve">
-    <value>Épingle un mod pour qu'il ne soit pas automatiquement remplacé par Lumafly</value>
+    <value>Épingle un mod pour qu'il ne soit pas automatiquement remplacé par LumaflyV2</value>
   </data>
   <data name="XAML_Unpin" xml:space="preserve">
     <value>Désépingler</value>
@@ -478,7 +478,7 @@
     <value>Impossible de se connecter à modlinks</value>
   </data>
   <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
-    <value>Voulez-vous passer Lumafly en mode hors-ligne ?</value>
+    <value>Voulez-vous passer LumaflyV2 en mode hors-ligne ?</value>
   </data>
   <data name="XAML_Select_Authors" xml:space="preserve">
     <value>Chercher par auteur</value>
@@ -505,13 +505,13 @@
     <value>Utiliser un lien modlinks personnalisé</value>
   </data>
   <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
-    <value>Normalement Lumafly charge la liste des mods depuis le modlinks officiel. Si vous voulez charger votre propre liste, entrez ici l'URL ou le chemin de fichier (dans le format file://{filepath}).\nUn lien vide ou invalide chargera le modlinks officiel</value>
+    <value>Normalement, LumaflyV2 charge la liste des mods depuis le modlinks officiel. Si vous voulez charger votre propre liste, entrez ici l'URL ou le chemin de fichier (au format file://{filepath}).\nUn lien vide ou invalide chargera le modlinks officiel</value>
   </data>
   <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
     <value>Entrez le lien du modlinks personnalisé. Rechargez pour le prendre en compte</value>
   </data>
   <data name="XAML_ReloadLumafly" xml:space="preserve">
-    <value>Recharger Lumafly</value>
+    <value>Recharger LumaflyV2</value>
   </data>
   <data name="XAML_ReloadPrompt" xml:space="preserve">
     <value>(rechargez pour prendre en compte les changements)</value>

@@ -74,7 +74,7 @@ namespace Lumafly.ViewModels
         {
             _hc = new HttpClient();
             _hc.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            _hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Lumafly", "1.0"));
+            _hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("LumaflyV2", "1.0"));
         }
 
         private async Task<string?> FetchReadme()
