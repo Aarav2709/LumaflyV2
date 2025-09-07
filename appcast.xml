@@ -9,6 +9,18 @@
             <sparkle:releaseNotesLink>
                 https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v4.0.0.0.md
             </sparkle:releaseNotesLink>
+            <pubDate>Sat, 06 Sep 2025 10:01:55 +0000</pubDate>
+            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v4.0.0.0/Lumafly.AU.exe"
+                sparkle:version="4.0.0.0"
+                sparkle:os="windows"
+                length="12288"
+                type="application/octet-stream"/>
+        </item>
+        <item>
+            <title>Lumafly Update v4.0.0.0</title>
+            <sparkle:releaseNotesLink>
+                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v4.0.0.0.md
+            </sparkle:releaseNotesLink>
             <pubDate>Sat, 06 Sep 2025 09:48:58 +0000</pubDate>
             <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v4.0.0.0/Lumafly.AU.exe"
                 sparkle:version="4.0.0.0"
