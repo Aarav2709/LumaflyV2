@@ -1,4 +1,13 @@
-# LumaflyV2 (previously Lumafly)
+<div align="center">
+
+# 🦋 LumaflyV2 (previously Lumafly)
+
+![build](https://github.com/Aarav2709/LumaflyV2/actions/workflows/build.yml/badge.svg)
+[![website](https://img.shields.io/badge/website-online-32c854)](https://lumaflyv2.vercel.app)
+[![GitHub all releases](https://img.shields.io/github/downloads/Aarav2709/LumaflyV2/total)](https://github.com/Aarav2709/LumaflyV2/releases)
+[![Crowdin](https://badges.crowdin.net/lumafly/localized.svg)](https://crowdin.com/project/lumafly)
+
+</div>
 
 LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
 
@@ -9,9 +18,7 @@ Key improvements in LumaflyV2:
 - Better internationalization and updated translations.
 - Small UX improvements: clearer messages, improved settings persistence, and fewer edge-case crashes.
 
-Note: repository and CI targets remain on the original `Lumafly` GitHub repository for now; links and badges will be migrated to a dedicated `LumaflyV2` organization/repo during release. Badges currently point to the existing CI and release pages to remain functional; update them during official v2 rollout.
-
-## Usage
+## 🎮 Usage
 
 - Download the latest version from the releases page.
 - Default game = Hollow Knight. To manage Silksong, open Settings → Game → select "Silksong". The active profile changes immediately and persists to your config.
@@ -20,7 +27,7 @@ Note: repository and CI targets remain on the original `Lumafly` GitHub reposito
 - Enable/Disable mods using the toggle and update outdated mods using the orange update button.
 - If you are unable to connect to the internet, LumaSong can be launched in offline mode where you can toggle mods/API.
 
-## Features
+## ✨ Features
 
 - Multi‑game profiles: Switch between Hollow Knight and Hollow Knight: Silksong in Settings.
 - Automatically downloads the [Modding API](https://github.com/hk-modding/api) which is required for mods to load. It also allows switching between modded and vanilla via the Toggle API button.
@@ -30,37 +37,18 @@ Note: repository and CI targets remain on the original `Lumafly` GitHub reposito
 - A single place to install, update, configure, view readmes, and report issues for mods.
 - Manage mods not available through modlinks via the manual install button.
 
-### Silksong profile details
-
-- Steam App ID: 1030300
-- Executables:
-  - Windows: "Hollow Knight Silksong.exe"
-  - Linux: "Hollow Knight Silksong"
-  - macOS: "Hollow Knight Silksong.app"
-- Data folder: "Hollow Knight Silksong_Data"
-- Save paths (Unity defaults):
-  - Windows: %USERPROFILE%/AppData/LocalLow/Team Cherry/Silksong
-  - macOS: ~/Library/Application Support/unity.Team Cherry.Silksong
-  - Linux: ~/.config/unity3d/Team Cherry/Silksong
-
-## Screenshot: What LumaSong looks like
-
-<!-- screenshots removed (previously referenced original repo's static resources) -->
-
-Screenshots will be updated to showcase the Game dropdown and Silksong profile. [TODO]
-
-## Migration notes
+## 🔄 Migration notes
 
 - Older configs continue to load with Hollow Knight as the default (`game` missing or set to `hollow_knight`).
 - When you choose Silksong in Settings, the config persists `silksong` and will restore that on next launch.
 
-## Contributions
+## 🤝 Contributions
 
 - If you want to suggest a feature or report a bug, report it on the issues page.
 - If you want to contribute, feel free to. You can see what features are currently requested over here.
   If you want to contribute to localizations, please use Crowdin to add the translations.
 
-## Credits
+## 🏆 Credits
 
 - Source code adapted from https://github.com/TheMulhima/Lumafly
 
