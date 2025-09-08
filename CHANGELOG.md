@@ -2,6 +2,7 @@
 
 Source code adapted from: https://github.com/TheMulhima/Lumafly
 
+- [v5.0.0.0](#changes-in-v5000)
 - [v4.0.0.0](#changes-in-v4000)
 - [v3.2.0.0](#changes-in-v3200)
 - [v3.1.0.0](#changes-in-v3100)
@@ -10,6 +11,16 @@ Source code adapted from: https://github.com/TheMulhima/Lumafly
 - [v2.2.0.0](#changes-in-v2200)
 - [v2.1.0.0](#changes-in-v2100)
 - [v2.0.0.0](#changes-in-v2000)
+
+- ## Changes in v5.0.0.0
+- DATE: 2025-09-07
+- - Silksong-inspired red theme and modernized UI components (surfaces, borders, primary buttons).
+- - Fixed navigation and layout issues; top-bar game switcher and bottom navigation with icons + text.
+- - Robust per-game behavior and path detection; profile-aware mods folder and installed-mods isolation.
+- - Empty-state banner and success notification styling; success bar now solid maroon with border.
+- - Removed all update prompts/buttons per request; update logic disabled.
+- - Re-enabled app icon with valid `Assets/Lumafly.ico`.
+- - Build and nullable warnings cleaned up (notably CustomModlinksUri guard).
 
 - ## Changes in v4.0.0.0
 - DATE: YYYY-MM-DD
