@@ -72,3 +72,74 @@ Key improvements in LumaflyV2:
   - [Dwarfwoot](https://patreon.com/DwarfWoot), [SFGrenade](https://github.com/SFGrenade) - Images and icons used in the installer.
   - [Lime](https://www.tumblr.com/ded-lime) - The Lumafly banner.
   - [HBKit](https://ko-fi.com/hbkit) - The Lumafly icon.
+
+## 🪟 Windows SmartScreen (free workaround)
+
+Because the app isn’t code-signed with a paid certificate, Windows SmartScreen may warn on first launch. Free options:
+
+- Unblock the downloaded ZIP before extracting.
+
+  - Right‑click the ZIP → Properties → check “Unblock” → OK → then extract.
+  - Or in PowerShell (replace the filename if different):
+
+    ```powershell
+    Unblock-File -Path .\LumaflyV2-Windows.zip
+    Expand-Archive .\LumaflyV2-Windows.zip -DestinationPath .\LumaflyV2
+    ```
+
+- If already extracted, unblock the files:
+
+  ```powershell
+  Get-ChildItem .\LumaflyV2 -Recurse | Unblock-File
+  ```
+
+- Verify downloads with the provided SHA256SUMS.txt in each release.
+
+Note: Fully removing SmartScreen requires a trusted code‑signing certificate (paid). The steps above avoid the “downloaded from the internet” flag and keep things safe and free.
+
+## 🔐 Verify downloads (SHA‑256)
+
+Each release includes a `SHA256SUMS.txt` file. Verify the file(s) you downloaded match the published checksums.
+
+- Download `SHA256SUMS.txt` from the same release as your file.
+- Put it in the same folder as the file(s) you want to verify.
+
+Windows (PowerShell)
+
+```powershell
+# Show the file's SHA-256 and compare with SHA256SUMS.txt
+Get-FileHash -Algorithm SHA256 .\LumaflyV2-Windows.zip
+
+# Optionally verify multiple files manually by comparing the printed hash
+# with the corresponding line in SHA256SUMS.txt.
+```
+
+Windows (Command Prompt)
+
+```bat
+certutil -hashfile LumaflyV2-Windows.zip SHA256
+```
+
+macOS
+
+```bash
+# Quick: print a file's hash
+shasum -a 256 LumaflyV2-MacOS.zip
+
+# Check against the whole list (expects files next to SHA256SUMS.txt)
+shasum -a 256 --check SHA256SUMS.txt
+# Outputs: "filename: OK" or "FAILED"
+```
+
+Linux
+
+```bash
+# Quick: print a file's hash
+sha256sum LumaflyV2-Linux.zip
+
+# Check against the whole list (expects files next to SHA256SUMS.txt)
+sha256sum -c SHA256SUMS.txt
+# Outputs: "filename: OK" or "FAILED"
+```
+
+Tip: You can also verify individual executables (e.g., `LumaflyV2.exe`, `LumaflyV2.AU.exe`) using the same commands.
