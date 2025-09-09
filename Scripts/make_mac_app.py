@@ -17,7 +17,7 @@ args = parser.parse_args()
 app_dir = Path(args.app_dir)
 publish = Path(args.publish)
 out = Path(args.out)
-exe = publish / "Lumafly"
+exe = publish / "LumaflyV2"
 
 if app_dir.suffix != ".app":
     print("Error: " + app_dir + " is not an .app folder.")
@@ -53,7 +53,7 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
         root = Path(root)
 
         for fname in files:
-            if fname == "Lumafly":
+            if fname == "LumaflyV2":
                 write_executable(zip_f, root / fname)
                 continue
 
@@ -66,11 +66,11 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
         for publish_root, _, files in walk(publish):
             publish_root = Path(publish_root)
             for fname in files:
-                if fname == "Lumafly":
+                if fname == "LumaflyV2":
                     continue
 
                 overrides = {
-                    "Lumafly.pdb": "run.pdb"
+                    "LumaflyV2.pdb": "run.pdb"
                 }
 
                 path = publish_root / fname
@@ -78,7 +78,7 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
 
                 zip_f.write(path, zip_path)
 
-        write_executable(zip_f, publish_root / "Lumafly", root / "MacOS" / "run")
+    write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "run")
 
 
 print("Created LumaflyV2-mac.zip")
