@@ -2,15 +2,15 @@
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Lumafly Update</title>
-        <link>https://raw.githubusercontent.com/TheMulhima/Lumafly/master/appcast.xml</link>
+    <link>https://raw.githubusercontent.com/Aarav2709/LumaflyV2/master/appcast.xml</link>
         <language>en</language>
         <item>
             <title>LumaflyV2 Update v5.1.0.0</title>
             <sparkle:releaseNotesLink>
-                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v5.1.0.0.md
+                https://github.com/Aarav2709/LumaflyV2/releases/tag/v5.1.0.0
             </sparkle:releaseNotesLink>
             <pubDate>Tue, 09 Sep 2025 07:33:25 +0000</pubDate>
-            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v5.1.0.0/LumaflyV2.AU.exe"
+            <enclosure url="https://github.com/Aarav2709/LumaflyV2/releases/download/v5.1.0.0/LumaflyV2.AU.exe"
                 sparkle:version="5.1.0.0"
                 sparkle:os="windows"
                 length="12288"
@@ -19,34 +19,34 @@
         <item>
             <title>LumaflyV2 Update v5.0.0.0</title>
             <sparkle:releaseNotesLink>
-                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v5.0.0.0.md
+                https://github.com/Aarav2709/LumaflyV2/releases/tag/v5.0.0.0
             </sparkle:releaseNotesLink>
             <pubDate>Mon, 08 Sep 2025 14:22:15 +0000</pubDate>
-            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v5.0.0.0/LumaflyV2.AU.exe"
+            <enclosure url="https://github.com/Aarav2709/LumaflyV2/releases/download/v5.0.0.0/LumaflyV2.AU.exe"
                 sparkle:version="5.0.0.0"
                 sparkle:os="windows"
                 length="12288"
                 type="application/octet-stream"/>
         </item>
         <item>
-            <title>Lumafly Update v4.0.0.0</title>
+            <title>LumaflyV2 Update v4.0.0.0</title>
             <sparkle:releaseNotesLink>
-                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v4.0.0.0.md
+                https://github.com/Aarav2709/LumaflyV2/releases/tag/v4.0.0.0
             </sparkle:releaseNotesLink>
             <pubDate>Sat, 06 Sep 2025 10:01:55 +0000</pubDate>
-            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v4.0.0.0/Lumafly.AU.exe"
+            <enclosure url="https://github.com/Aarav2709/LumaflyV2/releases/download/v4.0.0.0/LumaflyV2.AU.exe"
                 sparkle:version="4.0.0.0"
                 sparkle:os="windows"
                 length="12288"
                 type="application/octet-stream"/>
         </item>
         <item>
-            <title>Lumafly Update v4.0.0.0</title>
+            <title>LumaflyV2 Update v4.0.0.0</title>
             <sparkle:releaseNotesLink>
-                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v4.0.0.0.md
+                https://github.com/Aarav2709/LumaflyV2/releases/tag/v4.0.0.0
             </sparkle:releaseNotesLink>
             <pubDate>Sat, 06 Sep 2025 09:48:58 +0000</pubDate>
-            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v4.0.0.0/Lumafly.AU.exe"
+            <enclosure url="https://github.com/Aarav2709/LumaflyV2/releases/download/v4.0.0.0/LumaflyV2.AU.exe"
                 sparkle:version="4.0.0.0"
                 sparkle:os="windows"
                 length="12288"
