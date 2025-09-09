@@ -9,7 +9,7 @@
             <sparkle:releaseNotesLink>
                 https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v5.1.0.0.md
             </sparkle:releaseNotesLink>
-            <pubDate>Tue, 09 Sep 2025 07:33:11 +0000</pubDate>
+            <pubDate>Tue, 09 Sep 2025 07:33:25 +0000</pubDate>
             <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v5.1.0.0/LumaflyV2.AU.exe"
                 sparkle:version="5.1.0.0"
                 sparkle:os="windows"
