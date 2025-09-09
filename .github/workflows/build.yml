@@ -9,10 +9,8 @@ name: Build
 # verifies the tag is on master before creating a release.
 on:
   push:
-    branches: ["**"]
     tags:
       - "v*.*.*.*"
-  pull_request:
 
 permissions:
   contents: write
