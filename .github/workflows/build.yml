@@ -126,10 +126,18 @@ jobs:
   release:
     needs: [build-macos, build-windows, build-linux, build-auto-updater]
     runs-on: ubuntu-latest
-
-    if: startsWith(github.ref, 'refs/tags')
+    if: startsWith(github.ref, 'refs/tags') || github.event_name == 'release'
 
     steps:
+      - name: Resolve tag
+        id: resolve_tag
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout repository (needed to verify tag ancestry)
         uses: actions/checkout@v3
         with:
@@ -137,21 +145,16 @@ jobs:
 
       - name: Verify tag points to master
         id: verify_tag
-        if: startsWith(github.ref, 'refs/tags')
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
+          TAG='${{ steps.resolve_tag.outputs.tag }}'
           echo "Verifying tag: $TAG"
-          # get the commit sha that the tag points to
           TAG_SHA=$(git rev-list -n 1 "refs/tags/${TAG}")
           echo "Tag sha: $TAG_SHA"
-          # fetch remote master so we can check ancestry
           git fetch origin master
           if git merge-base --is-ancestor "$TAG_SHA" origin/master; then
             echo "on_master=true" >> $GITHUB_OUTPUT
-            echo "Tag $TAG is on origin/master"
           else
             echo "on_master=false" >> $GITHUB_OUTPUT
-            echo "Tag $TAG is NOT on origin/master"
           fi
 
       - name: Download artifacts
@@ -160,85 +163,63 @@ jobs:
         with:
           path: ./artifacts
 
-      - name: Zip files
+      - name: Package and checksum
         if: steps.verify_tag.outputs.on_master == 'true'
         run: |
-          # Prepare a Windows package folder so we can add free SmartScreen workarounds.
+          set -euo pipefail
           mkdir -p win_pkg
           cp -r ./artifacts/Lumafly-Windows/* ./win_pkg/
-
-          # Include a short README and helper scripts in the Windows zip to help users unblock files.
-          cat > ./win_pkg/README-Windows-First-Run.txt << 'EOF'
-          Windows may show a SmartScreen warning because this app is not code-signed with a paid certificate.
-
-          Free ways to run safely:
-          1) Unblock this zip before extracting: Right-click > Properties > check "Unblock" > OK, then extract.
-             Or in PowerShell: Unblock-File -Path .\LumaflyV2-Windows.zip
-          2) After extracting, run UNBLOCK_AND_RUN.cmd to automatically unblock files and start LumaflyV2.
-          3) Verify downloads using the SHA256SUMS.txt on the GitHub Release.
-
-          This package contains:
-          - UNBLOCK_AND_RUN.cmd (calls PowerShell with ExecutionPolicy Bypass)
-          - unblock-all.ps1 (runs Unblock-File recursively)
-          EOF
-
-          cat > ./win_pkg/unblock-all.ps1 << 'EOF'
-          Param(
-            [string]$Root = $PSScriptRoot
-          )
-          Write-Host "Unblocking files under: $Root"
-          Get-ChildItem -LiteralPath $Root -Recurse -Force | Unblock-File -ErrorAction SilentlyContinue
-          $exe = Join-Path $Root 'LumaflyV2.exe'
-          if (Test-Path $exe) {
-            Write-Host "Launching: $exe"
-            Start-Process -FilePath $exe
-          } else {
-            Write-Host "LumaflyV2.exe not found in $Root"
-          }
-          EOF
-
-          cat > ./win_pkg/UNBLOCK_AND_RUN.cmd << 'EOF'
-          @echo off
-          setlocal
-          powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0unblock-all.ps1"
-          endlocal
-          EOF
-
-          # Windows: zip the prepared package folder and name it LumaflyV2-Windows.zip
+          printf '%s\n' \
+            'Windows may show a SmartScreen warning because this app is not code-signed with a paid certificate.' \
+            '' \
+            'Free ways to run safely:' \
+            '1) Unblock this zip before extracting: Right-click > Properties > check "Unblock" > OK, then extract.' \
+            '   Or in PowerShell: Unblock-File -Path .\\LumaflyV2-Windows.zip' \
+            '2) After extracting, run UNBLOCK_AND_RUN.cmd to automatically unblock files and start LumaflyV2.' \
+            '3) Verify downloads using the SHA256SUMS.txt on the GitHub Release.' \
+            '' \
+            'This package contains:' \
+            '- UNBLOCK_AND_RUN.cmd (calls PowerShell with ExecutionPolicy Bypass)' \
+            '- unblock-all.ps1 (runs Unblock-File recursively)' \
+            > ./win_pkg/README-Windows-First-Run.txt
+          printf '%s\n' \
+            'Param(' \
+            '  [string]$Root = $PSScriptRoot' \
+            ')' \
+            'Write-Host "Unblocking files under: $Root"' \
+            'Get-ChildItem -LiteralPath $Root -Recurse -Force | Unblock-File -ErrorAction SilentlyContinue' \
+            '$exe = Join-Path $Root '\''LumaflyV2.exe'\''' \
+            'if (Test-Path $exe) {' \
+            '  Write-Host "Launching: $exe"' \
+            '  Start-Process -FilePath $exe' \
+            '} else {' \
+            '  Write-Host "LumaflyV2.exe not found in $Root"' \
+            '}' \
+            > ./win_pkg/unblock-all.ps1
+          printf '%s\n' \
+            '@echo off' \
+            'setlocal' \
+            'powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0unblock-all.ps1"' \
+            'endlocal' \
+            > ./win_pkg/UNBLOCK_AND_RUN.cmd
           zip -jr LumaflyV2-Windows.zip ./win_pkg/*
-
-          # Main Windows executable renamed to LumaflyV2.exe for the release page
-              if: startsWith(github.ref, 'refs/tags') || github.event_name == 'release'
-
-          # AU executable renamed to LumaflyV2.AU.exe for the release page
-                - name: Resolve tag
-                  id: resolve_tag
-                  run: |
-                    if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-                      echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-                    else
-                      echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-                    fi
+          cp ./artifacts/Lumafly-Windows/LumaflyV2.exe ./LumaflyV2.exe
           cp ./artifacts/Lumafly-AU/Lumafly.AU.exe ./LumaflyV2.AU.exe
-
-          # Linux and Mac were already zipped by their build jobs; move them and rename
           mv ./artifacts/Lumafly-Linux/linux.zip LumaflyV2-Linux.zip
           mv ./artifacts/Lumafly-MacOS/LumaflyV2-mac.zip LumaflyV2-MacOS.zip
-
-          # Generate SHA256 checksums for all release files (free integrity verification)
-                  if: startsWith(github.ref, 'refs/tags') || github.event_name == 'release'
+          sha256sum \
             LumaflyV2.exe \
-                    TAG='${{ steps.resolve_tag.outputs.tag }}'
+            LumaflyV2.AU.exe \
             LumaflyV2-Windows.zip \
             LumaflyV2-MacOS.zip \
             LumaflyV2-Linux.zip > SHA256SUMS.txt
 
-      - name: Create release if a new tag is pushed
+      - name: Create release
         if: steps.verify_tag.outputs.on_master == 'true'
         uses: softprops/action-gh-release@v1
         with:
-          # Ensure the action can create a release using the repository token
           token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.resolve_tag.outputs.tag }}
           files: |
             ./LumaflyV2.exe
             ./LumaflyV2.AU.exe
