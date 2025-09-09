@@ -5,6 +5,18 @@
         <link>https://raw.githubusercontent.com/TheMulhima/Lumafly/master/appcast.xml</link>
         <language>en</language>
         <item>
+            <title>LumaflyV2 Update v5.1.0.0</title>
+            <sparkle:releaseNotesLink>
+                https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v5.1.0.0.md
+            </sparkle:releaseNotesLink>
+            <pubDate>Tue, 09 Sep 2025 07:33:11 +0000</pubDate>
+            <enclosure url="https://github.com/TheMulhima/Lumafly/releases/download/v5.1.0.0/LumaflyV2.AU.exe"
+                sparkle:version="5.1.0.0"
+                sparkle:os="windows"
+                length="12288"
+                type="application/octet-stream"/>
+        </item>
+        <item>
             <title>LumaflyV2 Update v5.0.0.0</title>
             <sparkle:releaseNotesLink>
                 https://raw.githubusercontent.com/TheMulhima/Lumafly/static-resources/Changelogs/v5.0.0.0.md
