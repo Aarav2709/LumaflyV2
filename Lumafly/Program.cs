@@ -20,7 +20,7 @@ namespace Lumafly
     [UsedImplicitly]
     internal class Program
     {
-        internal static readonly IReadOnlyDictionary<string, string> fontOverrides = new Dictionary<string, string>() 
+        internal static readonly IReadOnlyDictionary<string, string> fontOverrides = new Dictionary<string, string>()
         {
             // the avalonia way of specifying embedded fonts
             ["zh"] = "fonts:Noto Sans SC#Noto Sans SC",
@@ -32,7 +32,7 @@ namespace Lumafly
         };
 
         private static TextWriterTraceListener _traceFile = null!;
-        internal const string LoggingFile = LoggingFileName + LoggingFileExtension; 
+        internal const string LoggingFile = LoggingFileName + LoggingFileExtension;
         private const string LoggingFileName = "ModInstaller";
         internal const string LoggingFileExtension = ".log";
 
@@ -43,18 +43,18 @@ namespace Lumafly
         {
             Console.WriteLine("Starting Lumafly...");
             SetupLogging();
-            
+
             Console.WriteLine("Finding preferred language...");
             SetPreferredLanguage();
-            
+
             Console.WriteLine("Logging sucessfully setup...");
             UrlSchemeHandler.Setup();
-            
+
             PosixSignalRegistration.Create(PosixSignal.SIGTERM, Handler);
             PosixSignalRegistration.Create(PosixSignal.SIGINT, Handler);
-            
+
             Console.WriteLine("Starting Avalonia Setup...");
-            
+
             try
             {
                 BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
@@ -74,7 +74,7 @@ namespace Lumafly
                 Settings.GetOrCreateDirPath(),
                 LoggingFile
             );
-            
+
             try
             {
                 // if the log file is too big, archive it
@@ -141,7 +141,7 @@ namespace Lumafly
                 "MacOS" => "../../../",
                 _ => string.Empty
             };
-            
+
             if (Debugger.IsAttached)
                 Debugger.Break();
 
@@ -160,7 +160,7 @@ namespace Lumafly
 
             Trace.Flush();
         }
-        
+
         private static void SetPreferredLanguage()
         {
             try
@@ -177,7 +177,7 @@ namespace Lumafly
                     if (!Enum.TryParse(culture.TwoLetterISOLanguageName, out preferredLanguage)) // if culture is supported, set that as preferred
                         preferredLanguage = SupportedLanguages.en; // default to english
                 }
-                
+
                 // set the culture to the preferred language
                 Thread.CurrentThread.CurrentUICulture =
                     new CultureInfo(SupportedLanguagesInfo.SupportedLangToCulture[preferredLanguage]);
@@ -212,17 +212,30 @@ namespace Lumafly
                 .UseReactiveUI()
                 .ConfigureFonts(manager =>
                 {
-                    manager.AddFontCollection(new EmbeddedFontCollection(
-                        new Uri("fonts:Noto Sans SC", UriKind.Absolute),
-                        new Uri("avares://Lumafly/Assets/Fonts/NotoSansSC", UriKind.Absolute)));
-                    manager.AddFontCollection(new EmbeddedFontCollection(
-                        new Uri("fonts:Noto Sans", UriKind.Absolute),
-                        new Uri("avares://Lumafly/Assets/Fonts/NotoSans", UriKind.Absolute)));
+                    try
+                    {
+                        manager.AddFontCollection(new EmbeddedFontCollection(
+                            new Uri("fonts:Noto Sans SC", UriKind.Absolute),
+                            new Uri("avares://LumaflyV2/Assets/Fonts/NotoSansSC", UriKind.Absolute)));
+                        manager.AddFontCollection(new EmbeddedFontCollection(
+                            new Uri("fonts:Noto Sans", UriKind.Absolute),
+                            new Uri("avares://LumaflyV2/Assets/Fonts/NotoSans", UriKind.Absolute)));
+                    }
+                    catch
+                    {
+                        // Fallback to default system fonts if embedded collections can't be loaded
+                    }
                 });
 
             foreach ((string culture, string fontFamily) in fontOverrides) {
                 SetCultureSpecificFontOptions(builder, culture, fontFamily);
             }
+
+            // Ensure a safe default font family to avoid glyph typeface creation errors
+            builder.With(new FontManagerOptions()
+            {
+                DefaultFamilyName = "Segoe UI, Arial, Noto Sans"
+            });
 
             return builder;
         }

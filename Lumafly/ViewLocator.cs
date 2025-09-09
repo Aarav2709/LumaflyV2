@@ -9,13 +9,13 @@ namespace Lumafly
     public class ViewLocator : IDataTemplate
     {
         private const string ViewNameSpace = "Views";
-        
-        private readonly string[] ViewSubNamespaces = 
+
+        private readonly string[] ViewSubNamespaces =
         {
             "Pages",
             "Windows"
         };
-        
+
         public Control Build(object? data)
         {
             var className = data?.GetType().Name.Replace("ViewModel", "View") ?? throw new InvalidOperationException();
@@ -28,9 +28,9 @@ namespace Lumafly
                 type ??= Type.GetType($"{baseNameSpace}.{ViewNameSpace}.{viewSubNamespace}.{className}");
             }
 
-            if (type == null) 
+            if (type == null)
                 return new TextBlock { Text = "Not Found: " + data };
-            
+
             var ctrl = (Control) Activator.CreateInstance(type)!;
             ctrl.DataContext = data;
 

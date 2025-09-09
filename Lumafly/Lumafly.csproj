@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <!-- Windowed exe, avoids Console showing for users. -->
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
         <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
-       <!-- ApplicationIcon temporarily removed to unblock build due to invalid .ico format.
-           Re-add after providing a valid Windows .ico file (multi-size, 16–256px, 32-bit with alpha).
-           <ApplicationIcon>Assets/Lumafly.ico</ApplicationIcon>
-       -->
-        <Version>5.0.0.0</Version>
+    <ApplicationIcon>Assets\Lumafly.ico</ApplicationIcon>
+    <AssemblyName>LumaflyV2</AssemblyName>
+    <Version>5.1.0.0</Version>
         <UseAppHost>true</UseAppHost>
     <!-- Branding metadata -->
     <Title>LumaflyV2</Title>

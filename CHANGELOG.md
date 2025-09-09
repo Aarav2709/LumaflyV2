@@ -2,6 +2,7 @@
 
 Source code adapted from: https://github.com/TheMulhima/Lumafly
 
+- [v5.1.0.0](#changes-in-v5100)
 - [v5.0.0.0](#changes-in-v5000)
 - [v4.0.0.0](#changes-in-v4000)
 - [v3.2.0.0](#changes-in-v3200)
@@ -11,6 +12,14 @@ Source code adapted from: https://github.com/TheMulhima/Lumafly
 - [v2.2.0.0](#changes-in-v2200)
 - [v2.1.0.0](#changes-in-v2100)
 - [v2.0.0.0](#changes-in-v2000)
+
+- ## Changes in v5.1.0.0
+- DATE: 2025-09-09
+- - Upgrade runtime to .NET 9.0 for better performance and longevity.
+- - Rename application binary to LumaflyV2 (AssemblyName change); resources updated accordingly.
+- - Re-enable and fix Windows application icon: `Assets/Lumafly.ico`.
+- - CI and scripts updated to target net9.0 and new binary names.
+- - Bump app version to 5.1.0.0.
 
 - ## Changes in v5.0.0.0
 - DATE: 2025-09-07

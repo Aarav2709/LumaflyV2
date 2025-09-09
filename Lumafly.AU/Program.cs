@@ -5,12 +5,12 @@ using System.Web;
 try
 {
     // set defaults to allow AU.exe to be run manually just incase
-    string LumaflyExeName = "Lumafly.exe"; 
+    string LumaflyExeName = "Lumafly.exe";
     string LumaflyPath = Environment.CurrentDirectory;
     bool shouldLaunchUpdated = true; // default to launching the updated app
 
     string fullPath = string.Empty;
-    
+
     // concat all cli args (except first which is the path of this app) to form the full path of lumafly which is passed
     // in by the installer. This is done because the path may contain spaces which would be split into multiple args
     for (int i = 1; i < Environment.GetCommandLineArgs().Length; i++)
@@ -37,7 +37,7 @@ try
     }
 
     var originalLumaflyExe = Path.Combine(LumaflyPath, LumaflyExeName);
-    
+
     var updatedLumaflyExeBytes = GetLumaflyExe() ?? throw new Exception("Unable to get updated Lumafly.");
     var updatedLumaflyFile = Path.Combine(LumaflyPath, "Lumafly-Update.exe");
 
@@ -45,7 +45,7 @@ try
     File.WriteAllBytes(updatedLumaflyFile, updatedLumaflyExeBytes); // create the file
     if (File.Exists(originalLumaflyExe)) // delete the old file
     {
-        File.Delete(originalLumaflyExe); 
+        File.Delete(originalLumaflyExe);
     }
     else // it means original exe file has Scarab in it and "originalLumaflyExe" doesnt exist anymore as we did the replace above
     {
@@ -53,9 +53,9 @@ try
         shouldLaunchUpdated = true; // netsparkle doesn't expect this to happen so we have to do it now
     }
     File.Move(updatedLumaflyFile, originalLumaflyExe); // move the new file to the old file's location
-    
+
     Console.WriteLine("Successfully updated Lumafly.");
-    
+
     Task.Delay(500).Wait(); // wait a second to show message
 
     // only relaunch app if it was launched manually
