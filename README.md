@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🦋 LumaflyV2 (previously Lumafly)
+# 🦋 LumaflyV2
 
 ![build](https://github.com/Aarav2709/LumaflyV2/actions/workflows/build.yml/badge.svg)
 [![website](https://img.shields.io/badge/website-online-32c854)](https://lumaflyv2.vercel.app)
@@ -9,13 +9,12 @@
 
 </div>
 
-LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
+LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support. LumaflyV2 is not affiliated with Lumafly or its developers.
 
 Key improvements in LumaflyV2:
 
 - Reworked game profile system: automatic detection and per-game executable resolution (better Silksong support).
 - Safer installer flow with improved error handling around file access and mod installation.
-- Better internationalization and updated translations.
 - Small UX improvements: clearer messages, improved settings persistence, and fewer edge-case crashes.
 
 ## 🎮 Usage
