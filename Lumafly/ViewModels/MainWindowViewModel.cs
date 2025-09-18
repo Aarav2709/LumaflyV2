@@ -587,12 +587,17 @@ namespace Lumafly.ViewModels
     {
       Trace.WriteLine("Settings path is invalid, forcing re-selection.");
 
+      // Use the currently loaded settings' selected game if available so the message
+      // reflects the actual profile (e.g., Silksong) rather than hardcoding Hollow Knight.
+      var loaded = Settings.Load();
+      var profileName = loaded?.CurrentProfile?.Name ?? Lumafly.Models.GameProfiles.HollowKnight.Name;
+
       await MessageBoxUtil.GetMessageBoxStandardWindow
       (
           new MessageBoxStandardParams
           {
             ContentHeader = Resources.MWVM_Warning,
-            ContentMessage = Resources.GAME_InvalidSavedPath_Message.FormatWith(Lumafly.Models.GameProfiles.HollowKnight.Name),
+            ContentMessage = Resources.GAME_InvalidSavedPath_Message.FormatWith(profileName),
             // The auto-resize for this lib is buggy, so
             // ensure that the message doesn't get cut off
             MinWidth = 550

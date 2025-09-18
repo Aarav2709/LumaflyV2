@@ -173,35 +173,49 @@ namespace Lumafly
     /// </summary>
     internal static async Task<ValidPath?> TryAutoDetect(GameProfile profile)
     {
-      ValidPath? path = null;
+      // Use an internal synchronous detector so we can attempt fallbacks without recursion.
+      ValidPath? TryDetectInternal(GameProfile p)
+      {
+        ValidPath? v = null;
 
-      // Try static paths first
-      var staticPaths = BuildStaticPaths(profile);
-      path = staticPaths.Select(p => PathUtil.ValidateWithSuffixForProfile(p, profile)).FirstOrDefault(x => x is not null);
+        // Try static paths first
+        var staticPaths = BuildStaticPaths(p);
+        v = staticPaths.Select(sp => PathUtil.ValidateWithSuffixForProfile(sp, p)).FirstOrDefault(x => x is not null);
+        if (v is not null) return v;
 
-      // If that's valid, use it.
-      if (path is not null)
-        return path;
-
-      // Otherwise, we go through the user profile suffixes.
-      string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-      var userSuffixes = BuildUserSuffixPaths(profile);
-      path = userSuffixes
+        // Otherwise, user profile suffixes
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var userSuffixes = BuildUserSuffixPaths(p);
+        v = userSuffixes
              .Select(suffix => Path.Combine(home, suffix))
-             .Select(p => PathUtil.ValidateWithSuffixForProfile(p, profile))
+             .Select(pth => PathUtil.ValidateWithSuffixForProfile(pth, p))
              .FirstOrDefault(x => x is not null);
+        if (v is not null) return v;
 
+        if (TryDetectFromRegistry(out var regPath, p))
+          return regPath;
+
+        return null;
+      }
+
+      // Attempt detection for the requested profile first.
+      var path = TryDetectInternal(profile);
       if (path is not null)
         return path;
 
-      if (TryDetectFromRegistry(out path, profile))
-        return path;
+      // If we couldn't find the requested profile, attempt reasonable fallbacks (e.g., if looking for Hollow Knight
+      // but only Silksong is installed, accept Silksong so the user can still use the mod manager).
+      if (profile == GameProfiles.HollowKnight)
+      {
+        var fallback = TryDetectInternal(GameProfiles.Silksong);
+        if (fallback is not null)
+          return fallback;
+      }
 
       // since it cant detect from registry assume its because it can't access the registry
       await DisplayErrors.AskForAdminReload("Path was not automatically found from registry.");
 
-      return path; // if couldn't find path it would be null
+      return null; // explicit null if nothing detected
     }
 
     private static bool TryDetectFromRegistry([MaybeNullWhen(false)] out ValidPath path, GameProfile profile)
@@ -355,6 +369,20 @@ namespace Lumafly
     {
       // Create from ManagedPath.
       var settings = new Settings(path);
+
+      // Infer Game from the managed path if it appears to belong to a known profile.
+      try
+      {
+        if (!string.IsNullOrWhiteSpace(path))
+        {
+          var lower = path.ToLowerInvariant();
+          if (lower.Contains("silksong") || lower.Contains("hollow knight silksong"))
+            settings.Game = GameProfiles.SilksongKey;
+          else if (lower.Contains("hollow_knight") || lower.Contains("hollow knight"))
+            settings.Game = GameProfiles.HollowKnightKey;
+        }
+      }
+      catch { /* best effort only */ }
 
       settings.Save();
 
