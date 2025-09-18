@@ -2,6 +2,8 @@
 
 Source code adapted from: https://github.com/TheMulhima/Lumafly
 
+- [v5.1.0.2](#changes-in-v5102)
+- [v5.1.0.1](#changes-in-v5101)
 - [v5.1.0.0](#changes-in-v5100)
 - [v5.0.0.0](#changes-in-v5000)
 - [v4.0.0.0](#changes-in-v4000)
@@ -12,6 +14,21 @@ Source code adapted from: https://github.com/TheMulhima/Lumafly
 - [v2.2.0.0](#changes-in-v2200)
 - [v2.1.0.0](#changes-in-v2100)
 - [v2.0.0.0](#changes-in-v2000)
+
+## Changes in v5.1.0.2
+
+DATE: 2025-09-18
+
+- Bump in-app version to 5.1.0.2 (metadata and about dialog updates).
+- Minor packaging/documentation clarifications; no runtime behavior changes.
+
+## Changes in v5.1.0.1
+
+DATE: 2025-09-09
+
+- Packaging and distribution fixes: added SHA256 checksums to releases and updated CI packaging scripts to include unblock helper files for Windows.
+- Fixed macOS `.app` packaging so the executable is placed at `Contents/MacOS` and executable bit is preserved in release ZIPs.
+- Minor release notes and appcast feed updates. See `appcast.xml` for the auto-update feed entries.
 
 - ## Changes in v5.1.0.0
 - DATE: 2025-09-09
