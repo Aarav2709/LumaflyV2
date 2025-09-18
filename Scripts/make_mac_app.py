@@ -43,7 +43,7 @@ def write_executable(zfile, path, zip_path=None):
     # UNIX host
     info.create_system = 3
 
-    zip_f.writestr(info, fbytes, ZIP_DEFLATED)
+    zfile.writestr(info, fbytes, ZIP_DEFLATED)
 
 if not Path(out).exists():
     Path(out).mkdir()
@@ -53,8 +53,10 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
         root = Path(root)
 
         for fname in files:
+            # Skip any existing executable found inside the source app_dir; we'll add
+            # the published executable into Contents/MacOS explicitly below so it
+            # ends up in the correct location and with correct permissions.
             if fname == "LumaflyV2":
-                write_executable(zip_f, root / fname)
                 continue
 
             path = Path(root, fname)
@@ -69,16 +71,15 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
                 if fname == "LumaflyV2":
                     continue
 
-                overrides = {
-                    "LumaflyV2.pdb": "run.pdb"
-                }
-
+                # keep original filenames for publish artifacts; place them under
+                # Contents/MacOS. We don't rename the executable here.
                 path = publish_root / fname
-                zip_path = root / "MacOS" / overrides.get(fname, fname)
-
+                zip_path = root / "MacOS" / fname
                 zip_f.write(path, zip_path)
 
-    write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "run")
+    # Add the published executable into Contents/MacOS with the expected name
+    # and executable bits. This ensures the app bundle opens correctly on macOS.
+    write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "LumaflyV2")
 
 
 print("Created LumaflyV2-mac.zip")
