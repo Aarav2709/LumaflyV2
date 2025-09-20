@@ -14,6 +14,9 @@
   <!-- Accents -->
   <Color x:Key="Color.Primary">#C1372A</Color>            <!-- Silksong red -->
   <Color x:Key="Color.PrimaryHover">#D4483B</Color>
+  <!-- Glow / highlight variants for hover states -->
+  <Color x:Key="Color.PrimaryGlow">#55C1372A</Color> <!-- semi-transparent accent for glow overlays -->
+  <Color x:Key="Color.SurfaceHover">#352222</Color>
   <Color x:Key="Color.Info">#88B6F1</Color>
   <Color x:Key="Color.Danger">#F05B5B</Color>
   <Color x:Key="Color.DangerHover">#DC4B4B</Color>
@@ -38,6 +41,8 @@
 
   <SolidColorBrush x:Key="Brush.Accent" Color="{DynamicResource Color.Primary}"/>
   <SolidColorBrush x:Key="Brush.AccentHover" Color="{DynamicResource Color.PrimaryHover}"/>
+  <SolidColorBrush x:Key="Brush.AccentGlow" Color="{DynamicResource Color.PrimaryGlow}"/>
+  <SolidColorBrush x:Key="Brush.SurfaceHover" Color="{DynamicResource Color.SurfaceHover}"/>
 
   <!-- Spacing & Radius Tokens -->
   <Thickness x:Key="Space.1">4</Thickness>
@@ -49,6 +54,8 @@
   <CornerRadius x:Key="Radius.Medium">8</CornerRadius>
   <CornerRadius x:Key="Radius.XL">14</CornerRadius>
   <CornerRadius x:Key="Radius.2XL">16</CornerRadius>
+  <!-- Compatibility token used by controls styles -->
+  <CornerRadius x:Key="Radius.MD">8</CornerRadius>
 
   <!-- Font -->
   <FontFamily x:Key="AppFont">Segoe UI, Inter, Arial</FontFamily>

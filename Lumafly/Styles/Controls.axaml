@@ -21,12 +21,21 @@
     <Setter Property="RenderTransform">
       <ScaleTransform ScaleX="1" ScaleY="1"/>
     </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+          <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+      </ControlTemplate>
+    </Setter>
   </Style>
   <Style Selector="Button.primary:pointerover">
     <Setter Property="Background" Value="{DynamicResource Brush.AccentHover}"/>
     <Setter Property="RenderTransform">
-      <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+      <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
     </Setter>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
+    <Setter Property="BorderThickness" Value="1"/>
   </Style>
   <Style Selector="Button.primary:pressed">
     <Setter Property="RenderTransform">
@@ -40,18 +49,22 @@
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderSubtle}"/>
     <Setter Property="BorderThickness" Value="1"/>
     <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
+    <Setter Property="Padding" Value="8"/>
   </Style>
   <Style Selector="ListBoxItem">
     <Setter Property="CornerRadius" Value="{DynamicResource Radius.MD}"/>
     <Setter Property="Padding" Value="16,12"/>
   </Style>
   <Style Selector="ListBoxItem:pointerover">
-    <Setter Property="Background" Value="#2A2A2E40"/>
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceHover}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.AccentGlow}"/>
+    <Setter Property="BorderThickness" Value="0,0,0,0"/>
   </Style>
   <Style Selector="ListBoxItem:selected">
     <Setter Property="Background" Value="#2A2A2E80"/>
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
     <Setter Property="BorderThickness" Value="1,0,0,0"/>
+    <Setter Property="Opacity" Value="1"/>
   </Style>
 
   <!-- Status pills -->
