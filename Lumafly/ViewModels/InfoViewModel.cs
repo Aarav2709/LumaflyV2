@@ -134,7 +134,7 @@ public partial class InfoViewModel : ViewModelBase
         candidateNames.AddRange(exeNames);
       }
 
-      string exeFullPath = null;
+  string? exeFullPath = null;
       var triedPaths = new List<string>();
       foreach (var candidate in candidateNames)
       {
