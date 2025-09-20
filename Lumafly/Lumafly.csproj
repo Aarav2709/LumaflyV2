@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
     <ApplicationIcon>Assets\Lumafly.ico</ApplicationIcon>
     <AssemblyName>LumaflyV2</AssemblyName>
-    <Version>5.1.0.2</Version>
+    <Version>5.1.0.4</Version>
         <UseAppHost>true</UseAppHost>
     <!-- Branding metadata -->
     <Title>LumaflyV2</Title>
