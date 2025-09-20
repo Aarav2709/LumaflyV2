@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -107,9 +108,44 @@ public partial class InfoViewModel : ViewModelBase
         throw new Exception($"{currentProfile.Name} executable not found");
       }
 
-      // Build executable path from profile's configured exe names. Use the first name as canonical launch target.
-      var exeNameFromProfile = currentProfile.ExeNames.FirstOrDefault() ?? string.Empty;
-      var exeFullPath = Path.Combine(installFolder.FullName, exeNameFromProfile);
+      // Resolve executable path from profile's configured exe names.
+      // On Unix-like systems prefer native binaries (no .exe) first, then fall back to configured names (including .exe) for Proton/Windows installs.
+      var exeNames = currentProfile.ExeNames ?? Array.Empty<string>();
+
+      var candidateNames = new List<string>();
+      if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+      {
+        // Add no-extension (native) variants first
+        foreach (var n in exeNames)
+        {
+          var noExt = Path.GetFileNameWithoutExtension(n);
+          if (!string.IsNullOrWhiteSpace(noExt) && !candidateNames.Contains(noExt))
+            candidateNames.Add(noExt);
+        }
+        // Then add the original configured names (may include .exe)
+        foreach (var n in exeNames)
+        {
+          if (!candidateNames.Contains(n))
+            candidateNames.Add(n);
+        }
+      }
+      else
+      {
+        candidateNames.AddRange(exeNames);
+      }
+
+      string exeFullPath = null;
+      var triedPaths = new List<string>();
+      foreach (var candidate in candidateNames)
+      {
+        var p = Path.Combine(installFolder.FullName, candidate);
+        triedPaths.Add(p);
+        if (File.Exists(p))
+        {
+          exeFullPath = p;
+          break;
+        }
+      }
 
   // Determine whether the install appears to be a Steam install by checking for steam_api64.dll in the Managed plugins folder.
       var isSteam = false;
@@ -134,9 +170,12 @@ public partial class InfoViewModel : ViewModelBase
       }
       else
       {
-        // Validate exe exists before attempting to launch; if not, surface a descriptive, user-facing exception (preserving behavior).
-        if (!File.Exists(exeFullPath))
-          throw new Exception($"{currentProfile.Name} executable not found at {exeFullPath}");
+        // Validate exe was found from candidate names
+        if (string.IsNullOrEmpty(exeFullPath))
+        {
+          var list = string.Join("\n", triedPaths);
+          throw new Exception($"{currentProfile.Name} executable not found. Tried the following paths:\n{list}");
+        }
 
         Process.Start(new ProcessStartInfo
         {
