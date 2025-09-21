@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>LumaflyV2</string>
+	<string>Lumafly</string>
 	<key>CFBundleGetInfoString</key>
 	<string>LumaflyV2</string>
 	<key>CFBundleIconFile</key>
