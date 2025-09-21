@@ -113,9 +113,9 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
                 zip_path = root / "MacOS" / fname
                 zip_f.write(path, zip_path)
 
-    # Add the published executable into Contents/MacOS with the expected name
-    # and executable bits. This ensures the app bundle opens correctly on macOS.
-    write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "LumaflyV2")
+        # Add the published executable into Contents/MacOS with the expected name
+        # and executable bits. This ensures the app bundle opens correctly on macOS.
+        write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "run")
 
 
 print("Created LumaflyV2-mac.zip")
