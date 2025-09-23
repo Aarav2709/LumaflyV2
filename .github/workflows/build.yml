@@ -81,7 +81,6 @@ jobs:
           cd Scripts
           # Ensure the published binary is executable before creating the .app bundle
           chmod +x ../Lumafly/bin/Release/net9.0/osx-x64/publish/LumaflyV2 || true
-          chmod +x ./Lumafly.app/Contents/MacOS/Lumafly || true
           python3 make_mac_app.py Lumafly.app ../Lumafly/bin/Release/net9.0/osx-x64/publish ../out
           cd ..
       - name: Upload macos binary
