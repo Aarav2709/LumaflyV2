@@ -5,7 +5,6 @@
 ![build](https://github.com/Aarav2709/Needlelight/actions/workflows/build.yml/badge.svg)
 [![website](https://img.shields.io/badge/website-online-32c854)](https://Needlelight.vercel.app)
 [![GitHub all releases](https://img.shields.io/github/downloads/Aarav2709/Needlelight/total)](https://github.com/Aarav2709/Needlelight/releases)
-[![Crowdin](https://badges.crowdin.net/Needlelight/localized.svg)](https://crowdin.com/project/Needlelight)
 
 </div>
 
