@@ -66,11 +66,6 @@ Key improvements in Needlelight:
   - [Sawayoshi](https://twittter.com/sawayoshiyt) - Japanese translations
   - [Thommie](https://discordapp.com/users/454185487641608193) - Dutch translations
 
-- Art
-  - [Dwarfwoot](https://patreon.com/DwarfWoot), [SFGrenade](https://github.com/SFGrenade) - Images and icons used in the installer.
-  - [Lime](https://www.tumblr.com/ded-lime) - The Needlelight banner.
-  - [HBKit](https://ko-fi.com/hbkit) - The Needlelight icon.
-
 ## 🪟 Windows SmartScreen (free workaround)
 
 Because the app isn’t code-signed with a paid certificate, Windows SmartScreen may warn on first launch. Free options:
