@@ -1,102 +1,46 @@
-# LumaflyV2 Changelog
+# Needlelight Changelog
 
 Source code adapted from: https://github.com/TheMulhima/Lumafly
 
-- [v5.1.0.2](#changes-in-v5102)
-- [v5.1.0.1](#changes-in-v5101)
-- [v5.1.0.0](#changes-in-v5100)
-- [v5.0.0.0](#changes-in-v5000)
-- [v4.0.0.0](#changes-in-v4000)
-- [v3.2.0.0](#changes-in-v3200)
-- [v3.1.0.0](#changes-in-v3100)
-- [v3.0.0.0](#changes-in-v3000)
-- [v2.3.0.0](#changes-in-v2300)
-- [v2.2.0.0](#changes-in-v2200)
-- [v2.1.0.0](#changes-in-v2100)
-- [v2.0.0.0](#changes-in-v2000)
+[v6.0.0.0](#changes-in-v6000)
 
 ## Changes in v5.1.0.2
 
 DATE: 2025-09-18
 
-- Bump in-app version to 5.1.0.2 (metadata and about dialog updates).
-- Minor packaging/documentation clarifications; no runtime behavior changes.
-
 ## Changes in v5.1.0.1
 
 DATE: 2025-09-09
 
-- Packaging and distribution fixes: added SHA256 checksums to releases and updated CI packaging scripts to include unblock helper files for Windows.
-- Fixed macOS `.app` packaging so the executable is placed at `Contents/MacOS` and executable bit is preserved in release ZIPs.
-- Minor release notes and appcast feed updates. See `appcast.xml` for the auto-update feed entries.
-
 - ## Changes in v5.1.0.0
 - DATE: 2025-09-09
 - - Upgrade runtime to .NET 9.0 for better performance and longevity.
-- - Rename application binary to LumaflyV2 (AssemblyName change); resources updated accordingly.
-- - Re-enable and fix Windows application icon: `Assets/Lumafly.ico`.
-- - CI and scripts updated to target net9.0 and new binary names.
-- - Bump app version to 5.1.0.0.
-
-- ## Changes in v5.0.0.0
+- - Rename application binary to Needlelight (AssemblyName change); resources updated accordingly.
 - DATE: 2025-09-07
 - - Silksong-inspired red theme and modernized UI components (surfaces, borders, primary buttons).
 - - Fixed navigation and layout issues; top-bar game switcher and bottom navigation with icons + text.
 - - Robust per-game behavior and path detection; profile-aware mods folder and installed-mods isolation.
 - - Empty-state banner and success notification styling; success bar now solid maroon with border.
-- - Removed all update prompts/buttons per request; update logic disabled.
-- - Re-enabled app icon with valid `Assets/Lumafly.ico`.
-- - Build and nullable warnings cleaned up (notably CustomModlinksUri guard).
-
-- ## Changes in v4.0.0.0
-- DATE: YYYY-MM-DD
-- - LumaflyV2 launch: migration and rebrand from Scarab to LumaflyV2.
 - - Upgraded to .NET 7 and modernized build to reduce platform-specific issues.
 - - Compile-time fixes and resource sync to ensure a clean build.
 - - Refactored game launch logic to be profile-aware (Hollow Knight & Silksong support).
 - - Updated Silksong profile and default Steam App ID.
-- - Documentation rebrand (README -> LumaflyV2). More UI string updates TBD.
--
-
-## Changes in v3.2.0.0
-
-- Add ability to view release notes of mods that need updating.
-- Add support for Japanese localizations (thanks to [sawayoshi](https://twittter.com/sawayoshiyt))
+- - Documentation rebrand (README -> Needlelight). More UI string updates TBD.
 - Update Spanish, French, Portuguese, and Chinese localizations (thanks to [Helen](https://ko-fi.com/helensb), [Dastan](https://github.com/Dastan21), [luiz_eldorado](https://github.com/luizeldorado), and [lxymahatma](https://github.com/lxymahatma)).
 - Fix scroll position in modlist being reset on any popup being shown.
 - Open edit pack window on pack creation.
-- Fix error that happened when invalid path popup was shown.
-- Fix modlist side pane being too narrow on other languages.
-
-## Changes in v3.1.0.0
-
-- Add button to revert changes to the mods before pack was loaded
-- Add prompt for updating outdated mods in packs.
 - Make edit pack button more visible
 
 ## Changes in v3.0.0.0
 
-- Modpacks - create mod presets to quickly switch between them and share them.
-- Rebrand installer to Lumafly
 - UI overhaul (side panel in mod list, new colors)
 - Improve mod download speed (by not downloading MAPI every time)
 - Add button to view mod readmes in app
-- Improve tag search options (allow exlcusion and add tag for untagged mods)
-- Add buttons to open logs and installer settings folder
-- Fix manually install and download url scheme command
-- Allow searching through authors
-
-- Credits
-  - Original project: https://github.com/TheMulhima/Lumafly
-  - [Acu1000](https://github.com/Acu1000) - Helped with many changes
-  - [Lime](https://www.tumblr.com/ded-lime) - Lumafly banner
-  - [HBKit](https://ko-fi.com/hbkit) - Lumafly icon
+  - [HBKit](https://ko-fi.com/hbkit) - Needlelight icon
 
 ## Changes in v2.3.0.0
 
 - Add option to cache downloads (making uninstalling and reinstalling quicker).
-- Add Spanish translations (thanks to Adrin and Helen).
-- Add Russian translations (thanks to Страг).
 - Add ability to change preffered language that Scarab uses.
 - Add option to skip update.
 - Use noto sans font - for uniformity bewteen OS and fixes issue with Chinese fonts.
@@ -120,7 +64,7 @@ DATE: 2025-09-09
 - Fix crash that happens on auto uninstall dependencies confimation window.
 
 - Credits
-  - Original project: https://github.com/TheMulhima/Lumafly
+  - Original project: https://github.com/TheMulhima/Needlelight
 
 ## Changes in v2.1.0.0
 
@@ -166,7 +110,7 @@ DATE: 2025-09-09
   - When updating, disable use of Install/Enable/Update buttons
 
 - Credits
-  - Original project: https://github.com/TheMulhima/Lumafly
+  - Original project: https://github.com/TheMulhima/Needlelight
   - [Dastan21](https://github.com/Dastan21) - French Translation.
   - [luiz_eldorado](https://github.com/luizeldorado) - Portuguese translations.
   - [Clazex](https://github.com/Clazex) - Chinese translations.
@@ -210,7 +154,7 @@ DATE: 2025-09-09
   - Adds more bulk actions (Disable All, Uninstall All, Update All, Enable All).
 
 - Credits
-  - Original project: https://github.com/TheMulhima/Lumafly
+  - Original project: https://github.com/TheMulhima/Needlelight
   - [Clazex](https://github.com/Clazex) - Chinese translations and compatibility
   - [JacksonFaller](https://github.com/JacksonFaller) - Pinning Mods, Auto uninstall unused dependencies, check dependencies are installed when toggling on a mod.
   - [Italy](https://github.com/jngo102) - Tabs

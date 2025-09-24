@@ -1,3 +1,4 @@
 files:
-  - source: /Lumafly/Resources.resx
-    translation: /Lumafly/Localizations/Resources.%two_letters_code%.resx
+  - source: /Needlelight/Resources.resx
+    translation: /Needlelight/Localizations/Resources.%two_letters_code%.resx
+

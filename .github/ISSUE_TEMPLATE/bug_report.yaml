@@ -9,10 +9,10 @@ body:
         Remember to check that your bug hasn't already been reported! 
         Note that specific mod bugs do *not* go here, and go to the appropriate mod's repository.
   - type: input
-    id: lumafly-version
+    id: Needlelight-version
     attributes:
-      label: Lumafly Version
-      description: "The version of Lumafly you're using"
+      label: Needlelight Version
+      description: "The version of Needlelight you're using"
       placeholder: "v1.14.0.0"
     validations:
       required: true
@@ -54,3 +54,4 @@ body:
         If you don't, you can attach the log file: `ModInstaller.log` here. You can find logs in `%appdata%\HKModInstaller` on windows and `~/.config/HKModInstaller` on Mac/Linux. There may also be logs in the same folder as the `.exe` or `.app` If there are no logs, please write 'None' here. Note that in any case where the app crashed or indicated an error or exception there *will* be logs you should include located in the previously mentioned folder.
     validations:
       required: true
+

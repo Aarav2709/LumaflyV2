@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Array_Sep" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="MI_InstallText_Installed" xml:space="preserve">
+    <value>Odinstaluj</value>
+  </data>
+  <data name="MI_InstallText_NotInstalled" xml:space="preserve">
+    <value>Zainstaluj</value>
+  </data>
+  <data name="MLVM_ApiButtonText_DisableAPI" xml:space="preserve">
+    <value>Wyłącz API</value>
+  </data>
+  <data name="MLVM_ApiButtonText_EnableAPI" xml:space="preserve">
+    <value>Włącz API</value>
+  </data>
+  <data name="MLVM_ApiButtonText_ToggleAPI" xml:space="preserve">
+    <value>Przełącz API</value>
+  </data>
+  <data name="MLVM_DisplayHashMismatch_Msgbox_Text" xml:space="preserve">
+    <value>Hasz pobierania dla {0} ({1}) nie zgadza się z otrzymanym podpisem ({2}). Jest uszkodzony lub pozycja jest niewłaściwa. </value>
+  </data>
+  <data name="MLVM_DisplayHashMismatch_Msgbox_Title" xml:space="preserve">
+    <value>Hasz się nie zgadza!</value>
+  </data>
+  <data name="MLVM_DisplayNetworkError_Msgbox_Text" xml:space="preserve">
+    <value>Nie udało się pobrać {0}! Strona internetowa może tymczasowo nie działać lub mógł wystąpić problem z twoim połączeniem.</value>
+  </data>
+  <data name="MLVM_DisplayNetworkError_Msgbox_Title" xml:space="preserve">
+    <value>Błąd Sieci</value>
+  </data>
+  <data name="MLVM_InternalUpdateInstallAsync_Msgbox_W_Text" xml:space="preserve">
+    <value>Hollow Knight jest otwarty! To może spowodować problemy podczas instalowania modów. Zamknąć Hollow Knight?</value>
+  </data>
+  <data name="MLVM_InternalUpdateInstallAsync_Msgbox_W_Title" xml:space="preserve">
+    <value>Ostrzeżenie!</value>
+  </data>
+  <data name="MWVM_Impl_Error_Fetch_ModLinks_Error" xml:space="preserve">
+    <value>błąd HTTP {0}</value>
+  </data>
+  <data name="MWVM_Impl_Error_Fetch_ModLinks_Msgbox_Text" xml:space="preserve">
+    <value>Nie udało się załadować listy modów z modlinks, operacja {0}</value>
+  </data>
+  <data name="MWVM_Impl_Error_Fetch_ModLinks_Msgbox_Title" xml:space="preserve">
+    <value>Błąd!</value>
+  </data>
+  <data name="MWVM_Impl_Error_Fetch_ModLinks_Timeout" xml:space="preserve">
+    <value>przekroczono limit czasu. Sprawdź swoje połączenie z internetem i spróbuj ponownie</value>
+  </data>
+  <data name="MWVM_OutOfDate_GetLatest" xml:space="preserve">
+    <value>Pobierz najnowszą wersję</value>
+  </data>
+  <data name="MWVM_OutOfDate_ContinueAnyways" xml:space="preserve">
+    <value>Kontynuuj mimo to</value>
+  </data>
+  <data name="MWVM_OutOfDate_Title" xml:space="preserve">
+    <value>Nieaktualny!</value>
+  </data>
+  <data name="MWVM_OutOfDate_Message" xml:space="preserve">
+    <value>Dostępna jest nowa aktualizacja Needlelight. Pobierz najnowszą wersję (v{0}) z nowymi funkcjami i naprawionymi błędami.</value>
+  </data>
+  <data name="MWVM_UpdateDownloadError_Message" xml:space="preserve">
+    <value>Nie udało się automatycznie pobrać aktualizacji. Needlelight otworzy teraz łącze do pobrania najnowszej wersji</value>
+  </data>
+  <data name="MWVM_Warning" xml:space="preserve">
+    <value>Ostrzeżenie</value>
+  </data>
+  <data name="MWVM_InvalidSavedPath_Message" xml:space="preserve">
+    <value>Zapisana ścieżka Hollow Knight jest niepoprawna, wybierz poprawną ścieżkę.</value>
+  </data>
+  <data name="MWVM_Info" xml:space="preserve">
+    <value>Informacje</value>
+  </data>
+  <data name="MWVM_UnableToDetect_Message" xml:space="preserve">
+    <value>Nie udało się wykryć twojej instalacji Hollow Knight. Prosimy o wskazanie jej.</value>
+  </data>
+  <data name="MWVM_DetectedPath_Title" xml:space="preserve">
+    <value>Wykryto ścieżkę!</value>
+  </data>
+  <data name="MWVM_DetectedPath_Message" xml:space="preserve">
+    <value>Wykryto instalację Hollow Knight w {0}. Czy ta ścieżka jest poprawna?</value>
+  </data>
+  <data name="XAML_ChangPath" xml:space="preserve">
+    <value>Zmień ścieżkę</value>
+  </data>
+  <data name="XAML_Dependencies" xml:space="preserve">
+    <value>Zależności:</value>
+  </data>
+  <data name="XAML_Donate" xml:space="preserve">
+    <value>Wesprzyj</value>
+  </data>
+  <data name="XAML_ModsFilter_All" xml:space="preserve">
+    <value>Wszystkie</value>
+  </data>
+  <data name="XAML_ModsFilter_Enabled" xml:space="preserve">
+    <value>Aktywne</value>
+  </data>
+  <data name="XAML_ModsFilter_Installed" xml:space="preserve">
+    <value>Zainstalowane</value>
+  </data>
+  <data name="XAML_ModsFilter_OutOfDate" xml:space="preserve">
+    <value>Przestarzałe</value>
+  </data>
+  <data name="XAML_OpenMods" xml:space="preserve">
+    <value>Otwórz folder modów</value>
+  </data>
+  <data name="XAML_Repository" xml:space="preserve">
+    <value>Repozytorium i README:</value>
+  </data>
+  <data name="XAML_SearchMark" xml:space="preserve">
+    <value>Wyszukaj Mody</value>
+  </data>
+  <data name="XAML_UpdateAPI" xml:space="preserve">
+    <value>Zaktualizuj API</value>
+  </data>
+  <data name="XAML_Version" xml:space="preserve">
+    <value>Wersja:</value>
+  </data>
+  <data name="XAML_Integrations" xml:space="preserve">
+    <value>Integracje:</value>
+  </data>
+  <data name="XAML_Tags" xml:space="preserve">
+    <value>Tagi:</value>
+  </data>
+  <data name="XAML_On" xml:space="preserve">
+    <value>Aktywny</value>
+  </data>
+  <data name="XAML_Off" xml:space="preserve">
+    <value>Nieaktywny</value>
+  </data>
+  <data name="XAML_Ask" xml:space="preserve">
+    <value>Zapytaj</value>
+  </data>
+  <data name="XAML_Update" xml:space="preserve">
+    <value>Aktualizacja</value>
+  </data>
+  <data name="PU_NoSelect" xml:space="preserve">
+    <value>Nie wybrano ścieżki!</value>
+  </data>
+  <data name="PU_NoSelectMac" xml:space="preserve">
+    <value>Nie wybrano aplikacji!</value>
+  </data>
+  <data name="PU_InvalidPathHeader" xml:space="preserve">
+    <value>Niewłaściwa ścieżka Hollow Knight!</value>
+  </data>
+  <data name="PU_InvalidAppHeader" xml:space="preserve">
+    <value>Niewłaściwa aplikacja Hollow Knight!</value>
+  </data>
+  <data name="PU_InvalidExeHeader" xml:space="preserve">
+    <value>Niewłaściwy .exe Hollow Knight! Wybierz plik .exe Hollow Knight lub skrót do niego</value>
+  </data>
+  <data name="PU_InvalidPath" xml:space="preserve">
+    <value>Wybierz folder zawierający hollow_knight_Data lub Hollow Knight_Data.</value>
+  </data>
+  <data name="PU_InvalidApp" xml:space="preserve">
+    <value>Brakuje folderu Managed lub Assembly-CSharp!</value>
+  </data>
+  <data name="PU_SelectPath" xml:space="preserve">
+    <value>Wybierz swój folder Hollow Knight.</value>
+  </data>
+  <data name="PU_InvalidPathTitle" xml:space="preserve">
+    <value>Ścieżka</value>
+  </data>
+  <data name="PU_SelectApp" xml:space="preserve">
+    <value>Wybierz swoją aplikację Hollow Knight.</value>
+  </data>
+  <data name="PU_SelectEXE" xml:space="preserve">
+    <value>Wybierz swój plik wykonywalny Hollow Knight (.exe) lub jego skrót.</value>
+  </data>
+  <data name="XAML_ModsFilter_OutOfDate_Update" xml:space="preserve">
+    <value>Zaktualizuj Wszystkie</value>
+  </data>
+  <data name="XAML_Open_Bulk_Action" xml:space="preserve">
+    <value>Akcje Masowe</value>
+  </data>
+  <data name="XAML_Disable_All_Installed" xml:space="preserve">
+    <value>Deaktywuj Wszystkie</value>
+  </data>
+  <data name="XAML_Enable_All_Installed" xml:space="preserve">
+    <value>Aktywuj Wszystkie</value>
+  </data>
+  <data name="XAML_Uninstall_All" xml:space="preserve">
+    <value>Odinstaluj Wszystkie</value>
+  </data>
+  <data name="XAML_Authors" xml:space="preserve">
+    <value>Autorzy:</value>
+  </data>
+  <data name="XAML_Search_Options" xml:space="preserve">
+    <value>Opcje Wyszukiwania</value>
+  </data>
+  <data name="XAML_Search_Type" xml:space="preserve">
+    <value>Typ Wyszukiwania</value>
+  </data>
+  <data name="XAML_Select_Tags" xml:space="preserve">
+    <value>Wybierz Tagi</value>
+  </data>
+  <data name="XAML_Exact_Search" xml:space="preserve">
+    <value>Wyszukiwanie Dokładne</value>
+  </data>
+  <data name="XAML_Normal_Search" xml:space="preserve">
+    <value>Wyszukiwanie Zwykłe</value>
+  </data>
+  <data name="XAML_Search_Dependents" xml:space="preserve">
+    <value>Wyszukaj według zależności</value>
+  </data>
+  <data name="XAML_Select_Mod" xml:space="preserve">
+    <value>Wybierz Mod</value>
+  </data>
+  <data name="XAML_No_Items" xml:space="preserve">
+    <value>Brak modów do wyświetlenia</value>
+  </data>
+  <data name="XAML_SavesFolder" xml:space="preserve">
+    <value>Otwórz Folder Zapisów</value>
+  </data>
+  <data name="XAML_Manual_Install" xml:space="preserve">
+    <value>Zainstaluj Ręcznie</value>
+  </data>
+  <data name="MLVM_Select_Mod" xml:space="preserve">
+    <value>Wybierz .dll lub .zip moda</value>
+  </data>
+  <data name="XAML_NewMods" xml:space="preserve">
+    <value>Nowe Mody</value>
+  </data>
+  <data name="XAML_UpdatedMods" xml:space="preserve">
+    <value>Zaktualizowane Mody</value>
+  </data>
+  <data name="XAML_LastWeek" xml:space="preserve">
+    <value>Ostatni Tydzień</value>
+  </data>
+  <data name="XAML_LastMonth" xml:space="preserve">
+    <value>Ostatni Miesiąc</value>
+  </data>
+  <data name="XAML_ModsFilter_WhatsNew" xml:space="preserve">
+    <value>Co Nowego</value>
+  </data>
+  <data name="XAML_CopyError" xml:space="preserve">
+    <value>Błąd Kopiowania</value>
+  </data>
+  <data name="XAML_ShowError" xml:space="preserve">
+    <value>Kliknij aby wyświetlić pełny błąd</value>
+  </data>
+  <data name="XAML_EditSettings" xml:space="preserve">
+    <value>Edytuj plik z ustawieniami moda</value>
+  </data>
+  <data name="MVVM_LoadingWhatsNew" xml:space="preserve">
+    <value>Ładowanie najnowszych modów z modlinks...</value>
+  </data>
+  <data name="MVVM_NotAbleToLoadWhatsNew" xml:space="preserve">
+    <value>Needlelight nie był w stanie załadować najnowszych modów z modlinks.</value>
+  </data>
+  <data name="MVVM_DNSError" xml:space="preserve">
+    <value>Mogło to być wywołane przez słabe połączenie internetowe lub jego brak. Sprawdź to i spróbuj ponownie.</value>
+  </data>
+  <data name="MVVM_DependentsWarning_Header" xml:space="preserve">
+    <value>Uwaga! Ten mod jest wymagany, aby inne mody mogły funkcjonować!</value>
+  </data>
+  <data name="MVVM_DependentsWarning_Body" xml:space="preserve">
+    <value>{0} jest konieczny aby {1} mógł działać poprawnie. Czy nadal chcesz kontynuować?</value>
+  </data>
+  <data name="MVVM_AreYouSure" xml:space="preserve">
+    <value>Uwaga! Czy na pewno chcesz to zrobić?</value>
+  </data>
+  <data name="MVVM_SystemIOException_GeneralReason" xml:space="preserve">
+    <value>Needlelight nie był w stanie uzyskać dostępu do pliku w folderze z modami</value>
+  </data>
+  <data name="MVVM_SystemIOException_ProtectedLocation" xml:space="preserve">
+    <value>Upewnij się że folder z modami nie jest w lokalizacji chronionej przed zapisem</value>
+  </data>
+  <data name="MVVM_SystemIOException_NeedlelightCantAccessFile" xml:space="preserve">
+    <value>Needlelight nie może uzyskać dostępu do pliku:</value>
+  </data>
+  <data name="MVVM_SystemIOException_GeneralFileLock" xml:space="preserve">
+    <value>Upewnij się że zamknąłeś/aś wszystkie pozostałe aplikacje które mogłyby używać folderu z modami</value>
+  </data>
+  <data name="MVVM_SystemIOException_LockingProcessesList" xml:space="preserve">
+    <value>Proszę o zamknięcie następujących procesów, gdyż blokują one ważne pliki:</value>
+  </data>
+  <data name="ModLinks_Tags_Boss" xml:space="preserve">
+    <value>Boss</value>
+  </data>
+  <data name="ModLinks_Tags_Gameplay" xml:space="preserve">
+    <value>Rozgrywka</value>
+  </data>
+  <data name="ModLinks_Tags_Utility" xml:space="preserve">
+    <value>Użytkowe</value>
+  </data>
+  <data name="ModLinks_Tags_Cosmetic" xml:space="preserve">
+    <value>Ozdobne</value>
+  </data>
+  <data name="ModLinks_Tags_Library" xml:space="preserve">
+    <value>Biblioteki</value>
+  </data>
+  <data name="ModLinks_Tags_Expansion" xml:space="preserve">
+    <value>Ekspansja</value>
+  </data>
+  <data name="MVVM_Loading1" xml:space="preserve">
+    <value>Pobieranie listy modów z modlinks...</value>
+  </data>
+  <data name="MVVM_Loading2" xml:space="preserve">
+    <value>Czekanie na odpowiedź z Githuba...</value>
+  </data>
+  <data name="MVVM_Loading3" xml:space="preserve">
+    <value>Nadal czekanie...</value>
+  </data>
+  <data name="MVVM_Loading4" xml:space="preserve">
+    <value>Próbowanie awaryjnego źródła...</value>
+  </data>
+  <data name="MVVM_Loading5" xml:space="preserve">
+    <value>Czekanie na odpowiedź z jsdelivr...</value>
+  </data>
+  <data name="MVVM_RunAsAdmin" xml:space="preserve">
+    <value>Spróbuj uruchomić Needlelight jako administratora — to może rozwiązać problem</value>
+  </data>
+  <data name="MVVM_ExceptionOccur" xml:space="preserve">
+    <value>Wystąpił wyjątek podczas {0} {1}</value>
+  </data>
+  <data name="XAML_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="XAML_AskForHelp" xml:space="preserve">
+    <value>Poproś o pomoc</value>
+  </data>
+  <data name="XAML_ReportError" xml:space="preserve">
+    <value>Zgłoś błąd</value>
+  </data>
+  <data name="MVVM_Install" xml:space="preserve">
+    <value>Zainstaluj</value>
+  </data>
+  <data name="MVVM_DependenciesNotInstalledWarning_Body" xml:space="preserve">
+    <value>{0} jest wymagany, aby {1} mógł działać poprawnie. Zainstalować?</value>
+  </data>
+  <data name="MVVM_DependenciesNotInstalledWarning_Header" xml:space="preserve">
+    <value>Mod zawiera zależności które nie są zainstalowane!</value>
+  </data>
+  <data name="XAML_ChooseDependenciesToUninstall" xml:space="preserve">
+    <value>Wybierz ręcznie</value>
+  </data>
+  <data name="XAML_ManuallyInstalledModesNote" xml:space="preserve">
+    <value>Uwaga: mogą być używane przez mody zainstalowane ręcznie</value>
+  </data>
+  <data name="XAML_None" xml:space="preserve">
+    <value>Żadne</value>
+  </data>
+  <data name="XAML_UninstallDependencies" xml:space="preserve">
+    <value>Odinstalowanie tego moda pozostawi zależności które nie są już używane</value>
+  </data>
+  <data name="XAML_UninstallDependencies_Title" xml:space="preserve">
+    <value>Usunąć zależności automatycznie?</value>
+  </data>
+  <data name="XAML_Pin" xml:space="preserve">
+    <value>Przypnij</value>
+  </data>
+  <data name="XAML_PinMod_Explanation" xml:space="preserve">
+    <value>Przypnij moda, aby nie był automatycznie zastępowany przez Needlelight</value>
+  </data>
+  <data name="XAML_Unpin" xml:space="preserve">
+    <value>Odepnij</value>
+  </data>
+  <data name="MVVM_UnableToGetModlinks" xml:space="preserve">
+    <value>Nie udało się pobrać listy modów z modlinks</value>
+  </data>
+  <data name="MVVM_LaunchOfflineMode" xml:space="preserve">
+    <value>Czy chcesz uruchomić Needlelight w trybie offline?</value>
+  </data>
+  <data name="XAML_Select_Authors" xml:space="preserve">
+    <value>Wybierz Autorów</value>
+  </data>
+  <data name="XAML_WarnBeforeRemovingDependentMods" xml:space="preserve">
+    <value>Ostrzeż mnie przed usunięciem zależnych modów</value>
+  </data>
+  <data name="XAML_Settings" xml:space="preserve">
+    <value>Opcje</value>
+  </data>
+  <data name="XAML_Mods" xml:space="preserve">
+    <value>Mody</value>
+  </data>
+  <data name="XAML_AutoRemoveDeps" xml:space="preserve">
+    <value>Automatycznie usuwaj nieużywane zależności</value>
+  </data>
+  <data name="XAML_OpenModsOrSaves" xml:space="preserve">
+    <value>Otwórz Folder</value>
+  </data>
+  <data name="XAML_GamePath" xml:space="preserve">
+    <value>Ścieżka Gry</value>
+  </data>
+  <data name="XAML_UseCustomModlinks" xml:space="preserve">
+    <value>Użyj niestandardowej listy modów</value>
+  </data>
+  <data name="XAML_CustomModlinksExplanation" xml:space="preserve">
+    <value>Normalnie Needlelight ładuje listę modów z oficjalnej listy modów (modlinks). Jeżeli chcesz załadować swoją własną, wpisz tu jej URL - można wpisać link https lub pliki (w formacie file://{filepath}).\nPuste lub niewłaściwe linki załadują oficjalny modlinks.</value>
+  </data>
+  <data name="XAML_CustomModlinksWatermark" xml:space="preserve">
+    <value>Wpisz link do niestandardowej listy modów. Wymagane ponowne załadowanie aby uzyskać efekt</value>
+  </data>
+  <data name="XAML_ReloadNeedlelight" xml:space="preserve">
+    <value>Załaduj Needlelight ponownie</value>
+  </data>
+  <data name="XAML_ReloadPrompt" xml:space="preserve">
+    <value>(Załaduj ponownie aby wprowadzić zmiany)</value>
+  </data>
+  <data name="XAML_Info" xml:space="preserve">
+    <value>Informacje</value>
+  </data>
+  <data name="XAML_InfoBody" xml:space="preserve">
+    <value>Needlelight to instalator dla Hollow Knight w wersji 1.5. Nie będzie on działać dla starszych wersji Hollow Knight</value>
+  </data>
+  <data name="XAML_InfoLinksHeader" xml:space="preserve">
+    <value>Stosowne Linki</value>
+  </data>
+  <data name="XAML_InfoLinkWebsite" xml:space="preserve">
+    <value>Strona\nInternetowa</value>
+  </data>
+  <data name="XAML_InfoLinkGithub" xml:space="preserve">
+    <value>Github\n</value>
+  </data>
+  <data name="XAML_InfoLinkReadme" xml:space="preserve">
+    <value>Przeczytaj\nmnie</value>
+  </data>
+  <data name="XAML_InfoLinkHKMM" xml:space="preserve">
+    <value>Menedżer\n modów HK</value>
+  </data>
+  <data name="XAML_InfoLinkHKMMToolTip" xml:space="preserve">
+    <value>Alternatywny Instalator</value>
+  </data>
+  <data name="XAML_InfoLinkModdingDocs" xml:space="preserve">
+    <value>Twórz\nMody</value>
+  </data>
+  <data name="XAML_InfoLinkTutorial" xml:space="preserve">
+    <value>Jak\nModować?</value>
+  </data>
+  <data name="XAML_LaunchVanilla" xml:space="preserve">
+    <value>Uruchom Grę Podstawową</value>
+  </data>
+  <data name="XAML_LaunchModded" xml:space="preserve">
+    <value>Uruchom Grę z Modami</value>
+  </data>
+  <data name="XAML_OpeningGame" xml:space="preserve">
+    <value>Proszę czekać, uruchamianie gry...</value>
+  </data>
+  <data name="XAML_RegisterNotInModlinks" xml:space="preserve">
+    <value>Zapamiętaj jako wersję niestandardową</value>
+  </data>
+  <data name="XAML_RegisterNotInModlinks_Explanation" xml:space="preserve">
+    <value>Zapamiętaj wersję tego moda jako niepochodzącą z modlinks. Nie wpływa w żaden sposób na moda, jedynie na sposób w jaki Needlelight go traktuje. Przypięty mod z wersją niestandardową nigdy nie zostanie zastąpiony przez Needlelight</value>
+  </data>
+  <data name="XAML_ResetMod" xml:space="preserve">
+    <value>Zresetuj Moda: przymusowo re-instaluje moda i usuwa jego ustawienia</value>
+  </data>
+  <data name="XAML_Share" xml:space="preserve">
+    <value>Zdobądź udostępnialny link do pobrania tego moda</value>
+  </data>
+  <data name="XAML_OpenFolder" xml:space="preserve">
+    <value>Otwórz folder w którym ten mod jest zainstalowany</value>
+  </data>
+  <data name="XAML_ReportBug" xml:space="preserve">
+    <value>Zgłoś problem z tym modem</value>
+  </data>
+  <data name="MVVM_NotInModlinks_Description" xml:space="preserve">
+    <value>Ten mod został zainstalowany ręcznie i nie pochodzi z modlinks</value>
+  </data>
+  <data name="MVVM_NotInModlinks_Disclaimer" xml:space="preserve">
+    <value>Wersja spoza modlinks</value>
+  </data>
+  <data name="XAML_Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="XAML_Low_Storage_Mode" xml:space="preserve">
+    <value>Tryb małej ilości miejsca na dysku</value>
+  </data>
+  <data name="XAML_CacheDownloads_Explanation" xml:space="preserve">
+    <value>(Używa dodatkowych {0} pamięci)</value>
+  </data>
+  <data name="XAML_SharingCode" xml:space="preserve">
+    <value>Kod udostępniania:</value>
+  </data>
+  <data name="XAML_GenerateSharingCode" xml:space="preserve">
+    <value>Wygeneruj 8-cyfrowy kod udostępniania. Może być on podany komuś, kto wtedy będzie mógł użyć tej paczki</value>
+  </data>
+  <data name="XAML_EditPack" xml:space="preserve">
+    <value>Edytuj paczkę</value>
+  </data>
+  <data name="XAML_DeletePack" xml:space="preserve">
+    <value>Usuń paczkę</value>
+  </data>
+  <data name="XAML_CreateNewPack" xml:space="preserve">
+    <value>Utwórz nową paczkę</value>
+  </data>
+  <data name="XAML_ImportPack" xml:space="preserve">
+    <value>Importuj paczkę</value>
+  </data>
+  <data name="XAML_Packs" xml:space="preserve">
+    <value>Paczki</value>
+  </data>
+  <data name="XAML_LoadPack" xml:space="preserve">
+    <value>Załaduj paczkę</value>
+  </data>
+  <data name="XAML_Description" xml:space="preserve">
+    <value>Opis:</value>
+  </data>
+  <data name="XAML_ModsInPack" xml:space="preserve">
+    <value>Mody w paczce:</value>
+  </data>
+  <data name="XAML_SharePack" xml:space="preserve">
+    <value>Udostępnij tę paczkę</value>
+  </data>
+  <data name="XAML_SharePackManually" xml:space="preserve">
+    <value>Udostępnij tę paczkę jako plik zip. Będziesz musiał wysłać ten plik samodzielnie.</value>
+  </data>
+  <data name="XAML_Search_Integrations" xml:space="preserve">
+    <value>Szukaj według Integracji</value>
+  </data>
+  <data name="XAML_Toggle_All" xml:space="preserve">
+    <value>Włącz/wyłącz wszystkie</value>
+  </data>
+  <data name="XAML_Toggle_All_Tooltip" xml:space="preserve">
+    <value>Wyłącz wszystkie mody, jeśli są jakieś włączone lub włącz wszystkie mody, jeśli wszystkie są wyłączone</value>
+  </data>
+  <data name="XAML_FilterMods" xml:space="preserve">
+    <value>Filtry modów:  </value>
+  </data>
+  <data name="XAML_SearchAuthor" xml:space="preserve">
+    <value>Szukaj autora</value>
+  </data>
+  <data name="EditPack" xml:space="preserve">
+    <value>Edytuj paczkę</value>
+  </data>
+  <data name="PackDetails" xml:space="preserve">
+    <value>Szczegóły paczki</value>
+  </data>
+  <data name="PackDetails_Explanation" xml:space="preserve">
+    <value>Edytuj szczegóły swojej paczki tutaj.</value>
+  </data>
+  <data name="PackName" xml:space="preserve">
+    <value>Nazwa paczki</value>
+  </data>
+  <data name="PackDescription" xml:space="preserve">
+    <value>Opis paczki</value>
+  </data>
+  <data name="EditDetails" xml:space="preserve">
+    <value>Edytuj szczegóły</value>
+  </data>
+  <data name="EditMods" xml:space="preserve">
+    <value>Edytuj mody</value>
+  </data>
+  <data name="AvailableMods" xml:space="preserve">
+    <value>Dostępne mody</value>
+  </data>
+  <data name="SelectedMods" xml:space="preserve">
+    <value>Wybrane mody</value>
+  </data>
+  <data name="EnableMod" xml:space="preserve">
+    <value>Aktywuj mod</value>
+  </data>
+  <data name="DisableMod" xml:space="preserve">
+    <value>Deaktywuj mod</value>
+  </data>
+  <data name="UseFixedVersion" xml:space="preserve">
+    <value>Użyj stałej wersji</value>
+  </data>
+  <data name="FixedVersion_Tooltip" xml:space="preserve">
+    <value>Nie używaj najnowszej wersji modlinks, zamiast tego użyj bieżącej wersji</value>
+  </data>
+  <data name="UseModlinksVersion" xml:space="preserve">
+    <value>Użyj wersji Modlinks</value>
+  </data>
+  <data name="ModlinksVersion_Tooltip" xml:space="preserve">
+    <value>Użyj najnowszej wersji modlinks</value>
+  </data>
+  <data name="EnterSharingCode" xml:space="preserve">
+    <value>Wprowadź kod udostępniania:</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Potwierdź</value>
+  </data>
+  <data name="AvailablePacks" xml:space="preserve">
+    <value>Dostępne paczki:</value>
+  </data>
+  <data name="RevertToPreviousMods" xml:space="preserve">
+    <value>Przywróć do poprzednich modów</value>
+  </data>
+  <data name="PackUpdatePrompt" xml:space="preserve">
+    <value>Niektóre mody w paczce są nieaktualne, czy chcesz je zaktualizować?</value>
+  </data>
+  <data name="LoadPackAdditive" xml:space="preserve">
+    <value>Załaduj bez zastępowania</value>
+  </data>
+  <data name="LoadPackAdditive_Explanation" xml:space="preserve">
+    <value>Załaduj tę paczkę bez zastępowania modów w bieżącym folderze modów</value>
+  </data>
+  <data name="XAML_CheckForUpdates" xml:space="preserve">
+    <value>Sprawdź dostępność aktualizacji</value>
+  </data>
+  <data name="XAML_OpenLogsFolder" xml:space="preserve">
+    <value>Otwórz folder z logami</value>
+  </data>
+  <data name="ToggleAPI_Explanation" xml:space="preserve">
+    <value>Włącz/Wyłącz API modowania — modyfikacja plików gry, który pozwala na uruchamianie modów</value>
+  </data>
+  <data name="ViewReadme" xml:space="preserve">
+    <value>Otwórz plik readme</value>
+  </data>
+  <data name="ModLinks_Tags_Untagged" xml:space="preserve">
+    <value>Nieztagowane</value>
+  </data>
+  <data name="XAML_GithubMirrorFormatWatermark" xml:space="preserve">
+    <value>Wprowadź format do lustra Github (potrzebuje przeładowania, aby zacząć działać)</value>
+  </data>
+  <data name="XAML_InfoLinkDiscord" xml:space="preserve">
+    <value>Discord\n</value>
+  </data>
+  <data name="XAML_UseGithubMirror" xml:space="preserve">
+    <value>Użyj lustra Github</value>
+  </data>
+</root>
+

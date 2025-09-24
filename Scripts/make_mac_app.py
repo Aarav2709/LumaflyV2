@@ -8,7 +8,7 @@ import argparse
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("app_dir", help="The path of the Lumafly.app directory")
+parser.add_argument("app_dir", help="The path of the Needlelight.app directory")
 parser.add_argument("publish", help="The directory of the published mac executable")
 parser.add_argument("out", help="The output directory for the zip file")
 
@@ -17,7 +17,7 @@ args = parser.parse_args()
 app_dir = Path(args.app_dir)
 publish = Path(args.publish)
 out = Path(args.out)
-exe = publish / "LumaflyV2"
+exe = publish / "Needlelight"
 
 if app_dir.suffix != ".app":
     print("Error: " + app_dir + " is not an .app folder.")
@@ -62,7 +62,7 @@ if looks_like_windows_pe(exe):
 
 if not looks_like_mach_o(exe):
     print(f"Warning: The publish executable '{exe}' does not appear to be a Mach-O binary.\n"
-          "If you intended to package a macOS app, ensure you published for macOS (dotnet publish -r osx-x64/osx-arm64) and placed the native binary named 'LumaflyV2' in the publish folder.\n"
+          "If you intended to package a macOS app, ensure you published for macOS (dotnet publish -r osx-x64/osx-arm64) and placed the native binary named 'Needlelight' in the publish folder.\n"
           "This script will continue, but the resulting .app may not open correctly on macOS.")
 
 def write_executable(zfile, path, zip_path=None):
@@ -84,7 +84,7 @@ def write_executable(zfile, path, zip_path=None):
 if not Path(out).exists():
     Path(out).mkdir()
 
-with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
+with ZipFile(out / "Needlelight-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
     for root, dirs, files in walk(app_dir):
         root = Path(root)
 
@@ -92,7 +92,7 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
             # Skip any existing executable found inside the source app_dir; we'll add
             # the published executable into Contents/MacOS explicitly below so it
             # ends up in the correct location and with correct permissions.
-            if fname == "LumaflyV2":
+            if fname == "Needlelight":
                 continue
 
             path = Path(root, fname)
@@ -104,7 +104,7 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
         for publish_root, _, files in walk(publish):
             publish_root = Path(publish_root)
             for fname in files:
-                if fname == "LumaflyV2":
+                if fname == "Needlelight":
                     continue
 
                 # keep original filenames for publish artifacts; place them under
@@ -115,7 +115,8 @@ with ZipFile(out / "LumaflyV2-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
 
         # Add the published executable into Contents/MacOS with the expected name
         # and executable bits. This ensures the app bundle opens correctly on macOS.
-        write_executable(zip_f, publish_root / "LumaflyV2", root / "MacOS" / "run")
+        write_executable(zip_f, publish_root / "Needlelight", root / "MacOS" / "run")
 
 
-print("Created LumaflyV2-mac.zip")
+print("Created Needlelight-mac.zip")
+

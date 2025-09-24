@@ -1,17 +1,17 @@
 <div align="center">
 
-# 🦋 LumaflyV2
+# 🦋 Needlelight
 
-![build](https://github.com/Aarav2709/LumaflyV2/actions/workflows/build.yml/badge.svg)
-[![website](https://img.shields.io/badge/website-online-32c854)](https://lumaflyv2.vercel.app)
-[![GitHub all releases](https://img.shields.io/github/downloads/Aarav2709/LumaflyV2/total)](https://github.com/Aarav2709/LumaflyV2/releases)
-[![Crowdin](https://badges.crowdin.net/lumafly/localized.svg)](https://crowdin.com/project/lumafly)
+![build](https://github.com/Aarav2709/Needlelight/actions/workflows/build.yml/badge.svg)
+[![website](https://img.shields.io/badge/website-online-32c854)](https://Needlelight.vercel.app)
+[![GitHub all releases](https://img.shields.io/github/downloads/Aarav2709/Needlelight/total)](https://github.com/Aarav2709/Needlelight/releases)
+[![Crowdin](https://badges.crowdin.net/Needlelight/localized.svg)](https://crowdin.com/project/Needlelight)
 
 </div>
 
-LumaflyV2 is a refreshed, production-ready evolution of the original Lumafly installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support. LumaflyV2 is not affiliated with Lumafly or its developers.
+Needlelight is a refreshed, production-ready evolution of the original Needlelight installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support. Auto-update functionality has been removed in this release; see the Releases page to download new versions (current release: v6.0.0.0).
 
-Key improvements in LumaflyV2:
+Key improvements in Needlelight:
 
 - Reworked game profile system: automatic detection and per-game executable resolution (better Silksong support).
 - Safer installer flow with improved error handling around file access and mod installation.
@@ -23,7 +23,7 @@ Key improvements in LumaflyV2:
 - Default game = Hollow Knight. To manage Silksong, open Settings → Game → select "Silksong". The active profile changes immediately and persists to your config.
 - Search through and download the mods you like.
 - Mods appear in the top left corner of the game title screen after installation.
-- Enable/Disable mods using the toggle and update outdated mods using the orange update button.
+- Enable/Disable mods using the toggle. (Manual update UI was removed in v6.0.0.0 — use the Releases page.)
 - If you are unable to connect to the internet, LumaSong can be launched in offline mode where you can toggle mods/API.
 
 ## ✨ Features
@@ -53,7 +53,7 @@ Key improvements in LumaflyV2:
 
 - Programming
 
-  - [56](https://github.com/fifty-six) - Creator of [Scarab](https://github.com/fifty-six/Scarab), on which Lumafly is based
+  - [56](https://github.com/fifty-six) - Creator of [Scarab](https://github.com/fifty-six/Scarab), on which Needlelight is based
   - [JacksonFaller](https://github.com/JacksonFaller), [Italy](https://github.com/jngo102), and [Acu1000](https://github.com/Acu1000)
 
 - Translations
@@ -69,8 +69,8 @@ Key improvements in LumaflyV2:
 
 - Art
   - [Dwarfwoot](https://patreon.com/DwarfWoot), [SFGrenade](https://github.com/SFGrenade) - Images and icons used in the installer.
-  - [Lime](https://www.tumblr.com/ded-lime) - The Lumafly banner.
-  - [HBKit](https://ko-fi.com/hbkit) - The Lumafly icon.
+  - [Lime](https://www.tumblr.com/ded-lime) - The Needlelight banner.
+  - [HBKit](https://ko-fi.com/hbkit) - The Needlelight icon.
 
 ## 🪟 Windows SmartScreen (free workaround)
 
@@ -82,14 +82,14 @@ Because the app isn’t code-signed with a paid certificate, Windows SmartScreen
   - Or in PowerShell (replace the filename if different):
 
     ```powershell
-    Unblock-File -Path .\LumaflyV2-Windows.zip
-    Expand-Archive .\LumaflyV2-Windows.zip -DestinationPath .\LumaflyV2
+    Unblock-File -Path .\Needlelight-Windows.zip
+    Expand-Archive .\Needlelight-Windows.zip -DestinationPath .\Needlelight
     ```
 
 - If already extracted, unblock the files:
 
   ```powershell
-  Get-ChildItem .\LumaflyV2 -Recurse | Unblock-File
+  Get-ChildItem .\Needlelight -Recurse | Unblock-File
   ```
 
 - Verify downloads with the provided SHA256SUMS.txt in each release.
@@ -107,7 +107,7 @@ Windows (PowerShell)
 
 ```powershell
 # Show the file's SHA-256 and compare with SHA256SUMS.txt
-Get-FileHash -Algorithm SHA256 .\LumaflyV2-Windows.zip
+Get-FileHash -Algorithm SHA256 .\Needlelight-Windows.zip
 
 # Optionally verify multiple files manually by comparing the printed hash
 # with the corresponding line in SHA256SUMS.txt.
@@ -116,14 +116,14 @@ Get-FileHash -Algorithm SHA256 .\LumaflyV2-Windows.zip
 Windows (Command Prompt)
 
 ```bat
-certutil -hashfile LumaflyV2-Windows.zip SHA256
+certutil -hashfile Needlelight-Windows.zip SHA256
 ```
 
 macOS
 
 ```bash
 # Quick: print a file's hash
-shasum -a 256 LumaflyV2-MacOS.zip
+shasum -a 256 Needlelight-MacOS.zip
 
 # Check against the whole list (expects files next to SHA256SUMS.txt)
 shasum -a 256 --check SHA256SUMS.txt
@@ -134,11 +134,11 @@ Linux
 
 ```bash
 # Quick: print a file's hash
-sha256sum LumaflyV2-Linux.zip
+sha256sum Needlelight-Linux.zip
 
 # Check against the whole list (expects files next to SHA256SUMS.txt)
 sha256sum -c SHA256SUMS.txt
 # Outputs: "filename: OK" or "FAILED"
 ```
 
-Tip: You can also verify individual executables (e.g., `LumaflyV2.exe`, `LumaflyV2.AU.exe`) using the same commands.
+Tip: You can also verify individual executables (e.g., `Needlelight.exe`, `Needlelight.AU.exe`) using the same commands.

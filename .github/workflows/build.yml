@@ -31,15 +31,15 @@ jobs:
           dotnet-version: 9.0.x
       - name: Build
         run: |
-          cd Lumafly
+          cd Needlelight
           dotnet publish -r win-x64 -p:PublishSingleFile=true -p:Configuration=Release --self-contained true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=embedded
           cd ..
       - name: Upload windows binary
         # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
         uses: actions/upload-artifact@v4
         with:
-          name: Lumafly-Windows
-          path: Lumafly/bin/Release/net9.0/win-x64/publish/
+          name: Needlelight-Windows
+          path: Needlelight/bin/Release/net9.0/win-x64/publish/
 
   build-linux:
     runs-on: ubuntu-latest
@@ -51,16 +51,16 @@ jobs:
           dotnet-version: 9.0.x
       - name: Build
         run: |
-          cd Lumafly
+          cd Needlelight
           dotnet publish -r linux-x64 -p:PublishSingleFile=true -p:Configuration=Release --self-contained true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=embedded
           cd ..
-          chmod +x Lumafly/bin/Release/net9.0/linux-x64/publish/LumaflyV2
-          zip -jr linux.zip Lumafly/bin/Release/net9.0/linux-x64/publish/*
+          chmod +x Needlelight/bin/Release/net9.0/linux-x64/publish/Needlelight
+          zip -jr linux.zip Needlelight/bin/Release/net9.0/linux-x64/publish/*
       - name: Upload linux binary
         # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
         uses: actions/upload-artifact@v4
         with:
-          name: Lumafly-Linux
+          name: Needlelight-Linux
           path: linux.zip
 
   build-macos:
@@ -75,21 +75,21 @@ jobs:
           dotnet-version: 9.0.x
       - name: Build
         run: |
-          cd Lumafly
+          cd Needlelight
           dotnet publish -r osx-x64 -p:PublishSingleFile=true -p:Configuration=Release --self-contained true
           cd ..
           cd Scripts
           # Ensure the published binary is executable before creating the .app bundle
-          chmod +x ../Lumafly/bin/Release/net9.0/osx-x64/publish/LumaflyV2 || true
-          chmod +x ./Lumafly.app/Contents/MacOS/Lumafly || true
-          python3 make_mac_app.py Lumafly.app ../Lumafly/bin/Release/net9.0/osx-x64/publish ../out
+          chmod +x ../Needlelight/bin/Release/net9.0/osx-x64/publish/Needlelight || true
+          chmod +x ./Needlelight.app/Contents/MacOS/Needlelight || true
+          python3 make_mac_app.py Needlelight.app ../Needlelight/bin/Release/net9.0/osx-x64/publish ../out
           cd ..
       - name: Upload macos binary
         # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
         uses: actions/upload-artifact@v4
         with:
-          name: Lumafly-MacOS
-          path: out/LumaflyV2-mac.zip
+          name: Needlelight-MacOS
+          path: out/Needlelight-mac.zip
 
   # needs to run when releasing but before main release action
   build-auto-updater:
@@ -115,16 +115,16 @@ jobs:
         run: dotnet restore -r win-x64
       - name: Build
         run: |
-          cp ./artifacts/Lumafly-Windows/LumaflyV2.exe ./Lumafly.AU/LumaflyV2.exe
-          cd Lumafly.AU
+          cp ./artifacts/Needlelight-Windows/Needlelight.exe ./Needlelight.AU/Needlelight.exe
+          cd Needlelight.AU
           dotnet publish -r win-x64 -c Release --self-contained true
           cd ..
       - name: Upload windows binary
         # NOTE: upgraded upload-artifact from v3 -> v4 to avoid deprecated action failures
         uses: actions/upload-artifact@v4
         with:
-          name: Lumafly-AU
-          path: Lumafly.AU/bin/Release/net9.0/win-x64/publish/
+          name: Needlelight.AU
+          path: Needlelight.AU/bin/Release/net9.0/win-x64/publish/
 
   release:
     needs: [build-macos, build-windows, build-linux, build-auto-updater]
@@ -171,14 +171,14 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p win_pkg
-          cp -r ./artifacts/Lumafly-Windows/* ./win_pkg/
+          cp -r ./artifacts/Needlelight-Windows/* ./win_pkg/
           printf '%s\n' \
             'Windows may show a SmartScreen warning because this app is not code-signed with a paid certificate.' \
             '' \
             'Free ways to run safely:' \
             '1) Unblock this zip before extracting: Right-click > Properties > check "Unblock" > OK, then extract.' \
-            '   Or in PowerShell: Unblock-File -Path .\\LumaflyV2-Windows.zip' \
-            '2) After extracting, run UNBLOCK_AND_RUN.cmd to automatically unblock files and start LumaflyV2.' \
+            '   Or in PowerShell: Unblock-File -Path .\\Needlelight-Windows.zip' \
+            '2) After extracting, run UNBLOCK_AND_RUN.cmd to automatically unblock files and start Needlelight.' \
             '3) Verify downloads using the SHA256SUMS.txt on the GitHub Release.' \
             '' \
             'This package contains:' \
@@ -191,12 +191,12 @@ jobs:
             ')' \
             'Write-Host "Unblocking files under: $Root"' \
             'Get-ChildItem -LiteralPath $Root -Recurse -Force | Unblock-File -ErrorAction SilentlyContinue' \
-            '$exe = Join-Path $Root '\''LumaflyV2.exe'\''' \
+            '$exe = Join-Path $Root '\''Needlelight.exe'\''' \
             'if (Test-Path $exe) {' \
             '  Write-Host "Launching: $exe"' \
             '  Start-Process -FilePath $exe' \
             '} else {' \
-            '  Write-Host "LumaflyV2.exe not found in $Root"' \
+            '  Write-Host "Needlelight.exe not found in $Root"' \
             '}' \
             > ./win_pkg/unblock-all.ps1
           printf '%s\n' \
@@ -205,17 +205,17 @@ jobs:
             'powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0unblock-all.ps1"' \
             'endlocal' \
             > ./win_pkg/UNBLOCK_AND_RUN.cmd
-          zip -jr LumaflyV2-Windows.zip ./win_pkg/*
-          cp ./artifacts/Lumafly-Windows/LumaflyV2.exe ./LumaflyV2.exe
-          cp ./artifacts/Lumafly-AU/Lumafly.AU.exe ./LumaflyV2.AU.exe
-          mv ./artifacts/Lumafly-Linux/linux.zip LumaflyV2-Linux.zip
-          mv ./artifacts/Lumafly-MacOS/LumaflyV2-mac.zip LumaflyV2-MacOS.zip
+          zip -jr Needlelight-Windows.zip ./win_pkg/*
+          cp ./artifacts/Needlelight-Windows/Needlelight.exe ./Needlelight.exe
+          cp ./artifacts/Needlelight.AU/Needlelight.AU.exe ./Needlelight.AU.exe
+          mv ./artifacts/Needlelight-Linux/linux.zip Needlelight-Linux.zip
+          mv ./artifacts/Needlelight-MacOS/Needlelight-mac.zip Needlelight-MacOS.zip
           sha256sum \
-            LumaflyV2.exe \
-            LumaflyV2.AU.exe \
-            LumaflyV2-Windows.zip \
-            LumaflyV2-MacOS.zip \
-            LumaflyV2-Linux.zip > SHA256SUMS.txt
+            Needlelight.exe \
+            Needlelight.AU.exe \
+            Needlelight-Windows.zip \
+            Needlelight-MacOS.zip \
+            Needlelight-Linux.zip > SHA256SUMS.txt
 
       - name: Create release
         if: steps.verify_tag.outputs.on_master == 'true'
@@ -224,35 +224,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.resolve_tag.outputs.tag }}
           files: |
-            ./LumaflyV2.exe
-            ./LumaflyV2.AU.exe
-            ./LumaflyV2-Windows.zip
-            ./LumaflyV2-MacOS.zip
-            ./LumaflyV2-Linux.zip
+            ./Needlelight.exe
+            ./Needlelight.AU.exe
+            ./Needlelight-Windows.zip
+            ./Needlelight-MacOS.zip
+            ./Needlelight-Linux.zip
             ./SHA256SUMS.txt
 
-  # run after release so no one downloads non existent files
-  create-appcast:
-    needs: [release]
-    runs-on: ubuntu-latest
-
-    if: startsWith(github.ref, 'refs/tags')
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Get tag
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
-      - name: Update appcast
-        run: |
-          python3 Scripts/make_appcast.py ${{ steps.vars.outputs.tag }}
-          cat appcast.xml
-
-      - name: Push updated appcast
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: master
-          folder: .
-          clean: true
-          commit-message: Update appcast to ${{ steps.vars.outputs.tag }}
+  # Appcast generation and auto-updater publishing removed — updates are now disabled

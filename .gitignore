@@ -7,7 +7,7 @@
 out/*
 windows.zip
 mac.zip
-LumaflyV2-mac.zip
+Needlelight-mac.zip
 linux.zip
 
 # User-specific files
@@ -350,3 +350,4 @@ healthchecksdb
 .vscode/settings.json
 .hintrc
 _site/*
+
