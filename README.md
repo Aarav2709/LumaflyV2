@@ -1,14 +1,20 @@
-<div align="center">
+<h1 align="center">🧵 Needlelight</h1>
 
-# 🦋 Needlelight
+<p align="center">
+  Needlelight is a refreshed, production-ready evolution of the original Needlelight installer. It focuses on first-class support for Hollow Knight: Silksong, improved     stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
+</p>
+
+<p align="center">
+  <img src="image.png" alt="Needlelight Banner" />
+</p>
+
+<div align="center">
 
 ![build](https://github.com/Aarav2709/Needlelight/actions/workflows/build.yml/badge.svg)
 [![website](https://img.shields.io/badge/website-online-32c854)](https://Needlelight.vercel.app)
 [![GitHub all releases](https://img.shields.io/github/downloads/Aarav2709/Needlelight/total)](https://github.com/Aarav2709/Needlelight/releases)
 
 </div>
-
-Needlelight is a refreshed, production-ready evolution of the original Needlelight installer. It focuses on first-class support for Hollow Knight: Silksong, improved stability when installing mods, and a cleaner, more maintainable codebase with better localization support. Auto-update functionality has been removed in this release; see the Releases page to download new versions (current release: v6.0.0.0).
 
 Key improvements in Needlelight:
 
