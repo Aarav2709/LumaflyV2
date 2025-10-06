@@ -47,7 +47,7 @@ def looks_like_mach_o(path: Path) -> bool:
                 b'\xfe\xed\xfa\xce',  # MH_MAGIC
                 b'\xce\xfa\xed\xfe',  # MH_CIGAM
                 b'\xfe\xed\xfa\xcf',  # MH_MAGIC_64
-                b'\xcf\xfa\ed\xfe',  # MH_CIGAM_64
+                b'\xcf\xfa\xed\xfe',  # MH_CIGAM_64
                 b'\xca\xfe\xba\xbe',  # FAT_MAGIC
                 b'\xbe\xba\xfe\xca'   # FAT_CIGAM
             ]
@@ -113,10 +113,8 @@ with ZipFile(out / "Needlelight-mac.zip", 'w', ZIP_DEFLATED) as zip_f:
                 zip_path = root / "MacOS" / fname
                 zip_f.write(path, zip_path)
 
-        # Add the published executable into Contents/MacOS with the expected name
-        # and executable bits. This ensures the app bundle opens correctly on macOS.
-        write_executable(zip_f, publish_root / "Needlelight", root / "MacOS" / "run")
+            write_executable(zip_f, publish_root / "Needlelight", root / "MacOS" / "run")
 
+        write_executable(zip_f, app_dir / "Contents" / "MacOS" / "Needlelight", root / "MacOS" / "Needlelight")
 
 print("Created Needlelight-mac.zip")
-
