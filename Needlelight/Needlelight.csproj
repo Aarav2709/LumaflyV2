@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
     <ApplicationIcon>Assets\Needlelight.ico</ApplicationIcon>
     <AssemblyName>Needlelight</AssemblyName>
-    <Version>6.1.0.0</Version>
+    <Version>6.1.0.1</Version>
         <UseAppHost>true</UseAppHost>
     <!-- Branding metadata -->
     <Title>Needlelight</Title>
