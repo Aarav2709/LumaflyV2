@@ -5,6 +5,18 @@
         <link>https://raw.githubusercontent.com/Aarav2709/Needlelight/master/appcast.xml</link>
         <language>en</language>
         <item>
+            <title>Needlelight Update v6.1.0.2</title>
+            <sparkle:releaseNotesLink>
+                https://raw.githubusercontent.com/Aarav2709/Needlelight/master/Changelogs/v6.1.0.2.md
+            </sparkle:releaseNotesLink>
+            <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+            <enclosure url="https://github.com/Aarav2709/Needlelight/releases/download/v6.1.0.2/Needlelight.AU.exe"
+                sparkle:version="6.1.0.2"
+                sparkle:os="windows"
+                length="12288"
+                type="application/octet-stream"/>
+        </item>
+        <item>
             <title>Needlelight Update v6.0.0.0</title>
             <sparkle:releaseNotesLink>
                 https://raw.githubusercontent.com/Aarav2709/Needlelight/static-resources/Changelogs/v6.0.0.0.md

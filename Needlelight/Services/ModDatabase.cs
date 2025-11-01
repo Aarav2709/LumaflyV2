@@ -24,9 +24,224 @@ namespace Needlelight.Services
 
         private const string VanillaApiRepo = "https://raw.githubusercontent.com/TheMulhima/Needlelight/static-resources/AssemblyLinks.json";
 
-        public static string GetModlinksUri(ISettings settings) => LINKS_BASE + "/ModLinks.xml";
+        private sealed record GameContentSources(
+            IReadOnlyList<Uri> Modlinks,
+            IReadOnlyList<Uri> ModlinksFallbacks,
+            IReadOnlyList<Uri> ApiLinks,
+            IReadOnlyList<Uri> ApiLinksFallbacks,
+            IReadOnlyList<Uri> AssemblyJsonUris,
+            IReadOnlyList<string> JsonGameKeys);
 
-        private static string GetAPILinksUri(ISettings settings) => LINKS_BASE + "/ApiLinks.xml";
+        private static readonly GameContentSources HollowKnightSources = new(
+            Modlinks: new[] { new Uri("https://raw.githubusercontent.com/hk-modding/modlinks/main/ModLinks.xml") },
+            ModlinksFallbacks: new[] { new Uri(FALLBACK_MODLINKS_URI) },
+            ApiLinks: new[] { new Uri("https://raw.githubusercontent.com/hk-modding/modlinks/main/ApiLinks.xml") },
+            ApiLinksFallbacks: new[] { new Uri(FALLBACK_APILINKS_URI) },
+            AssemblyJsonUris: new[] { new Uri(VanillaApiRepo) },
+            JsonGameKeys: new[] { GameProfiles.HollowKnightKey, "hk", "hollowknight", "hollow_knight" }
+        );
+
+        private static readonly GameContentSources SilksongSources = new(
+            Modlinks: new[]
+            {
+                new Uri("https://raw.githubusercontent.com/silksong-modding/modlinks/main/ModLinks.xml"),
+                new Uri("https://raw.githubusercontent.com/hk-modding/silksong-modlinks/main/ModLinks.xml"),
+                new Uri("https://raw.githubusercontent.com/hk-modding/modlinks/main/silksong/ModLinks.xml")
+            },
+            ModlinksFallbacks: new[]
+            {
+                new Uri("https://cdn.jsdelivr.net/gh/silksong-modding/modlinks@latest/ModLinks.xml")
+            },
+            ApiLinks: new[]
+            {
+                new Uri("https://raw.githubusercontent.com/silksong-modding/modlinks/main/ApiLinks.xml"),
+                new Uri("https://raw.githubusercontent.com/hk-modding/silksong-modlinks/main/ApiLinks.xml"),
+                new Uri("https://raw.githubusercontent.com/hk-modding/modlinks/main/silksong/ApiLinks.xml")
+            },
+            ApiLinksFallbacks: new[]
+            {
+                new Uri("https://cdn.jsdelivr.net/gh/silksong-modding/modlinks@latest/ApiLinks.xml")
+            },
+            AssemblyJsonUris: new[]
+            {
+                new Uri("https://raw.githubusercontent.com/silksong-modding/modlinks/main/AssemblyLinks.json"),
+                new Uri("https://raw.githubusercontent.com/TheMulhima/Needlelight/static-resources/SilksongAssemblyLinks.json"),
+                new Uri("https://raw.githubusercontent.com/TheMulhima/Needlelight/static-resources/AssemblyLinks.Silksong.json")
+            },
+            JsonGameKeys: new[] { GameProfiles.SilksongKey, "hkss", "silksong", "hollow_knight_silksong" }
+        );
+
+        public static string GetModlinksUri(ISettings settings)
+        {
+            var sources = GetContentSources(settings);
+            var uri = sources.Modlinks.FirstOrDefault();
+            if (uri is null)
+                throw new InvalidOperationException("No modlinks endpoint configured for the selected game profile.");
+
+            return uri.ToString();
+        }
+
+        private static string GetAPILinksUri(ISettings settings)
+        {
+            var sources = GetContentSources(settings);
+            var uri = sources.ApiLinks.FirstOrDefault();
+            if (uri is null)
+                throw new InvalidOperationException("No API endpoint configured for the selected game profile.");
+
+            return uri.ToString();
+        }
+
+        private static GameContentSources GetContentSources(ISettings? settings)
+        {
+            var key = settings?.Game?.Trim();
+            if (!string.IsNullOrEmpty(key) && key.Equals(GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase))
+                return SilksongSources;
+
+            return HollowKnightSources;
+        }
+
+        private static async Task<string?> TryFetchSequentially(HttpClient hc, ISettings? settings, IEnumerable<Uri> candidates)
+        {
+            foreach (var uri in candidates)
+            {
+                try
+                {
+                    var cts = new CancellationTokenSource(TIMEOUT);
+                    return await hc.GetStringAsync2(settings, uri, cts.Token);
+                }
+                catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
+                {
+                    Trace.TraceWarning($"Failed to fetch {uri}: {e.Message}");
+                }
+            }
+
+            return null;
+        }
+
+        private static async Task<string?> TryFetchWithFallbacks(HttpClient hc, ISettings? settings, GameContentSources sources, bool isModlinks)
+        {
+            var primary = isModlinks ? sources.Modlinks : sources.ApiLinks;
+            var fallback = isModlinks ? sources.ModlinksFallbacks : sources.ApiLinksFallbacks;
+
+            var result = await TryFetchSequentially(hc, settings, primary);
+            if (!string.IsNullOrWhiteSpace(result))
+                return result;
+
+            if (fallback is { Count: > 0 })
+                return await TryFetchSequentially(hc, settings, fallback) ?? result;
+
+            return result;
+        }
+
+        private static IEnumerable<string> BuildAssemblyJsonKeyCandidates(GameContentSources sources)
+        {
+            var osKey = OperatingSystem.IsMacOS()
+                ? "Mac"
+                : OperatingSystem.IsLinux()
+                    ? "Linux"
+                    : "Windows";
+
+            var baseKeys = new[]
+            {
+                "Assembly-CSharp.dll.v",
+                $"{osKey}-Assembly-CSharp.dll.v",
+                $"{osKey}_Assembly-CSharp.dll.v",
+                $"{osKey}/Assembly-CSharp.dll.v"
+            };
+
+            HashSet<string> seen = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var key in baseKeys)
+            {
+                if (seen.Add(key))
+                    yield return key;
+            }
+
+            foreach (var raw in sources.JsonGameKeys)
+            {
+                if (string.IsNullOrWhiteSpace(raw))
+                    continue;
+
+                var variants = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    raw,
+                    raw.Replace(" ", string.Empty),
+                    raw.Replace("-", "_"),
+                    raw.Replace(" ", string.Empty).Replace("-", "_"),
+                    raw.ToLowerInvariant(),
+                    raw.Replace(" ", string.Empty).Replace("-", "_").ToLowerInvariant()
+                };
+
+                foreach (var variant in variants)
+                {
+                    foreach (var format in new[]
+                    {
+                        $"{variant}-{osKey}-Assembly-CSharp.dll.v",
+                        $"{osKey}-{variant}-Assembly-CSharp.dll.v",
+                        $"{variant}_{osKey}_Assembly-CSharp.dll.v",
+                        $"{osKey}_{variant}_Assembly-CSharp.dll.v",
+                        $"{variant}/{osKey}/Assembly-CSharp.dll.v"
+                    })
+                    {
+                        if (seen.Add(format))
+                            yield return format;
+                    }
+                }
+            }
+        }
+
+        private static IEnumerable<JsonElement> EnumerateAssemblyNodes(JsonElement root, IReadOnlyList<string> jsonGameKeys)
+        {
+            foreach (var key in jsonGameKeys)
+            {
+                if (TryGetPropertyCaseInsensitive(root, key, out var perGame))
+                    yield return perGame;
+            }
+
+            if (TryGetPropertyCaseInsensitive(root, "games", out var gamesNode) && gamesNode.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var key in jsonGameKeys)
+                {
+                    if (TryGetPropertyCaseInsensitive(gamesNode, key, out var nested))
+                        yield return nested;
+                }
+            }
+
+            yield return root;
+        }
+
+        private static bool TryGetPropertyCaseInsensitive(JsonElement element, string propertyName, out JsonElement value)
+        {
+            foreach (var property in element.EnumerateObject())
+            {
+                if (string.Equals(property.Name, propertyName, StringComparison.OrdinalIgnoreCase))
+                {
+                    value = property.Value;
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        private static ApiLinks CreateEmptyApiLinks()
+        {
+            return new ApiLinks
+            {
+                Manifest = new ApiManifest
+                {
+                    Version = 0,
+                    Files = new List<string>(),
+                    Links = new Links
+                    {
+                        Windows = new Link { SHA256 = string.Empty, URL = string.Empty },
+                        Mac = new Link { SHA256 = string.Empty, URL = string.Empty },
+                        Linux = new Link { SHA256 = string.Empty, URL = string.Empty }
+                    }
+                }
+            };
+        }
 
         internal const int TIMEOUT = 30_000;
 
@@ -129,46 +344,21 @@ namespace Needlelight.Services
 
         private static async Task<ApiLinks> FetchApiLinks(HttpClient hc, ISettings settings)
         {
-            // If Silksong is selected and no custom modlinks are configured, return a minimal API stub
-            if (string.Equals(settings?.Game, GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase)
-                && !(settings?.UseCustomModlinks ?? false))
-            {
-                return new ApiLinks
-                {
-                    Manifest = new ApiManifest
-                    {
-                        Version = 0,
-                        Files = new List<string>(),
-                        Links = new Links
-                        {
-                            Windows = new Link { SHA256 = string.Empty, URL = string.Empty },
-                            Mac = new Link { SHA256 = string.Empty, URL = string.Empty },
-                            Linux = new Link { SHA256 = string.Empty, URL = string.Empty }
-                        }
-                    }
-                };
-            }
-
             var apisettings = settings ?? Settings.Load() ?? new Settings();
-            return FromString<ApiLinks>(await FetchWithFallback(hc, apisettings, new Uri(GetAPILinksUri(apisettings)), new Uri(FALLBACK_APILINKS_URI)));
+            var sources = GetContentSources(apisettings);
+
+            var xml = await TryFetchWithFallbacks(hc, apisettings, sources, isModlinks: false);
+            if (!string.IsNullOrWhiteSpace(xml))
+                return FromString<ApiLinks>(xml);
+
+            Trace.TraceWarning($"Unable to fetch API links for {apisettings.Game}; using empty manifest.");
+            return CreateEmptyApiLinks();
         }
 
         private static async Task<ModLinks> FetchModLinks(HttpClient hc, ISettings settings, bool fetchOfficial)
         {
             // Normalize settings to a guaranteed non-null instance for the rest of this method.
             var effectiveSettings = settings ?? Settings.Load() ?? new Settings();
-
-            // When Silksong is selected and user hasn't provided a custom list, don't fetch HK modlinks;
-            // instead, return an empty mod list so the UI reflects no available mods for Silksong yet.
-            if (fetchOfficial)
-            {
-                var selectedGame = effectiveSettings.Game;
-                var useCustom = effectiveSettings.UseCustomModlinks;
-                if (string.Equals(selectedGame, GameProfiles.SilksongKey, StringComparison.OrdinalIgnoreCase) && !useCustom)
-                {
-                    return new ModLinks { Manifests = Array.Empty<Manifest>(), Raw = string.Empty };
-                }
-            }
 
             if (!fetchOfficial && effectiveSettings.UseCustomModlinks)
             {
@@ -209,42 +399,65 @@ namespace Needlelight.Services
                 }
             }
 
-        var mlsettings = effectiveSettings;
-        return FromString<ModLinks>(await FetchWithFallback(hc, mlsettings, new Uri(GetModlinksUri(mlsettings)), new Uri(FALLBACK_MODLINKS_URI)));
-
-        }
-
-        private static async Task<string> FetchWithFallback(HttpClient hc, ISettings? settings, Uri uri, Uri fallback)
-        {
-            try
+            if (!fetchOfficial && !effectiveSettings.UseCustomModlinks)
             {
-                var cts = new CancellationTokenSource(TIMEOUT);
-                return await hc.GetStringAsync2(settings, uri, cts.Token);
+                // fall through to official fetch so UI matches official catalog
+                fetchOfficial = true;
             }
-            catch (Exception e) when (e is TaskCanceledException or HttpRequestException)
+
+            if (fetchOfficial)
             {
-                var cts = new CancellationTokenSource(TIMEOUT);
-                return await hc.GetStringAsync2(settings, fallback, cts.Token);
+                var sources = GetContentSources(effectiveSettings);
+                var xml = await TryFetchWithFallbacks(hc, effectiveSettings, sources, isModlinks: true);
+                if (!string.IsNullOrWhiteSpace(xml))
+                    return FromString<ModLinks>(xml);
+
+                Trace.TraceWarning($"Unable to fetch modlinks for {effectiveSettings.Game}; returning empty manifest list.");
             }
+
+            return new ModLinks { Manifests = Array.Empty<Manifest>(), Raw = string.Empty };
         }
 
         public static async Task<string> FetchVanillaAssemblyLink(ISettings? settings)
         {
-            var cts = new CancellationTokenSource(TIMEOUT);
             var hc = new HttpClient();
             hc.DefaultRequestHeaders.Add("User-Agent", "Needlelight");
-            var json = JsonDocument.Parse(await hc.GetStringAsync2(settings, VanillaApiRepo, cts.Token));
 
-            var jsonKey = "Assembly-CSharp.dll.v";
-            // windows assembly is just called that because initially this was overlooked and only windows assembly was downloaded
-            if (OperatingSystem.IsMacOS()) jsonKey = "Mac-Assembly-CSharp.dll.v";
-            if (OperatingSystem.IsLinux()) jsonKey = "Linux-Assembly-CSharp.dll.v";
+            var sources = GetContentSources(settings);
+            var candidateKeys = BuildAssemblyJsonKeyCandidates(sources).ToList();
 
-            json.RootElement.TryGetProperty(jsonKey, out var linkElem);
+            foreach (var endpoint in sources.AssemblyJsonUris)
+            {
+                try
+                {
+                    var cts = new CancellationTokenSource(TIMEOUT);
+                    var payload = await hc.GetStringAsync2(settings, endpoint, cts.Token);
 
-            var link = linkElem.GetString();
-            if (link != null)
-                return link;
+                    using var json = JsonDocument.Parse(payload);
+                    foreach (var node in EnumerateAssemblyNodes(json.RootElement, sources.JsonGameKeys))
+                    {
+                        foreach (var key in candidateKeys)
+                        {
+                            if (TryGetPropertyCaseInsensitive(node, key, out var linkElem) &&
+                                linkElem.ValueKind == JsonValueKind.String)
+                            {
+                                var link = linkElem.GetString();
+                                if (!string.IsNullOrWhiteSpace(link))
+                                    return link;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e) when (e is HttpRequestException or TaskCanceledException)
+                {
+                    Trace.TraceWarning($"Failed to fetch assembly link manifest from {endpoint}: {e.Message}");
+                }
+                catch (JsonException je)
+                {
+                    Trace.TraceWarning($"Invalid assembly link manifest at {endpoint}: {je.Message}");
+                }
+            }
+
             throw new Exception("Needlelight was unable to get vanilla assembly link from its resources. Please verify integrity of game files instead");
         }
     }

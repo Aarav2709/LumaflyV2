@@ -4,6 +4,14 @@ Source code adapted from: https://github.com/TheMulhima/Lumafly
 
 [v6.0.0.0](#changes-in-v6000)
 
+## Changes in v6.1.0.2
+
+DATE: 2025-11-01
+
+- Aligns ModLinks, API manifests, and vanilla assembly endpoints per game profile with resilient fallbacks for Silksong.
+- Fixes Silksong macOS launch detection by targeting the `.app/Contents/MacOS` executable path.
+- Adds defensive API toggle behaviour and nullability cleanups to keep Hollow Knight compatibility intact.
+
 ## Changes in v5.1.0.2
 
 DATE: 2025-09-18

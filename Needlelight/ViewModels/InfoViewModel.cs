@@ -93,13 +93,11 @@ public partial class InfoViewModel : ViewModelBase
       // launching always uses the selected profile and its configured ExeNames.
       var managedFolderInfo = new DirectoryInfo(_settings.ManagedFolder);
       var managedParent = managedFolderInfo.Parent; // *_Data or Data folder
-      var installFolder = managedParent?.Parent; // exe folder (two levels up from Managed)
+      DirectoryInfo? installFolder = managedParent?.Parent; // exe folder (two levels up from Managed)
 
-      // Mac has an extra nested structure; preserve previous mac handling by walking up additional folders when needed.
-      if (OperatingSystem.IsMacOS() && managedParent?.Parent != null)
+      if (OperatingSystem.IsMacOS())
       {
-        // On macOS, the structure can add two extra levels; follow prior approach to reach exe folder.
-        installFolder = managedParent.Parent.Parent; // safe to use Parent twice -- will be null if structure differs
+        installFolder = ResolveMacExecutableDirectory(managedFolderInfo) ?? installFolder;
       }
 
       if (installFolder == null)
@@ -134,7 +132,7 @@ public partial class InfoViewModel : ViewModelBase
         candidateNames.AddRange(exeNames);
       }
 
-      string exeFullPath = null;
+  string? exeFullPath = null;
       var triedPaths = new List<string>();
       foreach (var candidate in candidateNames)
       {
@@ -177,9 +175,11 @@ public partial class InfoViewModel : ViewModelBase
           throw new Exception($"{currentProfile.Name} executable not found. Tried the following paths:\n{list}");
         }
 
+        var resolvedExe = exeFullPath;
+
         Process.Start(new ProcessStartInfo
         {
-          FileName = exeFullPath,
+          FileName = resolvedExe!,
           WorkingDirectory = installFolder.FullName,
           UseShellExecute = true,
         });
@@ -232,6 +232,21 @@ public partial class InfoViewModel : ViewModelBase
 
       _urlSchemeHandler.FinishHandlingUrlScheme();
     }
+  }
+
+  private static DirectoryInfo? ResolveMacExecutableDirectory(DirectoryInfo managedFolder)
+  {
+    DirectoryInfo? cursor = managedFolder;
+    while (cursor is not null && !cursor.Name.EndsWith(".app", StringComparison.OrdinalIgnoreCase))
+    {
+      cursor = cursor.Parent;
+    }
+
+    if (cursor is null)
+      return null;
+
+    var macOsPath = Path.Combine(cursor.FullName, "Contents", "MacOS");
+    return Directory.Exists(macOsPath) ? new DirectoryInfo(macOsPath) : null;
   }
 }
 
