@@ -1,4 +1,4 @@
-<h1 align="center">🧵 Needlelight</h1>
+<h1 align="center"> Needlelight</h1>
 
 <p align="center">
   Needlelight is a refreshed, production-ready evolution of the original Needlelight installer. It focuses on first-class support for Hollow Knight: Silksong, improved     stability when installing mods, and a cleaner, more maintainable codebase with better localization support.
@@ -22,7 +22,7 @@ Key improvements in Needlelight:
 - Safer installer flow with improved error handling around file access and mod installation.
 - Small UX improvements: clearer messages, improved settings persistence, and fewer edge-case crashes.
 
-## 🎮 Usage
+## Usage
 
 - Download the latest version from the releases page.
 - Default game = Hollow Knight. To manage Silksong, open Settings → Game → select "Silksong". The active profile changes immediately and persists to your config.
@@ -31,7 +31,7 @@ Key improvements in Needlelight:
 - Enable/Disable mods using the toggle. (Manual update UI was removed in v6.0.0.0 — use the Releases page.)
 - If you are unable to connect to the internet, LumaSong can be launched in offline mode where you can toggle mods/API.
 
-## ✨ Features
+## Features
 
 - Multi‑game profiles: Switch between Hollow Knight and Hollow Knight: Silksong in Settings.
 - Automatically downloads the [Modding API](https://github.com/hk-modding/api) which is required for mods to load. It also allows switching between modded and vanilla via the Toggle API button.
@@ -41,18 +41,18 @@ Key improvements in Needlelight:
 - A single place to install, update, configure, view readmes, and report issues for mods.
 - Manage mods not available through modlinks via the manual install button.
 
-## 🔄 Migration notes
+## Migration notes
 
 - Older configs continue to load with Hollow Knight as the default (`game` missing or set to `hollow_knight`).
 - When you choose Silksong in Settings, the config persists `silksong` and will restore that on next launch.
 
-## 🤝 Contributions
+## Contributions
 
 - If you want to suggest a feature or report a bug, report it on the issues page.
 - If you want to contribute, feel free to. You can see what features are currently requested over here.
   If you want to contribute to localizations, please use Crowdin to add the translations.
 
-## 🏆 Credits
+## Credits
 
 - Source code adapted from https://github.com/TheMulhima/Lumafly
 
@@ -72,7 +72,7 @@ Key improvements in Needlelight:
   - [Sawayoshi](https://twittter.com/sawayoshiyt) - Japanese translations
   - [Thommie](https://discordapp.com/users/454185487641608193) - Dutch translations
 
-## 🪟 Windows SmartScreen (free workaround)
+## Windows SmartScreen (free workaround)
 
 Because the app isn’t code-signed with a paid certificate, Windows SmartScreen may warn on first launch. Free options:
 
